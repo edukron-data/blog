@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en" data-page="azure-devops" data-category="azure-devops" data-section="docker" data-topic="index">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Docker — EDUKRON BLOB</title>
+  <meta name="description" content="Docker — Azure DevOps learning path on EDUKRON BLOB.">
+  <link rel="stylesheet" href="../../assets/css/style.css">
+  <link rel="stylesheet" href="../../assets/css/flow-diagrams.css">
+</head>
+<body>
+  <div id="site-header"></div>
+  <div class="site-layout">
+    <aside id="sidebar-left"></aside>
+    <main class="main-content">
+      <nav class="breadcrumb" aria-label="Breadcrumb"><a href="../../index.html">Home</a><span class="breadcrumb-sep">/</span><a href="../../azure-devops/index.html">Azure DevOps</a><span class="breadcrumb-sep">/</span><span aria-current="page">Docker</span></nav>
+      <header class="page-header">
+        <span class="badge">azure devops</span>
+        <h1>Docker</h1>
+        <p class="page-subtitle">Azure DevOps · Docker</p>
+      </header>
+      
+      <article class="learning-plan topic-index">
+        <section class="learning-section">
+          <h2>Learning Path Overview</h2>
+          <p><strong>Docker</strong> moves from containers vs VMs through Dockerfile, networking, Compose, security, and pushing to Azure Container Registry.</p>
+          <p class="learning-callout">Work through the topics below in order for the best experience — each lesson builds on the previous one from beginner through advanced.</p>
+        </section>
+        
+      <section class="learning-section flow-diagram-section" id="flow-diagram">
+        <h2>Docker — Learning Path Overview</h2>
+        <p class="flow-diagram-desc">Topics progress from foundations through advanced production patterns. Follow the path in order for the best learning experience.</p>
+        <div class="flow-diagram-container">
+          <pre class="mermaid">flowchart LR
+    S0["Containers Overview"]
+    S1["Docker Installation"]
+    S2["Images & Containers"]
+    S3["Dockerfile"]
+    S4["…"]
+    S5["Health Checks"]
+    S6["Debugging Containers"]
+    S7["Docker in Production"]
+    S8["Docker Capstone"]
+    S0 --> S1
+    S1 --> S2
+    S2 --> S3
+    S3 --> S4
+    S4 --> S5
+    S5 --> S6
+    S6 --> S7
+    S7 --> S8</pre>
+        </div>
+      </section>
+        <section class="learning-section">
+          <h2>Path Phases</h2>
+          <div class="de-notes-grid">
+          <div class="de-note-card">
+            <h3>Phase 1: Container Basics</h3>
+            <p>Concepts, install, images, Dockerfile, run, registry.</p>
+          </div>
+          <div class="de-note-card">
+            <h3>Phase 2: Intermediate Docker</h3>
+            <p>Layers, volumes, networking, Compose, multi-stage builds, .dockerignore.</p>
+          </div>
+          <div class="de-note-card">
+            <h3>Phase 3: Production Docker</h3>
+            <p>Security, scanning, ACR, CI integration, troubleshooting, capstone.</p>
+          </div></div>
+        </section>
+        <section class="learning-section">
+          <h2>Prerequisites</h2>
+          <ul class="prereq-list"><li>Linux shell basics</li><li>Application you can containerize</li></ul>
+        </section>
+        <section class="learning-section">
+          <h2>What You Will Achieve</h2>
+          <ul class="learn-checklist"><li><span class="check-icon" aria-hidden="true">✓</span> Write efficient multi-stage Dockerfiles</li><li><span class="check-icon" aria-hidden="true">✓</span> Orchestrate local stacks with Compose</li><li><span class="check-icon" aria-hidden="true">✓</span> Push images to ACR and integrate with CI</li></ul>
+        </section>
+        <section class="learning-section">
+          <h2>All Topics</h2>
+          <ol class="path-step-list">
+        <li class="path-step-item">
+          <div class="path-step-body">
+            <a href="containers-overview/index.html">Containers Overview</a>
+            <p>Containers vs VMs, isolation, and portability benefits.</p>
+          </div>
+        </li>
+        <li class="path-step-item">
+          <div class="path-step-body">
+            <a href="docker-installation/index.html">Docker Installation</a>
+            <p>Docker Desktop, Engine, and verifying installation.</p>
+          </div>
+        </li>
+        <li class="path-step-item">
+          <div class="path-step-body">
+            <a href="images-containers/index.html">Images &amp; Containers</a>
+            <p>Image layers, container lifecycle, and immutability.</p>
+          </div>
+        </li>
+        <li class="path-step-item">
+          <div class="path-step-body">
+            <a href="dockerfile/index.html">Dockerfile</a>
+            <p>FROM, RUN, COPY, CMD, ENTRYPOINT, and best practices.</p>
+          </div>
+        </li>
+        <li class="path-step-item">
+          <div class="path-step-body">
+            <a href="building-images/index.html">Building Images</a>
+            <p>docker build, tags, and .dockerignore.</p>
+          </div>
+        </li>
+        <li class="path-step-item">
+          <div class="path-step-body">
+            <a href="running-containers/index.html">Running Containers</a>
+            <p>docker run, ports, volumes, and environment variables.</p>
+          </div>
+        </li>
+        <li class="path-step-item">
+          <div class="path-step-body">
+            <a href="docker-compose/index.html">Docker Compose</a>
+            <p>Multi-container apps, compose files, and local development.</p>
+          </div>
+        </li>
+        <li class="path-step-item">
+          <div class="path-step-body">
+            <a href="networking/index.html">Docker Networking</a>
+            <p>Bridge, host, overlay networks, and service discovery.</p>
+          </div>
+        </li>
+        <li class="path-step-item">
+          <div class="path-step-body">
+            <a href="volumes/index.html">Docker Volumes</a>
+            <p>Named volumes, bind mounts, and data persistence.</p>
+          </div>
+        </li>
+        <li class="path-step-item">
+          <div class="path-step-body">
+            <a href="multi-stage-builds/index.html">Multi-Stage Builds</a>
+            <p>Smaller production images with build and runtime stages.</p>
+          </div>
+        </li>
+        <li class="path-step-item">
+          <div class="path-step-body">
+            <a href="docker-registry/index.html">Container Registry</a>
+            <p>Docker Hub, ACR, and image tagging strategies.</p>
+          </div>
+        </li>
+        <li class="path-step-item">
+          <div class="path-step-body">
+            <a href="acr-setup/index.html">Azure Container Registry</a>
+            <p>Creating ACR, authentication, and geo-replication.</p>
+          </div>
+        </li>
+        <li class="path-step-item">
+          <div class="path-step-body">
+            <a href="security-scanning/index.html">Image Security Scanning</a>
+            <p>Vulnerability scanning and base image selection.</p>
+          </div>
+        </li>
+        <li class="path-step-item">
+          <div class="path-step-body">
+            <a href="dockerignore/index.html">Optimizing Builds</a>
+            <p>.dockerignore, layer caching, and build context size.</p>
+          </div>
+        </li>
+        <li class="path-step-item">
+          <div class="path-step-body">
+            <a href="health-checks/index.html">Health Checks</a>
+            <p>HEALTHCHECK instruction and container orchestration readiness.</p>
+          </div>
+        </li>
+        <li class="path-step-item">
+          <div class="path-step-body">
+            <a href="debugging-containers/index.html">Debugging Containers</a>
+            <p>docker logs, exec, inspect, and common issues.</p>
+          </div>
+        </li>
+        <li class="path-step-item">
+          <div class="path-step-body">
+            <a href="docker-production/index.html">Docker in Production</a>
+            <p>Resource limits, restart policies, and orchestration handoff.</p>
+          </div>
+        </li>
+        <li class="path-step-item">
+          <div class="path-step-body">
+            <a href="docker-capstone/index.html">Docker Capstone</a>
+            <p>Containerize a web app with Compose and push to ACR.</p>
+          </div>
+        </li></ol>
+        </section>
+      </article>
+    </main>
+    <aside id="sidebar-right"></aside>
+  </div>
+  <div id="site-footer"></div>
+  <script src="../../assets/js/main.js"></script>
+  
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        if (typeof mermaid !== 'undefined') {
+          mermaid.initialize({
+            startOnLoad: true,
+            theme: 'neutral',
+            securityLevel: 'loose',
+            themeVariables: {
+              primaryColor: '#e8f4fc',
+              primaryTextColor: '#1e293b',
+              primaryBorderColor: '#94a3b8',
+              lineColor: '#64748b',
+              secondaryColor: '#f1f5f9',
+              tertiaryColor: '#ffffff',
+              background: '#ffffff',
+              mainBkg: '#ffffff',
+              nodeBorder: '#94a3b8',
+              clusterBkg: '#f8fafc',
+              titleColor: '#0f172a',
+              edgeLabelBackground: '#ffffff'
+            }
+          });
+        }
+      });
+    </script>
+</body>
+</html>

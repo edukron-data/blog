@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en" data-page="ai" data-category="ai" data-section="artificial-intelligence" data-topic="agents-intro" data-step="19" data-total-steps="20">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Intelligent Agents — EDUKRON BLOB</title>
+  <meta name="description" content="Intelligent Agents — Artificial Intelligence. PEAS framework, agent types, and environments.">
+  <link rel="stylesheet" href="../../../assets/css/style.css">
+  <link rel="stylesheet" href="../../../assets/css/flow-diagrams.css">
+</head>
+<body>
+  <div id="site-header"></div>
+  <div class="site-layout">
+    <aside id="sidebar-left"></aside>
+    <main class="main-content">
+      <nav class="breadcrumb" aria-label="Breadcrumb"><a href="../../../index.html">Home</a><span class="breadcrumb-sep">/</span><a href="../../../ai/index.html">AI</a><span class="breadcrumb-sep">/</span><a href="../../../ai/artificial-intelligence/index.html">Artificial Intelligence</a><span class="breadcrumb-sep">/</span><span aria-current="page">Intelligent Agents</span></nav>
+      <header class="page-header">
+        <span class="badge">ai</span>
+        <h1>Intelligent Agents</h1>
+        <p class="page-subtitle">PEAS framework, agent types, and environments.</p>
+      </header>
+      
+      <article class="learning-plan">
+        
+      <div class="learning-progress" aria-label="Learning path progress">
+        <div class="learning-progress-header">
+          <span class="phase-badge phase-advanced">Advanced</span>
+          <span class="read-time">~16 min read</span>
+        </div>
+        <div class="progress-bar-track" role="progressbar" aria-valuenow="19" aria-valuemin="1" aria-valuemax="20" aria-label="Progress through this learning path">
+          <div class="progress-bar-fill" style="width:95%"></div>
+        </div>
+      </div>
+        <section class="learning-section" id="objective">
+          <h2>Learning Objective</h2>
+          <ul class="checklist objectives-list"><li>Define Intelligent Agents and explain its role in Classical artificial intelligence</li><li>Implement intelligent agents using search algorithms in advanced-level scenarios</li><li>Design intelligent agent design that integrates with symbolic AI foundations connecting to modern ML/LLM systems</li><li>Evaluate trade-offs, failure modes, and monitoring signals for intelligent agents</li><li>Connect intelligent agents to adjacent topics in the Artificial Intelligence path</li><li>Apply intelligent agents patterns in production-scale Classical artificial intelligence workloads</li></ul>
+        </section>
+        <section class="learning-section" id="prerequisites">
+          <h2>Prerequisites</h2>
+          <ul class="prereq-list"><li><a href="../../../ai/artificial-intelligence/ai-vs-ml-vs-dl/index.html">AI vs ML vs DL</a></li><li><a href="../../../ai/artificial-intelligence/modern-ai-landscape/index.html">Modern AI Landscape</a></li></ul>
+        </section>
+        <section class="learning-section" id="overview">
+          <h2>Overview</h2>
+          <p>Building on earlier Artificial Intelligence lessons, <strong>Intelligent Agents</strong> is a core topic in the Artificial Intelligence learning path. PEAS framework, agent types, and environments.</p>
+        <p>Classical artificial intelligence teams rely on intelligent agents when delivering PEAS framework and agent taxonomy. At this advanced stage, you will work with <strong>intelligent agent design</strong> using search algorithms, logic, planning, probabilistic reasoning, Python prototypes.</p>
+        <p>Industry practitioners treat intelligent agents as more than syntax — it shapes how you architect pipelines, debug incidents, and communicate in design reviews. Understanding the underlying mechanics helps you choose the right tool when multiple options exist (search algorithms, logic, planning, probabilistic reasoning, Python prototypes).</p>
+        <p>Production systems add constraints tutorials often skip: authentication, idempotency, observability, cost controls, and rollback paths. This lesson covers those operational realities alongside theory so you can reason about intelligent agents in real deployments.</p>
+        <p>Align your local practice environment with search algorithms, logic, planning, probabilistic reasoning, Python prototypes so examples transfer directly to work projects.</p>
+        <p>Work through the architecture notes, detailed explanations, production guidance, and code example below. Modify the sample for your domain, explain it aloud, and note one trade-off you would discuss in an interview.</p>
+        <p>The next steps extend intelligent agents into more complex Classical artificial intelligence scenarios — revisit this page if later topics feel unclear.</p>
+        </section>
+        
+      <section class="learning-section flow-diagram-section" id="flow-diagram">
+        <h2>Intelligent Agents — Process Flow</h2>
+        <p class="flow-diagram-desc">PEAS framework, agent types, and environments.</p>
+        <div class="flow-diagram-container">
+          <pre class="mermaid">flowchart LR
+    N0["Define problem & PEAS"]
+    N1["Step focus: Intelligent Agents"]
+    N2["PEAS framework"]
+    N3["Agent types"]
+    N4["And environments"]
+    N5["Agents — Intelligent Agents step 1"]
+    N6["Intro — Intelligent Agents step 2"]
+    N7["Validate intelligent agents output"]
+    N8["Intelligent Agents workflow — agents-intro"]
+    N9["Review & practice with code example"]
+    N0 --> N1
+    N1 --> N2
+    N2 --> N3
+    N3 --> N4
+    N4 --> N5
+    N5 --> N6
+    N6 --> N7
+    N7 --> N8
+    N8 --> N9</pre>
+        </div>
+      </section>
+        <section class="learning-section" id="key-concepts">
+          <h2>Key Concepts</h2>
+          <ul class="concept-list"><li>Intelligent Agents — definition, motivation, and when to apply it</li><li>Classical artificial intelligence vocabulary and mental models for intelligent agent design</li><li>PEAS framework and agent taxonomy</li><li>Integration with search algorithms and  logic</li><li>Input/output contracts, validation, and error boundaries</li><li>Testing strategy: unit, integration, and smoke checks</li><li>Performance, scalability, and cost levers</li><li>Security, secrets handling, and least privilege</li><li>Observability: logs, metrics, traces, and runbooks</li><li>Common anti-patterns and how teams avoid them</li></ul>
+        </section>
+        
+      <section class="learning-section" id="architecture">
+        <h2>Architecture Notes</h2>
+        <div class="de-architecture-block"><strong>System role:</strong> Intelligent Agents sits in the Classical artificial intelligence workflow as a component for intelligent agent design. Map inputs (sources, APIs, user actions), transformations (business rules, model inference, aggregations), and outputs (tables, APIs, dashboards). Define failure boundaries and retry semantics at each hop.</div><div class="de-architecture-block"><strong>Component interaction:</strong> Upstream producers and downstream consumers depend on stable contracts. Document schemas, SLAs, and versioning for interfaces touched by intelligent agents. Use feature flags or config-driven behavior when rolling out changes.</div><div class="de-architecture-block"><strong>Data & control flow:</strong> Trace how information moves when applying intelligent agents — including PEAS framework and agent taxonomy. Identify synchronous vs asynchronous steps, batch vs streaming paths, and where state persists between invocations.</div><div class="de-architecture-block"><strong>Operational model:</strong> Production usage requires structured logging, metrics (latency, error rate, throughput), alerting, runbooks, and rollback plans. Store infrastructure and application config in version control; automate deployments where possible.</div>
+      </section>
+        
+      <section class="learning-section de-detailed-notes" id="detailed-notes">
+        <h2>Detailed Notes</h2>
+        <p><strong>What it is:</strong> PEAS framework, agent types, and environments. In Classical artificial intelligence, this typically involves PEAS framework and agent taxonomy.</p>
+        <p><strong>Why it matters:</strong> Teams encounter intelligent agents when shipping intelligent agent design. Gaps here surface as production bugs, slow queries, model drift, pipeline failures, or failed interviews.</p>
+        <p><strong>How it works:</strong> Break the problem into inputs, processing steps, and outputs. For each step, specify validation rules, expected latency, and idempotency. Use search algorithms as your primary implementation surface.</p>
+        <p><strong>When to use:</strong> Apply intelligent agents when requirements align with PEAS framework and agent taxonomy. Avoid forcing this pattern when a simpler batch job, SQL view, or single API call suffices.</p>
+        <p><strong>How to practice:</strong> Run the code example locally or in a sandbox subscription. Change one parameter at a time, predict the outcome, then verify. Write a one-paragraph explanation suitable for a stand-up or PR description.</p>
+      </section>
+        <section class="learning-section" id="what-youll-learn">
+          <h2>What You&apos;ll Learn</h2>
+          <ul class="learn-checklist"><li><span class="check-icon" aria-hidden="true">✓</span> Theory and motivation behind intelligent agents in Classical artificial intelligence</li><li><span class="check-icon" aria-hidden="true">✓</span> Key terminology for intelligent agent design</li><li><span class="check-icon" aria-hidden="true">✓</span> Architecture and component interaction patterns</li><li><span class="check-icon" aria-hidden="true">✓</span> Production best practices, pitfalls, and interview preparation</li><li><span class="check-icon" aria-hidden="true">✓</span> Hands-on example using search algorithms</li><li><span class="check-icon" aria-hidden="true">✓</span> Clear linkage to prior and upcoming learning steps</li></ul>
+        </section>
+        
+      <section class="learning-section" id="production-notes">
+        <h2>Production Notes</h2>
+        <div class="de-notes-grid"><div class="de-note-card"><h3>Best Practices</h3><ul><li>Start with the simplest design that meets requirements — add complexity only with measured need</li><li>Pin tool and library versions; reproduce environments with containers or IaC</li><li>Write automated tests for critical paths before expanding scope</li><li>Document assumptions, inputs, outputs, SLAs, and known limitations in team wikis</li><li>Use structured logging with correlation IDs for cross-service debugging</li><li>Monitor key metrics from day one — latency, errors, cost, data freshness</li><li>Apply least-privilege access for credentials, API keys, and cloud roles</li><li>Peer-review intelligent agents changes; treat learning-path code as a draft requiring hardening for prod</li></ul></div><div class="de-note-card"><h3>Common Pitfalls</h3><ul><li>Skipping fundamentals and jumping to advanced intelligent agents patterns prematurely</li><li>Copy-pasting examples without understanding trade-offs or edge cases</li><li>Ignoring error handling, timeouts, and partial-failure recovery</li><li>Not validating outputs against representative production-scale data</li><li>Hard-coding secrets, connection strings, or environment-specific paths</li><li>Omitting observability — flying blind during incidents</li><li>Treating notebook or tutorial code as production-ready without tests and review</li></ul></div><div class="de-note-card"><h3>Interview Preparation</h3><ul><li>Open with a crisp definition of intelligent agents, then walk through a concrete Classical artificial intelligence example</li><li>Discuss trade-offs for intelligent agent design — interviewers reward reasoning over memorization</li><li>Mention tools: search algorithms,  logic,  planning and when you would choose each</li><li>Cover failure modes, debugging steps, and how you would monitor in production</li><li>Connect to a project story: problem, approach, metrics improved, lessons learned</li><li>Whiteboard the data/control flow for intelligent agents including one optimization you would make</li></ul></div></div>
+      </section>
+        
+      <section class="learning-section code-section" id="code-example">
+        <h2>Code Example</h2>
+        <pre class="code-block"><code class="language-python"># Intelligent Agents — A* search on a grid
+import heapq
+
+def astar(start, goal, neighbors, heuristic):
+    open_set = [(0, start)]
+    came_from, g_score = {}, {start: 0}
+
+    while open_set:
+        _, current = heapq.heappop(open_set)
+        if current == goal:
+            path = [current]
+            while current in came_from:
+                current = came_from[current]
+                path.append(current)
+            return path[::-1]
+
+        for nxt, cost in neighbors(current):
+            tentative = g_score[current] + cost
+            if tentative &lt; g_score.get(nxt, float(&quot;inf&quot;)):
+                came_from[nxt] = current
+                g_score[nxt] = tentative
+                f = tentative + heuristic(nxt, goal)
+                heapq.heappush(open_set, (f, nxt))
+    return None
+
+# Example: pathfind on 4-connected grid (implementation-specific neighbors/heuristic)</code></pre>
+      </section>
+        
+        <nav class="step-nav" aria-label="Learning path navigation"><a href="../../../ai/artificial-intelligence/ai-vs-ml-vs-dl/index.html" class="step-nav-link step-nav-prev">
+        <span class="step-nav-label">← Previous</span>
+        <span class="step-nav-title">AI vs ML vs DL</span>
+      </a><a href="../../../ai/artificial-intelligence/future-trends/index.html" class="step-nav-link step-nav-next">
+        <span class="step-nav-label">Next →</span>
+        <span class="step-nav-title">Future Trends</span>
+      </a></nav>
+      </article>
+    </main>
+    <aside id="sidebar-right"></aside>
+  </div>
+  <div id="site-footer"></div>
+  <script src="../../../assets/js/main.js"></script>
+  
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        if (typeof mermaid !== 'undefined') {
+          mermaid.initialize({
+            startOnLoad: true,
+            theme: 'neutral',
+            securityLevel: 'loose',
+            themeVariables: {
+              primaryColor: '#e8f4fc',
+              primaryTextColor: '#1e293b',
+              primaryBorderColor: '#94a3b8',
+              lineColor: '#64748b',
+              secondaryColor: '#f1f5f9',
+              tertiaryColor: '#ffffff',
+              background: '#ffffff',
+              mainBkg: '#ffffff',
+              nodeBorder: '#94a3b8',
+              clusterBkg: '#f8fafc',
+              titleColor: '#0f172a',
+              edgeLabelBackground: '#ffffff'
+            }
+          });
+        }
+      });
+    </script>
+</body>
+</html>

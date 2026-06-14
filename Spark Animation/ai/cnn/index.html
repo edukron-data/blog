@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en" data-page="ai" data-category="ai" data-section="cnn" data-topic="index">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CNN — EDUKRON BLOB</title>
+  <meta name="description" content="CNN — AI learning path on EDUKRON BLOB.">
+  <link rel="stylesheet" href="../../assets/css/style.css">
+  <link rel="stylesheet" href="../../assets/css/flow-diagrams.css">
+</head>
+<body>
+  <div id="site-header"></div>
+  <div class="site-layout">
+    <aside id="sidebar-left"></aside>
+    <main class="main-content">
+      <nav class="breadcrumb" aria-label="Breadcrumb"><a href="../../index.html">Home</a><span class="breadcrumb-sep">/</span><a href="../../ai/index.html">AI</a><span class="breadcrumb-sep">/</span><span aria-current="page">CNN</span></nav>
+      <header class="page-header">
+        <span class="badge">ai</span>
+        <h1>CNN</h1>
+        <p class="page-subtitle">AI · CNN</p>
+      </header>
+      
+      <article class="learning-plan topic-index">
+        <section class="learning-section">
+          <h2>Learning Path Overview</h2>
+          <p>The <strong>CNN</strong> track teaches computer vision deep learning — convolutions, ResNet, transfer learning, detection/segmentation intro, deployment, and a fine-tuning capstone.</p>
+          <p class="learning-callout">Work through the topics below in order for the best experience — each lesson builds on the previous one from beginner through advanced.</p>
+        </section>
+        
+      <section class="learning-section flow-diagram-section" id="flow-diagram">
+        <h2>CNN — Learning Path Overview</h2>
+        <p class="flow-diagram-desc">Topics progress from foundations through advanced production patterns. Follow the path in order for the best learning experience.</p>
+        <div class="flow-diagram-container">
+          <pre class="mermaid">flowchart LR
+    S0["Why CNNs?"]
+    S1["Convolution Operation"]
+    S2["Padding & Stride"]
+    S3["Pooling Layers"]
+    S4["…"]
+    S5["CNN Regularization"]
+    S6["CNN Interpretability"]
+    S7["Deploying CNN Models"]
+    S8["CNN Capstone"]
+    S0 --> S1
+    S1 --> S2
+    S2 --> S3
+    S3 --> S4
+    S4 --> S5
+    S5 --> S6
+    S6 --> S7
+    S7 --> S8</pre>
+        </div>
+      </section>
+        <section class="learning-section">
+          <h2>Path Phases</h2>
+          <div class="de-notes-grid">
+          <div class="de-note-card">
+            <h3>Phase 1: CNN Foundations</h3>
+            <p>Motivation, convolution, padding/stride, pooling, architecture, feature maps, classic architectures.</p>
+          </div>
+          <div class="de-note-card">
+            <h3>Phase 2: Training CNNs</h3>
+            <p>ResNet, transfer learning, augmentation, classification, detection/segmentation intro, YOLO.</p>
+          </div>
+          <div class="de-note-card">
+            <h3>Phase 3: Production CV</h3>
+            <p>PyTorch/Keras, regularization, interpretability, deployment, capstone fine-tuning.</p>
+          </div></div>
+        </section>
+        <section class="learning-section">
+          <h2>Prerequisites</h2>
+          <ul class="prereq-list"><li>ANN fundamentals</li><li>PyTorch or TensorFlow basics</li></ul>
+        </section>
+        <section class="learning-section">
+          <h2>What You Will Achieve</h2>
+          <ul class="learn-checklist"><li><span class="check-icon" aria-hidden="true">✓</span> Design and train CNN classifiers</li><li><span class="check-icon" aria-hidden="true">✓</span> Fine-tune pretrained models</li><li><span class="check-icon" aria-hidden="true">✓</span> Apply augmentation and regularization</li><li><span class="check-icon" aria-hidden="true">✓</span> Deploy or export models via ONNX</li></ul>
+        </section>
+        <section class="learning-section">
+          <h2>All Topics</h2>
+          <ol class="path-step-list">
+        <li class="path-step-item">
+          <div class="path-step-body">
+            <a href="cnn-motivation/index.html">Why CNNs?</a>
+            <p>Spatial hierarchies in images and parameter sharing benefits.</p>
+          </div>
+        </li>
+        <li class="path-step-item">
+          <div class="path-step-body">
+            <a href="convolution-operation/index.html">Convolution Operation</a>
+            <p>Filters, kernels, stride, and feature map computation.</p>
+          </div>
+        </li>
+        <li class="path-step-item">
+          <div class="path-step-body">
+            <a href="padding-stride/index.html">Padding &amp; Stride</a>
+            <p>Same vs valid padding and output dimension formulas.</p>
+          </div>
+        </li>
+        <li class="path-step-item">
+          <div class="path-step-body">
+            <a href="pooling-layers/index.html">Pooling Layers</a>
+            <p>Max pooling, average pooling, and spatial downsampling.</p>
+          </div>
+        </li>
+        <li class="path-step-item">
+          <div class="path-step-body">
+            <a href="cnn-architecture/index.html">CNN Architecture</a>
+            <p>Conv-pool stacks, flatten, and fully connected classifier.</p>
+          </div>
+        </li>
+        <li class="path-step-item">
+          <div class="path-step-body">
+            <a href="feature-maps/index.html">Feature Maps</a>
+            <p>What filters learn at each layer — edges to objects.</p>
+          </div>
+        </li>
+        <li class="path-step-item">
+          <div class="path-step-body">
+            <a href="popular-architectures/index.html">Popular Architectures</a>
+            <p>LeNet, AlexNet, VGG, ResNet overview.</p>
+          </div>
+        </li>
+        <li class="path-step-item">
+          <div class="path-step-body">
+            <a href="residual-connections/index.html">Residual Connections</a>
+            <p>Skip connections, vanishing gradients, and ResNet blocks.</p>
+          </div>
+        </li>
+        <li class="path-step-item">
+          <div class="path-step-body">
+            <a href="transfer-learning/index.html">Transfer Learning</a>
+            <p>Pre-trained models, fine-tuning, and feature extraction.</p>
+          </div>
+        </li>
+        <li class="path-step-item">
+          <div class="path-step-body">
+            <a href="data-augmentation/index.html">Data Augmentation</a>
+            <p>Rotation, flip, crop, and synthetic training data.</p>
+          </div>
+        </li>
+        <li class="path-step-item">
+          <div class="path-step-body">
+            <a href="image-classification/index.html">Image Classification</a>
+            <p>Training and evaluating CNN classifiers end-to-end.</p>
+          </div>
+        </li>
+        <li class="path-step-item">
+          <div class="path-step-body">
+            <a href="object-detection-intro/index.html">Object Detection Intro</a>
+            <p>Bounding boxes, IoU, and detection vs classification.</p>
+          </div>
+        </li>
+        <li class="path-step-item">
+          <div class="path-step-body">
+            <a href="yolo-intro/index.html">YOLO Introduction</a>
+            <p>Single-shot detectors and real-time detection concepts.</p>
+          </div>
+        </li>
+        <li class="path-step-item">
+          <div class="path-step-body">
+            <a href="segmentation-intro/index.html">Segmentation Intro</a>
+            <p>Semantic vs instance segmentation overview.</p>
+          </div>
+        </li>
+        <li class="path-step-item">
+          <div class="path-step-body">
+            <a href="cnn-pytorch/index.html">CNNs in PyTorch</a>
+            <p>nn.Conv2d, nn.MaxPool2d, and torchvision models.</p>
+          </div>
+        </li>
+        <li class="path-step-item">
+          <div class="path-step-body">
+            <a href="cnn-keras/index.html">CNNs in Keras</a>
+            <p>Conv2D, MaxPooling2D, and pretrained applications.</p>
+          </div>
+        </li>
+        <li class="path-step-item">
+          <div class="path-step-body">
+            <a href="regularization-cnn/index.html">CNN Regularization</a>
+            <p>Dropout, batch norm, and weight decay for CNNs.</p>
+          </div>
+        </li>
+        <li class="path-step-item">
+          <div class="path-step-body">
+            <a href="interpretability-cnn/index.html">CNN Interpretability</a>
+            <p>Grad-CAM, filter visualization, and saliency maps.</p>
+          </div>
+        </li>
+        <li class="path-step-item">
+          <div class="path-step-body">
+            <a href="deployment-cnn/index.html">Deploying CNN Models</a>
+            <p>ONNX, TensorRT, and edge deployment considerations.</p>
+          </div>
+        </li>
+        <li class="path-step-item">
+          <div class="path-step-body">
+            <a href="cnn-capstone/index.html">CNN Capstone</a>
+            <p>Fine-tune a pretrained model for a custom image dataset.</p>
+          </div>
+        </li></ol>
+        </section>
+      </article>
+    </main>
+    <aside id="sidebar-right"></aside>
+  </div>
+  <div id="site-footer"></div>
+  <script src="../../assets/js/main.js"></script>
+  
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        if (typeof mermaid !== 'undefined') {
+          mermaid.initialize({
+            startOnLoad: true,
+            theme: 'neutral',
+            securityLevel: 'loose',
+            themeVariables: {
+              primaryColor: '#e8f4fc',
+              primaryTextColor: '#1e293b',
+              primaryBorderColor: '#94a3b8',
+              lineColor: '#64748b',
+              secondaryColor: '#f1f5f9',
+              tertiaryColor: '#ffffff',
+              background: '#ffffff',
+              mainBkg: '#ffffff',
+              nodeBorder: '#94a3b8',
+              clusterBkg: '#f8fafc',
+              titleColor: '#0f172a',
+              edgeLabelBackground: '#ffffff'
+            }
+          });
+        }
+      });
+    </script>
+</body>
+</html>

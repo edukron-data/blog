@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en" data-page="azure-data-engineering" data-category="azure-data-engineering" data-section="azure-sql-database" data-topic="indexing-azuresql" data-step="8" data-total-steps="18">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Indexing — EDUKRON BLOB</title>
+  <meta name="description" content="Indexing — Azure SQL Database. Index design, missing index recommendations, and maintenance.">
+  <link rel="stylesheet" href="../../../assets/css/style.css">
+  <link rel="stylesheet" href="../../../assets/css/flow-diagrams.css">
+</head>
+<body>
+  <div id="site-header"></div>
+  <div class="site-layout">
+    <aside id="sidebar-left"></aside>
+    <main class="main-content">
+      <nav class="breadcrumb" aria-label="Breadcrumb"><a href="../../../index.html">Home</a><span class="breadcrumb-sep">/</span><a href="../../../azure-data-engineering/index.html">Azure Data Engineering</a><span class="breadcrumb-sep">/</span><a href="../../../azure-data-engineering/azure-sql-database/index.html">Azure SQL Database</a><span class="breadcrumb-sep">/</span><span aria-current="page">Indexing</span></nav>
+      <header class="page-header">
+        <span class="badge">azure data engineering</span>
+        <h1>Indexing</h1>
+        <p class="page-subtitle">Index design, missing index recommendations, and maintenance.</p>
+      </header>
+      
+      <article class="learning-plan">
+        
+      <div class="learning-progress" aria-label="Learning path progress">
+        <div class="learning-progress-header">
+          <span class="phase-badge phase-intermediate">Intermediate</span>
+          <span class="read-time">~14 min read</span>
+        </div>
+        <div class="progress-bar-track" role="progressbar" aria-valuenow="8" aria-valuemin="1" aria-valuemax="18" aria-label="Progress through this learning path">
+          <div class="progress-bar-fill" style="width:44%"></div>
+        </div>
+      </div>
+        <section class="learning-section" id="objective">
+          <h2>Learning Objective</h2>
+          <ul class="checklist objectives-list"><li>Explain Indexing in the context of Azure SQL Database and Azure data engineering</li><li>Design SQL workloads solutions using Azure SQL Database components</li><li>Apply indexing patterns in intermediate-level production scenarios on Azure</li><li>Identify common pitfalls, security considerations, and monitoring signals for indexing</li></ul>
+        </section>
+        <section class="learning-section" id="prerequisites">
+          <h2>Prerequisites</h2>
+          <ul class="prereq-list"><li><a href="../../../azure-data-engineering/azure-sql-database/query-store/index.html">Query Store</a></li><li><a href="../../../azure-data-engineering/azure-sql-database/performance-tiers/index.html">Performance Tiers</a></li></ul>
+        </section>
+        <section class="learning-section" id="overview">
+          <h2>Overview</h2>
+          <p>Building on earlier steps in the Azure SQL Database path, <strong>Indexing</strong> is a core topic in the Azure SQL Database track. Index design, missing index recommendations, and maintenance.</p>
+        <p>Azure SQL Database is a core building block on Azure for modern data platforms. In this intermediate topic, you will focus on <strong>T-SQL patterns, indexing, and query optimization</strong> — the practical skills data engineers use when shipping reliable pipelines to production.</p>
+        <p>Azure data engineers working with Azure SQL Database routinely deal with SQL workloads. Understanding how indexing fits into the broader lakehouse architecture — from ingestion through transformation to serving — helps you make better design decisions during architecture reviews and incident response.</p>
+        <p>The Azure SQL Database ecosystem integrates with other Azure services: Azure Data Factory for orchestration, ADLS Gen2 for storage, Databricks or Synapse Spark for processing, Delta Lake for ACID tables, and Azure Monitor for observability. Indexing sits at the intersection of these components.</p>
+        <p>Production teams measure success for indexing through pipeline SLAs, data freshness, cost per TB processed, and mean time to recovery. This lesson covers the theory, a live animated walkthrough, architecture notes, and a hands-on code example you can adapt to your own projects.</p>
+        <p>Later steps will extend these ideas with more advanced Azure SQL Database scenarios.</p>
+        </section>
+        
+      <section class="learning-section flow-diagram-section" id="flow-diagram">
+        <h2>Indexing — Process Flow</h2>
+        <p class="flow-diagram-desc">Index design, missing index recommendations, and maintenance.</p>
+        <div class="flow-diagram-container">
+          <pre class="mermaid">flowchart LR
+    N0["Connect to Azure SQL"]
+    N1["Step focus: Indexing"]
+    N2["Index design"]
+    N3["Missing index recommendations"]
+    N4["And maintenance"]
+    N5["Indexing — Indexing step 1"]
+    N6["Azuresql — Indexing step 2"]
+    N7["Validate indexing output"]
+    N8["Indexing workflow — indexing-azuresql"]
+    N9["Review & practice with code example"]
+    N0 --> N1
+    N1 --> N2
+    N2 --> N3
+    N3 --> N4
+    N4 --> N5
+    N5 --> N6
+    N6 --> N7
+    N7 --> N8
+    N8 --> N9</pre>
+        </div>
+      </section>
+        <section class="learning-section" id="key-concepts">
+          <h2>Key Concepts</h2>
+          <ul class="concept-list"><li>Indexing — definition and when to use it on Azure</li><li>Azure SQL Database core components: Logical Server, Database, Firewall</li><li>Integration with TDE and Query Store</li><li>Authentication: managed identity vs service principal vs Key Vault references</li><li>Monitoring: Azure Monitor metrics, diagnostic logs, and pipeline run history</li><li>Security: private endpoints, RBAC, encryption at rest and in transit</li><li>Cost levers: right-sizing compute, scheduling, and storage lifecycle policies</li><li>Failure modes: retries, idempotency, dead-letter queues, and alerting</li><li>SQL workloads patterns</li></ul>
+        </section>
+        
+      <section class="learning-section" id="architecture">
+        <h2>Architecture Notes</h2>
+        <div class="de-architecture-block"><strong>Architecture role:</strong> Indexing operates within the Azure SQL Database layer of your Azure data platform. Typical flow: source systems → ingestion (ADF/Event Hubs) → bronze landing (ADLS) → silver/gold transformation (Databricks/Synapse) → serving (SQL Warehouse, Power BI).</div><div class="de-architecture-block"><strong>Component interaction:</strong> Key resources include Logical Server, Database, Firewall, TDE, Query Store, Elastic Pools. Each component has a specific responsibility — avoid mixing orchestration logic with transformation logic; keep notebooks idempotent and pipelines metadata-driven where possible.</div><div class="de-architecture-block"><strong>Data flow:</strong> For SQL workloads, data moves through defined zones with clear ownership. Use managed identities for service-to-service auth, store secrets in Azure Key Vault, and enforce network isolation with private endpoints on production workloads.</div><div class="de-architecture-block"><strong>Operational model:</strong> Deploy infrastructure with Terraform or Bicep, store pipeline code in Git (Azure DevOps/GitHub), promote through dev → test → prod environments, and monitor with Azure Monitor alerts on failure rates and data latency SLAs.</div>
+      </section>
+        
+      <section class="learning-section de-detailed-notes" id="detailed-notes">
+        <h2>Detailed Notes</h2>
+        <p><strong>What it is:</strong> Index design, missing index recommendations, and maintenance. In Azure implementations, Indexing typically involves configuring Logical Server and Database with clear separation between control plane (orchestration) and data plane (storage/compute).</p>
+        <p><strong>Platform context:</strong> Azure SQL Database is a fully managed PaaS offering built on SQL Server engine. vCore model gives independent compute/storage scaling; serverless auto-pauses during idle periods. Query Store captures plan regressions. Synapse Link streams OLTP changes to analytics without ETL lag.</p>
+        <p><strong>How it works:</strong> When a pipeline or job runs, the Azure SQL Database control plane authenticates via managed identity, reads configuration from Git or a metadata store, executes activities against the data plane, and writes results to ADLS or a warehouse. Checkpointing and logging ensure recoverability.</p>
+        <p><strong>When to use:</strong> Choose indexing when your workload requires T-SQL patterns, indexing, and query optimization. Avoid it when a simpler pattern (e.g., direct copy without transformation) meets the SLA at lower cost.</p>
+        <p><strong>Azure-specific configuration:</strong> Provision resources in the same region as your data lake to minimize egress charges. Use Azure Policy to enforce tags, encryption, and allowed SKUs. Register resources under Microsoft.Sql/servers/databases in your subscription before deployment.</p>
+      </section>
+        <section class="learning-section" id="what-youll-learn">
+          <h2>What You&apos;ll Learn</h2>
+          <ul class="learn-checklist"><li><span class="check-icon" aria-hidden="true">✓</span> Core theory behind indexing on Azure SQL Database</li><li><span class="check-icon" aria-hidden="true">✓</span> Animated walkthrough of data flow through Azure components</li><li><span class="check-icon" aria-hidden="true">✓</span> Architecture patterns for SQL workloads</li><li><span class="check-icon" aria-hidden="true">✓</span> Production best practices, pitfalls, and interview preparation</li><li><span class="check-icon" aria-hidden="true">✓</span> Hands-on code example you can run in your Azure subscription</li><li><span class="check-icon" aria-hidden="true">✓</span> How indexing connects to prior and upcoming steps in this path</li></ul>
+        </section>
+        
+      <section class="learning-section" id="production-notes">
+        <h2>Production Notes</h2>
+        <div class="de-notes-grid"><div class="de-note-card"><h3>Best Practices</h3><ul><li>Use managed identities instead of embedded credentials for all Azure SQL Database connections</li><li>Parameterize pipelines and notebooks — avoid hard-coded environment-specific paths</li><li>Implement idempotent writes (MERGE/upsert) so retries do not duplicate data</li><li>Partition data by date or high-cardinality filter columns to optimize query pruning</li><li>Set up diagnostic settings to Log Analytics on day one — not after the first incident</li><li>Document data contracts: schema, freshness SLA, owner, and downstream consumers for every table</li><li>Test with representative data volumes in a staging environment before production cutover</li><li>Apply the principle of least privilege — separate dev/test/prod service principals and RBAC scopes</li></ul></div><div class="de-note-card"><h3>Common Pitfalls</h3><ul><li>Running production workloads on public endpoints without private link or firewall rules</li><li>Ignoring small-file problems — millions of tiny Parquet files destroy Spark read performance</li><li>Skipping data quality checks at the silver layer and pushing dirty data to gold dashboards</li><li>Hard-coding connection strings or storage paths instead of using Key Vault and parameters</li><li>Not setting retry policies and alerts — silent failures propagate stale data to executives</li><li>Over-partitioning or under-partitioning — both cause shuffle-heavy slow queries</li><li>Deploying schema changes without backward-compatible evolution or consumer notification</li></ul></div><div class="de-note-card"><h3>Interview Preparation</h3><ul><li>Be ready to whiteboard how indexing fits into a Azure SQL Database architecture with ADLS, ADF, and Databricks</li><li>Explain trade-offs: cost vs performance, batch vs streaming, schema-on-read vs schema-on-write</li><li>Describe a real incident: what failed, how you diagnosed it (Monitor/Spark UI/ADF runs), and how you fixed it</li><li>Discuss SQL workloads — interviewers want specifics, not generic definitions</li><li>Mention governance: Unity Catalog, column-level security, and PII masking for regulated industries</li></ul></div></div>
+      </section>
+        
+      <section class="learning-section code-section" id="code-example">
+        <h2>Code Example</h2>
+        <pre class="code-block"><code class="language-sql">-- Indexing — Azure SQL / Synapse example
+-- Index design, missing index recommendations, and maintenance.
+
+-- Create staging table
+CREATE TABLE dbo.stg_indexing_azuresql (
+    id          INT PRIMARY KEY,
+    event_date  DATE NOT NULL,
+    amount      DECIMAL(18,2),
+    updated_at  DATETIME2 DEFAULT SYSUTCDATETIME()
+);
+
+-- Incremental load with MERGE
+MERGE dbo.fact_indexing_azuresql AS target
+USING dbo.stg_indexing_azuresql AS source
+ON target.id = source.id
+WHEN MATCHED AND source.updated_at &gt; target.updated_at THEN
+    UPDATE SET amount = source.amount, updated_at = source.updated_at
+WHEN NOT MATCHED THEN
+    INSERT (id, event_date, amount, updated_at)
+    VALUES (source.id, source.event_date, source.amount, source.updated_at);</code></pre>
+      </section>
+        
+        <nav class="step-nav" aria-label="Learning path navigation"><a href="../../../azure-data-engineering/azure-sql-database/query-store/index.html" class="step-nav-link step-nav-prev">
+        <span class="step-nav-label">← Previous</span>
+        <span class="step-nav-title">Query Store</span>
+      </a><a href="../../../azure-data-engineering/azure-sql-database/elastic-pools/index.html" class="step-nav-link step-nav-next">
+        <span class="step-nav-label">Next →</span>
+        <span class="step-nav-title">Elastic Pools</span>
+      </a></nav>
+      </article>
+    </main>
+    <aside id="sidebar-right"></aside>
+  </div>
+  <div id="site-footer"></div>
+  <script src="../../../assets/js/main.js"></script>
+  
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        if (typeof mermaid !== 'undefined') {
+          mermaid.initialize({
+            startOnLoad: true,
+            theme: 'neutral',
+            securityLevel: 'loose',
+            themeVariables: {
+              primaryColor: '#e8f4fc',
+              primaryTextColor: '#1e293b',
+              primaryBorderColor: '#94a3b8',
+              lineColor: '#64748b',
+              secondaryColor: '#f1f5f9',
+              tertiaryColor: '#ffffff',
+              background: '#ffffff',
+              mainBkg: '#ffffff',
+              nodeBorder: '#94a3b8',
+              clusterBkg: '#f8fafc',
+              titleColor: '#0f172a',
+              edgeLabelBackground: '#ffffff'
+            }
+          });
+        }
+      });
+    </script>
+</body>
+</html>

@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en" data-page="ai" data-category="ai" data-section="agentic-ai" data-topic="planning-agents" data-step="7" data-total-steps="24">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Planning Agents — EDUKRON BLOB</title>
+  <meta name="description" content="Planning Agents — Agentic AI. Task decomposition, goal setting, and plan execution.">
+  <link rel="stylesheet" href="../../../assets/css/style.css">
+  <link rel="stylesheet" href="../../../assets/css/flow-diagrams.css">
+</head>
+<body>
+  <div id="site-header"></div>
+  <div class="site-layout">
+    <aside id="sidebar-left"></aside>
+    <main class="main-content">
+      <nav class="breadcrumb" aria-label="Breadcrumb"><a href="../../../index.html">Home</a><span class="breadcrumb-sep">/</span><a href="../../../ai/index.html">AI</a><span class="breadcrumb-sep">/</span><a href="../../../ai/agentic-ai/index.html">Agentic AI</a><span class="breadcrumb-sep">/</span><span aria-current="page">Planning Agents</span></nav>
+      <header class="page-header">
+        <span class="badge">ai</span>
+        <h1>Planning Agents</h1>
+        <p class="page-subtitle">Task decomposition, goal setting, and plan execution.</p>
+      </header>
+      
+      <article class="learning-plan">
+        
+      <div class="learning-progress" aria-label="Learning path progress">
+        <div class="learning-progress-header">
+          <span class="phase-badge phase-beginner">Beginner</span>
+          <span class="read-time">~15 min read</span>
+        </div>
+        <div class="progress-bar-track" role="progressbar" aria-valuenow="7" aria-valuemin="1" aria-valuemax="24" aria-label="Progress through this learning path">
+          <div class="progress-bar-fill" style="width:29%"></div>
+        </div>
+      </div>
+        <section class="learning-section" id="objective">
+          <h2>Learning Objective</h2>
+          <ul class="checklist objectives-list"><li>Explain Planning Agents and how it fits into modern agentic AI systems</li><li>Design planning agents using LLMs, tools, and orchestration patterns</li><li>Apply planning agents in beginner-level production scenarios</li><li>Identify security, cost, and reliability trade-offs for planning agents</li></ul>
+        </section>
+        <section class="learning-section" id="prerequisites">
+          <h2>Prerequisites</h2>
+          <ul class="prereq-list"><li><a href="../../../ai/agentic-ai/memory-systems/index.html">Agent Memory</a></li><li><a href="../../../ai/agentic-ai/function-calling/index.html">Function Calling</a></li></ul>
+        </section>
+        <section class="learning-section" id="overview">
+          <h2>Overview</h2>
+          <p>Building on earlier topics, <strong>Planning Agents</strong> continues the Agentic AI track at the beginner level. Task decomposition, goal setting, and plan execution.</p>
+        <p><strong>Planning Agents</strong> separate “what to do” from “doing it.” A planner decomposes “launch Q4 report” into subtasks: pull sales data, compute YoY, draft narrative, build slides. Executors run each subtask, possibly with different tools or sub-agents.</p>
+        <p>Plan-and-execute reduces tool thrashing on multi-step goals. The planner sees the full goal once; executors focus on one subtask with smaller tool sets. Trade-off: replanning is harder if mid-task facts change — add a replan trigger on failure.</p>
+        <p>Goal trees and HTN (hierarchical task networks) appear in classical AI; LLM planners approximate them in natural language bullet lists. Validate plans with a second pass or constrained JSON schema.</p>
+        <p>Parallel subtasks (independent data pulls) save wall-clock time. Sequential subtasks (each depends on prior output) need strict state passing. The orchestrator tracks subtask status in shared state.</p>
+        <p>BabyAGI-style loops (generate tasks, execute, reprioritize) are planning agents without fixed upfront plans. They explore open-ended goals but risk infinite task generation — cap task queue length.</p>
+        <p>Compare to ReAct: ReAct plans one step at a time inline; plan-and-execute plans many steps upfront. Hybrid patterns plan coarse phases, ReAct within each phase.</p>
+        <p>The plan-and-execute diagram shows decomposition into parallel subtasks synthesizing to output. Use it when explaining data pipeline agents that SQL → analyze → visualize.</p>
+        <p>Case study link: research agents plan “search → read → synthesize”; coding agents plan “reproduce → fix → test”. Map your capstone planner to explicit subtask types.</p>
+        </section>
+        
+      <section class="learning-section flow-diagram-section" id="flow-diagram">
+        <h2>Plan-and-Execute Flow</h2>
+        <p class="flow-diagram-desc">Decompose goal into subtasks, execute sequentially or in parallel.</p>
+        <div class="flow-diagram-container">
+          <pre class="mermaid">flowchart TD
+    G[Goal] --> DEC[Decompose]
+    DEC --> P1[Subtask 1]
+    DEC --> P2[Subtask 2]
+    DEC --> P3[Subtask 3]
+    P1 --> SYN[Synthesize]
+    P2 --> SYN
+    P3 --> SYN
+    SYN --> OUT[Final Plan Result]</pre>
+        </div>
+      </section>
+        <section class="learning-section" id="key-concepts">
+          <h2>Key Concepts</h2>
+          <ul class="concept-list"><li>Planning Agents — definition, motivation, and when to use it</li><li>Agent loop: observe → plan → act → reflect</li><li>Tool schemas and structured function calling</li><li>Context windows, memory tiers, and retrieval augmentation</li><li>Orchestration: single agent vs multi-agent graphs</li><li>Human-in-the-loop approval and escalation paths</li><li>Evaluation: trajectory analysis and task-level metrics</li><li>Security: prompt injection, tool sandboxing, least privilege</li></ul>
+        </section>
+        
+      <section class="learning-section" id="architecture">
+        <h2>Architecture Notes</h2>
+        <div class="de-architecture-block"><strong>System role:</strong> Planning Agents typically sits between the user interface and backend services. Flow: user goal → orchestrator → LLM planner → tool executor → memory store → response synthesis. Each layer should have clear contracts and timeouts.</div><div class="de-architecture-block"><strong>Component interaction:</strong> The LLM receives system prompts, tool definitions, and retrieved memory. The orchestrator manages state transitions, enforces max iteration limits, and routes to human reviewers when confidence is low or actions are high-risk.</div><div class="de-architecture-block"><strong>Data flow:</strong> Observations (tool results, API responses, file contents) flow back into the context window or vector store. Keep traces structured (JSON) so evaluators and debuggers can replay agent runs step by step.</div><div class="de-architecture-block"><strong>Operational model:</strong> Version prompts and tool schemas in Git, deploy agents as API services or background workers, monitor with LangSmith/OpenTelemetry, and run regression eval suites before each release.</div>
+      </section>
+        
+      <section class="learning-section de-detailed-notes" id="detailed-notes">
+        <h2>Detailed Notes</h2>
+        <p><strong>What it is:</strong> Task decomposition, goal setting, and plan execution. Agent implementations combine prompt engineering, tool APIs, and workflow graphs — not just a larger chat model.</p>
+        <p><strong>How it works:</strong> The orchestrator loads tools and memory, sends a structured prompt to the LLM, parses the model's tool call or final answer, executes tools, appends observations to state, and repeats until the task completes or limits are hit.</p>
+        <p><strong>When to use:</strong> Choose planning agents when tasks require task decomposition, goal trees, and plan-and-execute. Avoid agents when a fixed pipeline or single LLM call suffices — agents add latency, cost, and failure modes.</p>
+        <p><strong>Framework landscape:</strong> LangChain/LangGraph for graph-based flows, Microsoft AutoGen for conversational multi-agent, CrewAI for role-based teams, and custom FastAPI services for full control.</p>
+      </section>
+        <section class="learning-section" id="what-youll-learn">
+          <h2>What You&apos;ll Learn</h2>
+          <ul class="learn-checklist"><li><span class="check-icon" aria-hidden="true">✓</span> Core theory behind planning agents in agentic AI systems</li><li><span class="check-icon" aria-hidden="true">✓</span> Animated walkthrough of the agent loop and component interactions</li><li><span class="check-icon" aria-hidden="true">✓</span> Architecture patterns for planning agents</li><li><span class="check-icon" aria-hidden="true">✓</span> Production best practices, pitfalls, and interview preparation</li><li><span class="check-icon" aria-hidden="true">✓</span> Hands-on Python/LangGraph code example you can adapt</li><li><span class="check-icon" aria-hidden="true">✓</span> How planning agents connects to prior and upcoming steps in this path</li></ul>
+        </section>
+        
+      <section class="learning-section" id="production-notes">
+        <h2>Production Notes</h2>
+        <div class="de-notes-grid"><div class="de-note-card"><h3>Best Practices</h3><ul><li>Cap agent loops with max_iterations to prevent runaway token spend</li><li>Use structured tool outputs (JSON schema) instead of parsing free-form text</li><li>Separate system prompts from user content; never trust user input inside tool arguments blindly</li><li>Log full trajectories (thought, action, observation) for debugging and evaluation</li><li>Implement idempotent tools where possible so retries are safe</li><li>Add human approval gates for destructive or financial actions</li><li>Run eval datasets on every prompt or tool schema change</li><li>Use smaller models for routing/planning and larger models for complex reasoning when cost matters</li></ul></div><div class="de-note-card"><h3>Common Pitfalls</h3><ul><li>Giving agents too many tools at once — causes wrong tool selection and context bloat</li><li>No timeout or retry policy — hung API calls block the entire agent loop</li><li>Storing secrets in prompts instead of secure credential stores</li><li>Skipping evaluation and shipping based on demo conversations only</li><li>Allowing agents to execute arbitrary code without sandboxing</li><li>Ignoring token growth from unbounded conversation history</li><li>Treating multi-agent systems as always better — coordination overhead can hurt simple tasks</li></ul></div><div class="de-note-card"><h3>Interview Preparation</h3><ul><li>Whiteboard the agent loop for planning agents: inputs, LLM calls, tools, memory, outputs</li><li>Discuss trade-offs: ReAct vs plan-and-execute, single vs multi-agent, sync vs async tools</li><li>Explain planning agents with a concrete example (research agent, coding agent, or data agent)</li><li>Cover failure modes: hallucinated tool args, infinite loops, prompt injection via retrieved docs</li><li>Mention observability: LangSmith traces, custom metrics, and A/B testing agent versions</li></ul></div></div>
+      </section>
+        
+      <section class="learning-section code-section" id="code-example">
+        <h2>Code Example</h2>
+        <pre class="code-block"><code class="language-python"># Plan-and-execute with explicit subtasks
+def plan_and_execute(goal: str, planner, executor, tools):
+    plan = planner.decompose(goal)  # [&quot;fetch data&quot;, &quot;analyze&quot;, &quot;summarize&quot;]
+    results = []
+    for subtask in plan.subtasks:
+        result = executor.run(subtask, tools, context=results)
+        results.append(result)
+    return planner.synthesize(goal, results)</code></pre>
+      </section>
+        
+        <nav class="step-nav" aria-label="Learning path navigation"><a href="../../../ai/agentic-ai/memory-systems/index.html" class="step-nav-link step-nav-prev">
+        <span class="step-nav-label">← Previous</span>
+        <span class="step-nav-title">Agent Memory</span>
+      </a><a href="../../../ai/agentic-ai/reflection/index.html" class="step-nav-link step-nav-next">
+        <span class="step-nav-label">Next →</span>
+        <span class="step-nav-title">Self-Reflection</span>
+      </a></nav>
+      </article>
+    </main>
+    <aside id="sidebar-right"></aside>
+  </div>
+  <div id="site-footer"></div>
+  <script src="../../../assets/js/main.js"></script>
+  
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        if (typeof mermaid !== 'undefined') {
+          mermaid.initialize({
+            startOnLoad: true,
+            theme: 'neutral',
+            securityLevel: 'loose',
+            themeVariables: {
+              primaryColor: '#e8f4fc',
+              primaryTextColor: '#1e293b',
+              primaryBorderColor: '#94a3b8',
+              lineColor: '#64748b',
+              secondaryColor: '#f1f5f9',
+              tertiaryColor: '#ffffff',
+              background: '#ffffff',
+              mainBkg: '#ffffff',
+              nodeBorder: '#94a3b8',
+              clusterBkg: '#f8fafc',
+              titleColor: '#0f172a',
+              edgeLabelBackground: '#ffffff'
+            }
+          });
+        }
+      });
+    </script>
+</body>
+</html>

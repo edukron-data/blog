@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en" data-page="azure-devops" data-category="azure-devops" data-section="monitoring" data-topic="observability-patterns" data-step="16" data-total-steps="17">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Observability Patterns — EDUKRON BLOB</title>
+  <meta name="description" content="Observability Patterns — Monitoring. Three pillars: metrics, logs, traces in Azure.">
+  <link rel="stylesheet" href="../../../assets/css/style.css">
+  <link rel="stylesheet" href="../../../assets/css/flow-diagrams.css">
+</head>
+<body>
+  <div id="site-header"></div>
+  <div class="site-layout">
+    <aside id="sidebar-left"></aside>
+    <main class="main-content">
+      <nav class="breadcrumb" aria-label="Breadcrumb"><a href="../../../index.html">Home</a><span class="breadcrumb-sep">/</span><a href="../../../azure-devops/index.html">Azure DevOps</a><span class="breadcrumb-sep">/</span><a href="../../../azure-devops/monitoring/index.html">Monitoring</a><span class="breadcrumb-sep">/</span><span aria-current="page">Observability Patterns</span></nav>
+      <header class="page-header">
+        <span class="badge">azure devops</span>
+        <h1>Observability Patterns</h1>
+        <p class="page-subtitle">Three pillars: metrics, logs, traces in Azure.</p>
+      </header>
+      
+      <article class="learning-plan">
+        
+      <div class="learning-progress" aria-label="Learning path progress">
+        <div class="learning-progress-header">
+          <span class="phase-badge phase-advanced">Advanced</span>
+          <span class="read-time">~16 min read</span>
+        </div>
+        <div class="progress-bar-track" role="progressbar" aria-valuenow="16" aria-valuemin="1" aria-valuemax="17" aria-label="Progress through this learning path">
+          <div class="progress-bar-fill" style="width:94%"></div>
+        </div>
+      </div>
+        <section class="learning-section" id="objective">
+          <h2>Learning Objective</h2>
+          <ul class="checklist objectives-list"><li>Define Observability Patterns and explain its role in Azure monitoring and observability</li><li>Implement observability patterns using Azure Monitor in advanced-level scenarios</li><li>Design real-world engineering patterns that integrates with SRE visibility across apps and infrastructure</li><li>Evaluate trade-offs, failure modes, and monitoring signals for observability patterns</li><li>Connect observability patterns to adjacent topics in the Monitoring path</li><li>Apply observability patterns patterns in production-scale Azure monitoring and observability workloads</li></ul>
+        </section>
+        <section class="learning-section" id="prerequisites">
+          <h2>Prerequisites</h2>
+          <ul class="prereq-list"><li><a href="../../../azure-devops/monitoring/cost-monitoring/index.html">Monitoring Costs</a></li><li><a href="../../../azure-devops/monitoring/smart-detection/index.html">Smart Detection</a></li></ul>
+        </section>
+        <section class="learning-section" id="overview">
+          <h2>Overview</h2>
+          <p>Building on earlier Monitoring lessons, <strong>Observability Patterns</strong> is a core topic in the Monitoring learning path. Three pillars: metrics, logs, traces in Azure.</p>
+        <p>Azure monitoring and observability teams rely on observability patterns when delivering practical implementation and production-ready design. At this advanced stage, you will work with <strong>real-world engineering patterns</strong> using Azure Monitor, Log Analytics, Application Insights, KQL, alerts, dashboards.</p>
+        <p>Industry practitioners treat observability patterns as more than syntax — it shapes how you architect pipelines, debug incidents, and communicate in design reviews. Understanding the underlying mechanics helps you choose the right tool when multiple options exist (Azure Monitor, Log Analytics, Application Insights, KQL, alerts, dashboards).</p>
+        <p>Production systems add constraints tutorials often skip: authentication, idempotency, observability, cost controls, and rollback paths. This lesson covers those operational realities alongside theory so you can reason about observability patterns in real deployments.</p>
+        <p>Align your local practice environment with Azure Monitor, Log Analytics, Application Insights, KQL, alerts, dashboards so examples transfer directly to work projects.</p>
+        <p>Work through the architecture notes, detailed explanations, production guidance, and code example below. Modify the sample for your domain, explain it aloud, and note one trade-off you would discuss in an interview.</p>
+        <p>The next steps extend observability patterns into more complex Azure monitoring and observability scenarios — revisit this page if later topics feel unclear.</p>
+        </section>
+        
+      <section class="learning-section flow-diagram-section" id="flow-diagram">
+        <h2>Observability Patterns — Process Flow</h2>
+        <p class="flow-diagram-desc">Three pillars: metrics, logs, traces in Azure.</p>
+        <div class="flow-diagram-container">
+          <pre class="mermaid">flowchart LR
+    N0["Open observability dashboard"]
+    N1["Step focus: Observability Patterns"]
+    N2["Three pillars: metrics"]
+    N3["Logs"]
+    N4["Traces in Azure"]
+    N5["Observability — Observability Patterns step 1"]
+    N6["Patterns — Observability Patterns step 2"]
+    N7["Validate observability patterns output"]
+    N8["Observability Patterns workflow — observability-"]
+    N9["Review & practice with code example"]
+    N0 --> N1
+    N1 --> N2
+    N2 --> N3
+    N3 --> N4
+    N4 --> N5
+    N5 --> N6
+    N6 --> N7
+    N7 --> N8
+    N8 --> N9</pre>
+        </div>
+      </section>
+        <section class="learning-section" id="key-concepts">
+          <h2>Key Concepts</h2>
+          <ul class="concept-list"><li>Observability Patterns — definition, motivation, and when to apply it</li><li>Azure monitoring and observability vocabulary and mental models for real-world engineering patterns</li><li>Practical implementation and production-ready design</li><li>Integration with Azure Monitor and  Log Analytics</li><li>Input/output contracts, validation, and error boundaries</li><li>Testing strategy: unit, integration, and smoke checks</li><li>Performance, scalability, and cost levers</li><li>Security, secrets handling, and least privilege</li><li>Observability: logs, metrics, traces, and runbooks</li><li>Common anti-patterns and how teams avoid them</li></ul>
+        </section>
+        
+      <section class="learning-section" id="architecture">
+        <h2>Architecture Notes</h2>
+        <div class="de-architecture-block"><strong>System role:</strong> Observability Patterns sits in the Azure monitoring and observability workflow as a component for real-world engineering patterns. Map inputs (sources, APIs, user actions), transformations (business rules, model inference, aggregations), and outputs (tables, APIs, dashboards). Define failure boundaries and retry semantics at each hop.</div><div class="de-architecture-block"><strong>Component interaction:</strong> Upstream producers and downstream consumers depend on stable contracts. Document schemas, SLAs, and versioning for interfaces touched by observability patterns. Use feature flags or config-driven behavior when rolling out changes.</div><div class="de-architecture-block"><strong>Data & control flow:</strong> Trace how information moves when applying observability patterns — including practical implementation and production-ready design. Identify synchronous vs asynchronous steps, batch vs streaming paths, and where state persists between invocations.</div><div class="de-architecture-block"><strong>Operational model:</strong> Production usage requires structured logging, metrics (latency, error rate, throughput), alerting, runbooks, and rollback plans. Store infrastructure and application config in version control; automate deployments where possible.</div><div class="de-architecture-block"><strong>Platform context:</strong> On Microsoft Azure Monitor, observability patterns typically integrates with managed services, identity (managed identity / service principal), and regional redundancy. Follow well-architected pillars: reliability, security, cost, operations, performance.</div>
+      </section>
+        
+      <section class="learning-section de-detailed-notes" id="detailed-notes">
+        <h2>Detailed Notes</h2>
+        <p><strong>What it is:</strong> Three pillars: metrics, logs, traces in Azure. In Azure monitoring and observability, this typically involves practical implementation and production-ready design.</p>
+        <p><strong>Why it matters:</strong> Teams encounter observability patterns when shipping real-world engineering patterns. Gaps here surface as production bugs, slow queries, model drift, pipeline failures, or failed interviews.</p>
+        <p><strong>How it works:</strong> Break the problem into inputs, processing steps, and outputs. For each step, specify validation rules, expected latency, and idempotency. Use Azure Monitor as your primary implementation surface.</p>
+        <p><strong>When to use:</strong> Apply observability patterns when requirements align with practical implementation and production-ready design. Avoid forcing this pattern when a simpler batch job, SQL view, or single API call suffices.</p>
+        <p><strong>How to practice:</strong> Run the code example locally or in a sandbox subscription. Change one parameter at a time, predict the outcome, then verify. Write a one-paragraph explanation suitable for a stand-up or PR description.</p>
+      </section>
+        <section class="learning-section" id="what-youll-learn">
+          <h2>What You&apos;ll Learn</h2>
+          <ul class="learn-checklist"><li><span class="check-icon" aria-hidden="true">✓</span> Theory and motivation behind observability patterns in Azure monitoring and observability</li><li><span class="check-icon" aria-hidden="true">✓</span> Key terminology for real-world engineering patterns</li><li><span class="check-icon" aria-hidden="true">✓</span> Architecture and component interaction patterns</li><li><span class="check-icon" aria-hidden="true">✓</span> Production best practices, pitfalls, and interview preparation</li><li><span class="check-icon" aria-hidden="true">✓</span> Hands-on example using Azure Monitor</li><li><span class="check-icon" aria-hidden="true">✓</span> Clear linkage to prior and upcoming learning steps</li></ul>
+        </section>
+        
+      <section class="learning-section" id="production-notes">
+        <h2>Production Notes</h2>
+        <div class="de-notes-grid"><div class="de-note-card"><h3>Best Practices</h3><ul><li>Start with the simplest design that meets requirements — add complexity only with measured need</li><li>Pin tool and library versions; reproduce environments with containers or IaC</li><li>Write automated tests for critical paths before expanding scope</li><li>Document assumptions, inputs, outputs, SLAs, and known limitations in team wikis</li><li>Use structured logging with correlation IDs for cross-service debugging</li><li>Monitor key metrics from day one — latency, errors, cost, data freshness</li><li>Apply least-privilege access for credentials, API keys, and cloud roles</li><li>Peer-review observability patterns changes; treat learning-path code as a draft requiring hardening for prod</li></ul></div><div class="de-note-card"><h3>Common Pitfalls</h3><ul><li>Skipping fundamentals and jumping to advanced observability patterns patterns prematurely</li><li>Copy-pasting examples without understanding trade-offs or edge cases</li><li>Ignoring error handling, timeouts, and partial-failure recovery</li><li>Not validating outputs against representative production-scale data</li><li>Hard-coding secrets, connection strings, or environment-specific paths</li><li>Omitting observability — flying blind during incidents</li><li>Treating notebook or tutorial code as production-ready without tests and review</li></ul></div><div class="de-note-card"><h3>Interview Preparation</h3><ul><li>Open with a crisp definition of observability patterns, then walk through a concrete Azure monitoring and observability example</li><li>Discuss trade-offs for real-world engineering patterns — interviewers reward reasoning over memorization</li><li>Mention tools: Azure Monitor,  Log Analytics,  Application Insights and when you would choose each</li><li>Cover failure modes, debugging steps, and how you would monitor in production</li><li>Connect to a project story: problem, approach, metrics improved, lessons learned</li><li>Whiteboard the data/control flow for observability patterns including one optimization you would make</li></ul></div></div>
+      </section>
+        
+      <section class="learning-section code-section" id="code-example">
+        <h2>Code Example</h2>
+        <pre class="code-block"><code class="language-sql">// Observability Patterns — KQL query in Log Analytics
+AzureActivity
+| where TimeGenerated &gt; ago(24h)
+| where ActivityStatusValue == &quot;Failed&quot;
+| summarize failure_count = count() by ResourceGroup, OperationNameValue
+| order by failure_count desc
+| take 20
+
+// Application Insights — failed requests trend
+requests
+| where timestamp &gt; ago(1h)
+| where success == false
+| summarize failures = count() by name, resultCode
+| order by failures desc</code></pre>
+      </section>
+        
+        <nav class="step-nav" aria-label="Learning path navigation"><a href="../../../azure-devops/monitoring/cost-monitoring/index.html" class="step-nav-link step-nav-prev">
+        <span class="step-nav-label">← Previous</span>
+        <span class="step-nav-title">Monitoring Costs</span>
+      </a><a href="../../../azure-devops/monitoring/monitoring-capstone/index.html" class="step-nav-link step-nav-next">
+        <span class="step-nav-label">Next →</span>
+        <span class="step-nav-title">Monitoring Capstone</span>
+      </a></nav>
+      </article>
+    </main>
+    <aside id="sidebar-right"></aside>
+  </div>
+  <div id="site-footer"></div>
+  <script src="../../../assets/js/main.js"></script>
+  
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        if (typeof mermaid !== 'undefined') {
+          mermaid.initialize({
+            startOnLoad: true,
+            theme: 'neutral',
+            securityLevel: 'loose',
+            themeVariables: {
+              primaryColor: '#e8f4fc',
+              primaryTextColor: '#1e293b',
+              primaryBorderColor: '#94a3b8',
+              lineColor: '#64748b',
+              secondaryColor: '#f1f5f9',
+              tertiaryColor: '#ffffff',
+              background: '#ffffff',
+              mainBkg: '#ffffff',
+              nodeBorder: '#94a3b8',
+              clusterBkg: '#f8fafc',
+              titleColor: '#0f172a',
+              edgeLabelBackground: '#ffffff'
+            }
+          });
+        }
+      });
+    </script>
+</body>
+</html>

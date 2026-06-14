@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en" data-page="azure-data-engineering" data-category="azure-data-engineering" data-section="azure-sql-database" data-topic="index">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Azure SQL Database — EDUKRON BLOB</title>
+  <meta name="description" content="Azure SQL Database — Azure Data Engineering learning path on EDUKRON BLOB.">
+  <link rel="stylesheet" href="../../assets/css/style.css">
+  <link rel="stylesheet" href="../../assets/css/flow-diagrams.css">
+</head>
+<body>
+  <div id="site-header"></div>
+  <div class="site-layout">
+    <aside id="sidebar-left"></aside>
+    <main class="main-content">
+      <nav class="breadcrumb" aria-label="Breadcrumb"><a href="../../index.html">Home</a><span class="breadcrumb-sep">/</span><a href="../../azure-data-engineering/index.html">Azure Data Engineering</a><span class="breadcrumb-sep">/</span><span aria-current="page">Azure SQL Database</span></nav>
+      <header class="page-header">
+        <span class="badge">azure data engineering</span>
+        <h1>Azure SQL Database</h1>
+        <p class="page-subtitle">Azure Data Engineering · Azure SQL Database</p>
+      </header>
+      
+      <article class="learning-plan topic-index">
+        <section class="learning-section">
+          <h2>Learning Path Overview</h2>
+          <p>The <strong>Azure SQL Database</strong> learning path provides structured lessons from fundamentals through advanced production patterns.</p>
+          <p class="learning-callout">Work through the topics below in order for the best experience — each lesson builds on the previous one from beginner through advanced.</p>
+        </section>
+        
+      <section class="learning-section flow-diagram-section" id="flow-diagram">
+        <h2>Azure SQL Database — Learning Path Overview</h2>
+        <p class="flow-diagram-desc">Topics progress from foundations through advanced production patterns. Follow the path in order for the best learning experience.</p>
+        <div class="flow-diagram-container">
+          <pre class="mermaid">flowchart LR
+    S0["Azure SQL Overview"]
+    S1["Provisioning"]
+    S2["Connecting to Azure …"]
+    S3["Security Basics"]
+    S4["…"]
+    S5["Synapse Link"]
+    S6["Monitoring"]
+    S7["Performance Tuning"]
+    S8["Azure SQL Capstone"]
+    S0 --> S1
+    S1 --> S2
+    S2 --> S3
+    S3 --> S4
+    S4 --> S5
+    S5 --> S6
+    S6 --> S7
+    S7 --> S8</pre>
+        </div>
+      </section>
+        <section class="learning-section">
+          <h2>Path Phases</h2>
+          <div class="de-notes-grid">
+          <div class="de-note-card">
+            <h3>Phase 1: Foundations</h3>
+            <p>Core concepts, terminology, and first hands-on exercises.</p>
+          </div>
+          <div class="de-note-card">
+            <h3>Phase 2: Intermediate</h3>
+            <p>Applied patterns, integration, and real-world scenarios.</p>
+          </div>
+          <div class="de-note-card">
+            <h3>Phase 3: Advanced</h3>
+            <p>Production tuning, architecture, capstone, and interview readiness.</p>
+          </div></div>
+        </section>
+        <section class="learning-section">
+          <h2>Prerequisites</h2>
+          <ul class="prereq-list"><li>Willingness to learn sequentially</li><li>Dev environment setup for hands-on examples</li></ul>
+        </section>
+        <section class="learning-section">
+          <h2>What You Will Achieve</h2>
+          <ul class="learn-checklist"><li><span class="check-icon" aria-hidden="true">✓</span> Apply Azure SQL Database concepts in practical projects</li><li><span class="check-icon" aria-hidden="true">✓</span> Understand architecture and production trade-offs</li><li><span class="check-icon" aria-hidden="true">✓</span> Build portfolio-ready artifacts from capstone steps</li></ul>
+        </section>
+        <section class="learning-section">
+          <h2>All Topics</h2>
+          <ol class="path-step-list">
+        <li class="path-step-item">
+          <div class="path-step-body">
+            <a href="azuresql-overview/index.html">Azure SQL Overview</a>
+            <p>PaaS SQL options: single database, elastic pool, managed instance.</p>
+          </div>
+        </li>
+        <li class="path-step-item">
+          <div class="path-step-body">
+            <a href="provisioning/index.html">Provisioning</a>
+            <p>Creating databases, tiers, and compute/storage sizing.</p>
+          </div>
+        </li>
+        <li class="path-step-item">
+          <div class="path-step-body">
+            <a href="connection/index.html">Connecting to Azure SQL</a>
+            <p>Connection strings, firewall rules, and private link.</p>
+          </div>
+        </li>
+        <li class="path-step-item">
+          <div class="path-step-body">
+            <a href="security-basics/index.html">Security Basics</a>
+            <p>Authentication, encryption TDE, and Always Encrypted.</p>
+          </div>
+        </li>
+        <li class="path-step-item">
+          <div class="path-step-body">
+            <a href="firewall-vnet/index.html">Firewall &amp; VNet Rules</a>
+            <p>IP rules, service endpoints, and private endpoints.</p>
+          </div>
+        </li>
+        <li class="path-step-item">
+          <div class="path-step-body">
+            <a href="performance-tiers/index.html">Performance Tiers</a>
+            <p>DTU vs vCore models, serverless, and hyperscale.</p>
+          </div>
+        </li>
+        <li class="path-step-item">
+          <div class="path-step-body">
+            <a href="query-store/index.html">Query Store</a>
+            <p>Query performance tracking, plan regression, and tuning.</p>
+          </div>
+        </li>
+        <li class="path-step-item">
+          <div class="path-step-body">
+            <a href="indexing-azuresql/index.html">Indexing</a>
+            <p>Index design, missing index recommendations, and maintenance.</p>
+          </div>
+        </li>
+        <li class="path-step-item">
+          <div class="path-step-body">
+            <a href="elastic-pools/index.html">Elastic Pools</a>
+            <p>Multi-tenant resource sharing and eDTU management.</p>
+          </div>
+        </li>
+        <li class="path-step-item">
+          <div class="path-step-body">
+            <a href="geo-replication/index.html">Geo-Replication</a>
+            <p>Active geo-replication, failover groups, and DR planning.</p>
+          </div>
+        </li>
+        <li class="path-step-item">
+          <div class="path-step-body">
+            <a href="backup-restore/index.html">Backup &amp; Restore</a>
+            <p>Automated backups, point-in-time restore, and LTR.</p>
+          </div>
+        </li>
+        <li class="path-step-item">
+          <div class="path-step-body">
+            <a href="migration-assessment/index.html">Migration Assessment</a>
+            <p>DMA, Azure Migrate, and compatibility assessment.</p>
+          </div>
+        </li>
+        <li class="path-step-item">
+          <div class="path-step-body">
+            <a href="migration-methods/index.html">Migration Methods</a>
+            <p>BACPAC, DMS, transaction replication, and cutover strategies.</p>
+          </div>
+        </li>
+        <li class="path-step-item">
+          <div class="path-step-body">
+            <a href="serverless/index.html">Serverless SQL</a>
+            <p>Auto-pause, auto-scale, and cost-effective dev/test workloads.</p>
+          </div>
+        </li>
+        <li class="path-step-item">
+          <div class="path-step-body">
+            <a href="synapse-link/index.html">Synapse Link</a>
+            <p>Near real-time analytics from Azure SQL to Synapse.</p>
+          </div>
+        </li>
+        <li class="path-step-item">
+          <div class="path-step-body">
+            <a href="monitoring-azuresql/index.html">Monitoring</a>
+            <p>Metrics, alerts, Intelligent Insights, and diagnostics.</p>
+          </div>
+        </li>
+        <li class="path-step-item">
+          <div class="path-step-body">
+            <a href="tuning-azuresql/index.html">Performance Tuning</a>
+            <p>Wait statistics, blocking, and query optimization.</p>
+          </div>
+        </li>
+        <li class="path-step-item">
+          <div class="path-step-body">
+            <a href="azuresql-capstone/index.html">Azure SQL Capstone</a>
+            <p>Provision, secure, and tune an Azure SQL database.</p>
+          </div>
+        </li></ol>
+        </section>
+      </article>
+    </main>
+    <aside id="sidebar-right"></aside>
+  </div>
+  <div id="site-footer"></div>
+  <script src="../../assets/js/main.js"></script>
+  
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        if (typeof mermaid !== 'undefined') {
+          mermaid.initialize({
+            startOnLoad: true,
+            theme: 'neutral',
+            securityLevel: 'loose',
+            themeVariables: {
+              primaryColor: '#e8f4fc',
+              primaryTextColor: '#1e293b',
+              primaryBorderColor: '#94a3b8',
+              lineColor: '#64748b',
+              secondaryColor: '#f1f5f9',
+              tertiaryColor: '#ffffff',
+              background: '#ffffff',
+              mainBkg: '#ffffff',
+              nodeBorder: '#94a3b8',
+              clusterBkg: '#f8fafc',
+              titleColor: '#0f172a',
+              edgeLabelBackground: '#ffffff'
+            }
+          });
+        }
+      });
+    </script>
+</body>
+</html>

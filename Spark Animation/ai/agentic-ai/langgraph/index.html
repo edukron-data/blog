@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en" data-page="ai" data-category="ai" data-section="agentic-ai" data-topic="langgraph" data-step="13" data-total-steps="24">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LangGraph Deep Dive — EDUKRON BLOB</title>
+  <meta name="description" content="LangGraph Deep Dive — Agentic AI. State graphs, nodes, edges, and conditional routing.">
+  <link rel="stylesheet" href="../../../assets/css/style.css">
+  <link rel="stylesheet" href="../../../assets/css/flow-diagrams.css">
+</head>
+<body>
+  <div id="site-header"></div>
+  <div class="site-layout">
+    <aside id="sidebar-left"></aside>
+    <main class="main-content">
+      <nav class="breadcrumb" aria-label="Breadcrumb"><a href="../../../index.html">Home</a><span class="breadcrumb-sep">/</span><a href="../../../ai/index.html">AI</a><span class="breadcrumb-sep">/</span><a href="../../../ai/agentic-ai/index.html">Agentic AI</a><span class="breadcrumb-sep">/</span><span aria-current="page">LangGraph Deep Dive</span></nav>
+      <header class="page-header">
+        <span class="badge">ai</span>
+        <h1>LangGraph Deep Dive</h1>
+        <p class="page-subtitle">State graphs, nodes, edges, and conditional routing.</p>
+      </header>
+      
+      <article class="learning-plan">
+        
+      <div class="learning-progress" aria-label="Learning path progress">
+        <div class="learning-progress-header">
+          <span class="phase-badge phase-intermediate">Intermediate</span>
+          <span class="read-time">~18 min read</span>
+        </div>
+        <div class="progress-bar-track" role="progressbar" aria-valuenow="13" aria-valuemin="1" aria-valuemax="24" aria-label="Progress through this learning path">
+          <div class="progress-bar-fill" style="width:54%"></div>
+        </div>
+      </div>
+        <section class="learning-section" id="objective">
+          <h2>Learning Objective</h2>
+          <ul class="checklist objectives-list"><li>Explain LangGraph Deep Dive and how it fits into modern agentic AI systems</li><li>Design LangGraph implementation using LLMs, tools, and orchestration patterns</li><li>Apply langgraph deep dive in intermediate-level production scenarios</li><li>Identify security, cost, and reliability trade-offs for langgraph deep dive</li></ul>
+        </section>
+        <section class="learning-section" id="prerequisites">
+          <h2>Prerequisites</h2>
+          <ul class="prereq-list"><li><a href="../../../ai/agentic-ai/orchestration/index.html">Orchestration Frameworks</a></li><li><a href="../../../ai/agentic-ai/communication/index.html">Agent Communication</a></li></ul>
+        </section>
+        <section class="learning-section" id="overview">
+          <h2>Overview</h2>
+          <p>Building on earlier topics, <strong>LangGraph Deep Dive</strong> continues the Agentic AI track at the intermediate level. State graphs, nodes, edges, and conditional routing.</p>
+        <p><strong>LangGraph Deep Dive</strong> implements agents as state machines. Nodes are functions; edges define transitions; conditional edges branch on router functions; State is a TypedDict (often with reducer annotations for message lists).</p>
+        <p>Entry point → agent node calls LLM → conditional: if tool_calls → tool node → back to agent; else END. This is the ReAct loop as a graph.</p>
+        <p>Checkpointers (MemorySaver, Postgres) persist state per thread_id — resume conversations, recover from crashes, implement HITL resume after approval.</p>
+        <p>Subgraphs package reusable flows: a research subgraph embedded in a larger customer-support graph. Compile subgraphs with <code>graph.add_node("research", research_subgraph)</code>.</p>
+        <p>Streaming <code>app.stream()</code> emits node events for UX progress indicators — “Searching…”, “Running SQL…”.</p>
+        <p>Debug with LangSmith: each node execution becomes a trace span. Compare runs when prompts change.</p>
+        <p>The LangGraph state machine diagram shows agent ↔ tool loops with HITL branch. Reproduce this graph in the code example before adding custom nodes.</p>
+        <p>Production: run compiled graphs behind FastAPI; scale workers horizontally; externalize checkpointer to Postgres for multi-instance deployments.</p>
+        </section>
+        
+      <section class="learning-section flow-diagram-section" id="flow-diagram">
+        <h2>LangGraph State Machine</h2>
+        <p class="flow-diagram-desc">Nodes, edges, conditional routing, and persistent state graph.</p>
+        <div class="flow-diagram-container">
+          <pre class="mermaid">flowchart TD
+    START([Start]) --> AG[Agent Node]
+    AG -->|tool needed| TOOL[Tool Node]
+    TOOL --> AG
+    AG -->|done| END([End])
+    AG -->|approval| HITL[Human Node]
+    HITL --> AG</pre>
+        </div>
+      </section>
+        <section class="learning-section" id="key-concepts">
+          <h2>Key Concepts</h2>
+          <ul class="concept-list"><li>LangGraph Deep Dive — definition, motivation, and when to use it</li><li>Agent loop: observe → plan → act → reflect</li><li>Tool schemas and structured function calling</li><li>Context windows, memory tiers, and retrieval augmentation</li><li>Orchestration: single agent vs multi-agent graphs</li><li>Human-in-the-loop approval and escalation paths</li><li>Evaluation: trajectory analysis and task-level metrics</li><li>Security: prompt injection, tool sandboxing, least privilege</li><li>StateGraph nodes, edges, and conditional routing</li></ul>
+        </section>
+        
+      <section class="learning-section" id="architecture">
+        <h2>Architecture Notes</h2>
+        <div class="de-architecture-block"><strong>System role:</strong> LangGraph Deep Dive typically sits between the user interface and backend services. Flow: user goal → orchestrator → LLM planner → tool executor → memory store → response synthesis. Each layer should have clear contracts and timeouts.</div><div class="de-architecture-block"><strong>Component interaction:</strong> The LLM receives system prompts, tool definitions, and retrieved memory. The orchestrator manages state transitions, enforces max iteration limits, and routes to human reviewers when confidence is low or actions are high-risk.</div><div class="de-architecture-block"><strong>Data flow:</strong> Observations (tool results, API responses, file contents) flow back into the context window or vector store. Keep traces structured (JSON) so evaluators and debuggers can replay agent runs step by step.</div><div class="de-architecture-block"><strong>Operational model:</strong> Version prompts and tool schemas in Git, deploy agents as API services or background workers, monitor with LangSmith/OpenTelemetry, and run regression eval suites before each release.</div>
+      </section>
+        
+      <section class="learning-section de-detailed-notes" id="detailed-notes">
+        <h2>Detailed Notes</h2>
+        <p><strong>What it is:</strong> State graphs, nodes, edges, and conditional routing. Agent implementations combine prompt engineering, tool APIs, and workflow graphs — not just a larger chat model.</p>
+        <p><strong>How it works:</strong> The orchestrator loads tools and memory, sends a structured prompt to the LLM, parses the model's tool call or final answer, executes tools, appends observations to state, and repeats until the task completes or limits are hit.</p>
+        <p><strong>When to use:</strong> Choose langgraph deep dive when tasks require state graphs, nodes, edges, and conditional routing. Avoid agents when a fixed pipeline or single LLM call suffices — agents add latency, cost, and failure modes.</p>
+        <p><strong>Framework landscape:</strong> LangChain/LangGraph for graph-based flows, Microsoft AutoGen for conversational multi-agent, CrewAI for role-based teams, and custom FastAPI services for full control.</p>
+      </section>
+        <section class="learning-section" id="what-youll-learn">
+          <h2>What You&apos;ll Learn</h2>
+          <ul class="learn-checklist"><li><span class="check-icon" aria-hidden="true">✓</span> Core theory behind langgraph deep dive in agentic AI systems</li><li><span class="check-icon" aria-hidden="true">✓</span> Animated walkthrough of the agent loop and component interactions</li><li><span class="check-icon" aria-hidden="true">✓</span> Architecture patterns for LangGraph implementation</li><li><span class="check-icon" aria-hidden="true">✓</span> Production best practices, pitfalls, and interview preparation</li><li><span class="check-icon" aria-hidden="true">✓</span> Hands-on Python/LangGraph code example you can adapt</li><li><span class="check-icon" aria-hidden="true">✓</span> How langgraph deep dive connects to prior and upcoming steps in this path</li></ul>
+        </section>
+        
+      <section class="learning-section" id="production-notes">
+        <h2>Production Notes</h2>
+        <div class="de-notes-grid"><div class="de-note-card"><h3>Best Practices</h3><ul><li>Cap agent loops with max_iterations to prevent runaway token spend</li><li>Use structured tool outputs (JSON schema) instead of parsing free-form text</li><li>Separate system prompts from user content; never trust user input inside tool arguments blindly</li><li>Log full trajectories (thought, action, observation) for debugging and evaluation</li><li>Implement idempotent tools where possible so retries are safe</li><li>Add human approval gates for destructive or financial actions</li><li>Run eval datasets on every prompt or tool schema change</li><li>Use smaller models for routing/planning and larger models for complex reasoning when cost matters</li></ul></div><div class="de-note-card"><h3>Common Pitfalls</h3><ul><li>Giving agents too many tools at once — causes wrong tool selection and context bloat</li><li>No timeout or retry policy — hung API calls block the entire agent loop</li><li>Storing secrets in prompts instead of secure credential stores</li><li>Skipping evaluation and shipping based on demo conversations only</li><li>Allowing agents to execute arbitrary code without sandboxing</li><li>Ignoring token growth from unbounded conversation history</li><li>Treating multi-agent systems as always better — coordination overhead can hurt simple tasks</li></ul></div><div class="de-note-card"><h3>Interview Preparation</h3><ul><li>Whiteboard the agent loop for langgraph deep dive: inputs, LLM calls, tools, memory, outputs</li><li>Discuss trade-offs: ReAct vs plan-and-execute, single vs multi-agent, sync vs async tools</li><li>Explain LangGraph implementation with a concrete example (research agent, coding agent, or data agent)</li><li>Cover failure modes: hallucinated tool args, infinite loops, prompt injection via retrieved docs</li><li>Mention observability: LangSmith traces, custom metrics, and A/B testing agent versions</li></ul></div></div>
+      </section>
+        
+      <section class="learning-section code-section" id="code-example">
+        <h2>Code Example</h2>
+        <pre class="code-block"><code class="language-python"># LangGraph state machine
+from typing import TypedDict, Annotated
+from langgraph.graph import StateGraph, END
+import operator
+
+class State(TypedDict):
+    messages: Annotated[list, operator.add]
+
+def call_model(state: State):
+    return {&quot;messages&quot;: [llm.invoke(state[&quot;messages&quot;])]}
+
+def call_tool(state: State):
+    last = state[&quot;messages&quot;][-1]
+    result = tool_executor.invoke(last.tool_calls)
+    return {&quot;messages&quot;: result}
+
+graph = StateGraph(State)
+graph.add_node(&quot;agent&quot;, call_model)
+graph.add_node(&quot;tools&quot;, call_tool)
+graph.add_conditional_edges(&quot;agent&quot;, should_continue, {&quot;tools&quot;: &quot;tools&quot;, END: END})
+graph.set_entry_point(&quot;agent&quot;)
+app = graph.compile()</code></pre>
+      </section>
+        
+        <nav class="step-nav" aria-label="Learning path navigation"><a href="../../../ai/agentic-ai/orchestration/index.html" class="step-nav-link step-nav-prev">
+        <span class="step-nav-label">← Previous</span>
+        <span class="step-nav-title">Orchestration Frameworks</span>
+      </a><a href="../../../ai/agentic-ai/human-in-loop/index.html" class="step-nav-link step-nav-next">
+        <span class="step-nav-label">Next →</span>
+        <span class="step-nav-title">Human-in-the-Loop</span>
+      </a></nav>
+      </article>
+    </main>
+    <aside id="sidebar-right"></aside>
+  </div>
+  <div id="site-footer"></div>
+  <script src="../../../assets/js/main.js"></script>
+  
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        if (typeof mermaid !== 'undefined') {
+          mermaid.initialize({
+            startOnLoad: true,
+            theme: 'neutral',
+            securityLevel: 'loose',
+            themeVariables: {
+              primaryColor: '#e8f4fc',
+              primaryTextColor: '#1e293b',
+              primaryBorderColor: '#94a3b8',
+              lineColor: '#64748b',
+              secondaryColor: '#f1f5f9',
+              tertiaryColor: '#ffffff',
+              background: '#ffffff',
+              mainBkg: '#ffffff',
+              nodeBorder: '#94a3b8',
+              clusterBkg: '#f8fafc',
+              titleColor: '#0f172a',
+              edgeLabelBackground: '#ffffff'
+            }
+          });
+        }
+      });
+    </script>
+</body>
+</html>

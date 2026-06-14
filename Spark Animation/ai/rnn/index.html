@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en" data-page="ai" data-category="ai" data-section="rnn" data-topic="index">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RNN — EDUKRON BLOB</title>
+  <meta name="description" content="RNN — AI learning path on EDUKRON BLOB.">
+  <link rel="stylesheet" href="../../assets/css/style.css">
+  <link rel="stylesheet" href="../../assets/css/flow-diagrams.css">
+</head>
+<body>
+  <div id="site-header"></div>
+  <div class="site-layout">
+    <aside id="sidebar-left"></aside>
+    <main class="main-content">
+      <nav class="breadcrumb" aria-label="Breadcrumb"><a href="../../index.html">Home</a><span class="breadcrumb-sep">/</span><a href="../../ai/index.html">AI</a><span class="breadcrumb-sep">/</span><span aria-current="page">RNN</span></nav>
+      <header class="page-header">
+        <span class="badge">ai</span>
+        <h1>RNN</h1>
+        <p class="page-subtitle">AI · RNN</p>
+      </header>
+      
+      <article class="learning-plan topic-index">
+        <section class="learning-section">
+          <h2>Learning Path Overview</h2>
+          <p>The <strong>RNN</strong> track covers sequence modeling with RNNs, LSTMs, GRUs, seq2seq, attention, and PyTorch/Keras implementations culminating in a forecasting or text-generation capstone.</p>
+          <p class="learning-callout">Work through the topics below in order for the best experience — each lesson builds on the previous one from beginner through advanced.</p>
+        </section>
+        
+      <section class="learning-section flow-diagram-section" id="flow-diagram">
+        <h2>RNN — Learning Path Overview</h2>
+        <p class="flow-diagram-desc">Topics progress from foundations through advanced production patterns. Follow the path in order for the best learning experience.</p>
+        <div class="flow-diagram-container">
+          <pre class="mermaid">flowchart LR
+    S0["Sequences Introduction"]
+    S1["RNN Architecture"]
+    S2["Forward Pass"]
+    S3["Backprop Through Time"]
+    S4["…"]
+    S5["RNN in Keras"]
+    S6["RNN Limitations"]
+    S7["RNN Hyperparameter T…"]
+    S8["RNN Capstone"]
+    S0 --> S1
+    S1 --> S2
+    S2 --> S3
+    S3 --> S4
+    S4 --> S5
+    S5 --> S6
+    S6 --> S7
+    S7 --> S8</pre>
+        </div>
+      </section>
+        <section class="learning-section">
+          <h2>Path Phases</h2>
+          <div class="de-notes-grid">
+          <div class="de-note-card">
+            <h3>Phase 1: RNN Foundations</h3>
+            <p>Sequence data, RNN architecture, forward pass, BPTT, LSTM intro.</p>
+          </div>
+          <div class="de-note-card">
+            <h3>Phase 2: Advanced RNNs</h3>
+            <p>LSTM apps, GRU, bi-directional/stacked RNNs, seq2seq, teacher forcing, attention.</p>
+          </div>
+          <div class="de-note-card">
+            <h3>Phase 3: Applied RNNs</h3>
+            <p>Time series, padding/masking, PyTorch/Keras, limitations, tuning, capstone.</p>
+          </div></div>
+        </section>
+        <section class="learning-section">
+          <h2>Prerequisites</h2>
+          <ul class="prereq-list"><li>Neural network basics (ANN path helpful)</li><li>PyTorch or TensorFlow familiarity</li></ul>
+        </section>
+        <section class="learning-section">
+          <h2>What You Will Achieve</h2>
+          <ul class="learn-checklist"><li><span class="check-icon" aria-hidden="true">✓</span> Implement LSTM/GRU models for sequences</li><li><span class="check-icon" aria-hidden="true">✓</span> Build seq2seq models with attention</li><li><span class="check-icon" aria-hidden="true">✓</span> Diagnose RNN training issues</li><li><span class="check-icon" aria-hidden="true">✓</span> Complete an LSTM capstone project</li></ul>
+        </section>
+        <section class="learning-section">
+          <h2>All Topics</h2>
+          <ol class="path-step-list">
+        <li class="path-step-item">
+          <div class="path-step-body">
+            <a href="sequences-intro/index.html">Sequences Introduction</a>
+            <p>Sequential data types: text, time series, audio, and video.</p>
+          </div>
+        </li>
+        <li class="path-step-item">
+          <div class="path-step-body">
+            <a href="rnn-architecture/index.html">RNN Architecture</a>
+            <p>Recurrent connections, hidden state, and unrolling through time.</p>
+          </div>
+        </li>
+        <li class="path-step-item">
+          <div class="path-step-body">
+            <a href="forward-pass/index.html">Forward Pass</a>
+            <p>Computing outputs step-by-step across sequence length.</p>
+          </div>
+        </li>
+        <li class="path-step-item">
+          <div class="path-step-body">
+            <a href="bptt/index.html">Backprop Through Time</a>
+            <p>Gradient flow through unrolled RNN and vanishing gradients.</p>
+          </div>
+        </li>
+        <li class="path-step-item">
+          <div class="path-step-body">
+            <a href="lstm-architecture/index.html">LSTM Architecture</a>
+            <p>Forget, input, output gates, and cell state mechanics.</p>
+          </div>
+        </li>
+        <li class="path-step-item">
+          <div class="path-step-body">
+            <a href="lstm-applications/index.html">LSTM Applications</a>
+            <p>Language modeling, sentiment, and sequence prediction.</p>
+          </div>
+        </li>
+        <li class="path-step-item">
+          <div class="path-step-body">
+            <a href="gru-architecture/index.html">GRU Architecture</a>
+            <p>Reset and update gates — lighter alternative to LSTM.</p>
+          </div>
+        </li>
+        <li class="path-step-item">
+          <div class="path-step-body">
+            <a href="gru-vs-lstm/index.html">GRU vs LSTM</a>
+            <p>Trade-offs in parameters, training speed, and performance.</p>
+          </div>
+        </li>
+        <li class="path-step-item">
+          <div class="path-step-body">
+            <a href="bidirectional-rnn/index.html">Bidirectional RNNs</a>
+            <p>Forward and backward passes for context from both directions.</p>
+          </div>
+        </li>
+        <li class="path-step-item">
+          <div class="path-step-body">
+            <a href="stacked-rnn/index.html">Stacked RNNs</a>
+            <p>Multi-layer recurrent networks for hierarchical features.</p>
+          </div>
+        </li>
+        <li class="path-step-item">
+          <div class="path-step-body">
+            <a href="sequence-to-sequence/index.html">Sequence-to-Sequence</a>
+            <p>Encoder-decoder architecture for translation and summarization.</p>
+          </div>
+        </li>
+        <li class="path-step-item">
+          <div class="path-step-body">
+            <a href="teacher-forcing/index.html">Teacher Forcing</a>
+            <p>Training seq2seq models with ground-truth vs predicted inputs.</p>
+          </div>
+        </li>
+        <li class="path-step-item">
+          <div class="path-step-body">
+            <a href="attention-rnn/index.html">Attention in RNNs</a>
+            <p>Bahdanau attention connecting encoder and decoder.</p>
+          </div>
+        </li>
+        <li class="path-step-item">
+          <div class="path-step-body">
+            <a href="time-series-rnn/index.html">Time Series with RNNs</a>
+            <p>Forecasting, windowing, and multivariate sequences.</p>
+          </div>
+        </li>
+        <li class="path-step-item">
+          <div class="path-step-body">
+            <a href="padding-masking/index.html">Padding &amp; Masking</a>
+            <p>Handling variable-length sequences in batches.</p>
+          </div>
+        </li>
+        <li class="path-step-item">
+          <div class="path-step-body">
+            <a href="pytorch-rnn/index.html">RNN in PyTorch</a>
+            <p>nn.RNN, nn.LSTM, nn.GRU modules and training loops.</p>
+          </div>
+        </li>
+        <li class="path-step-item">
+          <div class="path-step-body">
+            <a href="keras-rnn/index.html">RNN in Keras</a>
+            <p>Sequential models with LSTM/GRU layers.</p>
+          </div>
+        </li>
+        <li class="path-step-item">
+          <div class="path-step-body">
+            <a href="rnn-limitations/index.html">RNN Limitations</a>
+            <p>Long-range dependencies and why transformers emerged.</p>
+          </div>
+        </li>
+        <li class="path-step-item">
+          <div class="path-step-body">
+            <a href="rnn-tuning/index.html">RNN Hyperparameter Tuning</a>
+            <p>Hidden size, layers, dropout, and learning rate.</p>
+          </div>
+        </li>
+        <li class="path-step-item">
+          <div class="path-step-body">
+            <a href="rnn-capstone/index.html">RNN Capstone</a>
+            <p>Train an LSTM for text generation or time series forecasting.</p>
+          </div>
+        </li></ol>
+        </section>
+      </article>
+    </main>
+    <aside id="sidebar-right"></aside>
+  </div>
+  <div id="site-footer"></div>
+  <script src="../../assets/js/main.js"></script>
+  
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        if (typeof mermaid !== 'undefined') {
+          mermaid.initialize({
+            startOnLoad: true,
+            theme: 'neutral',
+            securityLevel: 'loose',
+            themeVariables: {
+              primaryColor: '#e8f4fc',
+              primaryTextColor: '#1e293b',
+              primaryBorderColor: '#94a3b8',
+              lineColor: '#64748b',
+              secondaryColor: '#f1f5f9',
+              tertiaryColor: '#ffffff',
+              background: '#ffffff',
+              mainBkg: '#ffffff',
+              nodeBorder: '#94a3b8',
+              clusterBkg: '#f8fafc',
+              titleColor: '#0f172a',
+              edgeLabelBackground: '#ffffff'
+            }
+          });
+        }
+      });
+    </script>
+</body>
+</html>

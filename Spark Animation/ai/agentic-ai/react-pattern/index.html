@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en" data-page="ai" data-category="ai" data-section="agentic-ai" data-topic="react-pattern" data-step="3" data-total-steps="24">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ReAct Pattern — EDUKRON BLOB</title>
+  <meta name="description" content="ReAct Pattern — Agentic AI. Reasoning and acting interleaved in agent loops.">
+  <link rel="stylesheet" href="../../../assets/css/style.css">
+  <link rel="stylesheet" href="../../../assets/css/flow-diagrams.css">
+</head>
+<body>
+  <div id="site-header"></div>
+  <div class="site-layout">
+    <aside id="sidebar-left"></aside>
+    <main class="main-content">
+      <nav class="breadcrumb" aria-label="Breadcrumb"><a href="../../../index.html">Home</a><span class="breadcrumb-sep">/</span><a href="../../../ai/index.html">AI</a><span class="breadcrumb-sep">/</span><a href="../../../ai/agentic-ai/index.html">Agentic AI</a><span class="breadcrumb-sep">/</span><span aria-current="page">ReAct Pattern</span></nav>
+      <header class="page-header">
+        <span class="badge">ai</span>
+        <h1>ReAct Pattern</h1>
+        <p class="page-subtitle">Reasoning and acting interleaved in agent loops.</p>
+      </header>
+      
+      <article class="learning-plan">
+        
+      <div class="learning-progress" aria-label="Learning path progress">
+        <div class="learning-progress-header">
+          <span class="phase-badge phase-beginner">Beginner</span>
+          <span class="read-time">~13 min read</span>
+        </div>
+        <div class="progress-bar-track" role="progressbar" aria-valuenow="3" aria-valuemin="1" aria-valuemax="24" aria-label="Progress through this learning path">
+          <div class="progress-bar-fill" style="width:13%"></div>
+        </div>
+      </div>
+        <section class="learning-section" id="objective">
+          <h2>Learning Objective</h2>
+          <ul class="checklist objectives-list"><li>Explain ReAct Pattern and how it fits into modern agentic AI systems</li><li>Design ReAct prompting pattern using LLMs, tools, and orchestration patterns</li><li>Apply react pattern in beginner-level production scenarios</li><li>Identify security, cost, and reliability trade-offs for react pattern</li></ul>
+        </section>
+        <section class="learning-section" id="prerequisites">
+          <h2>Prerequisites</h2>
+          <ul class="prereq-list"><li><a href="../../../ai/agentic-ai/agent-components/index.html">Agent Components</a></li><li><a href="../../../ai/agentic-ai/agents-overview/index.html">AI Agents Overview</a></li></ul>
+        </section>
+        <section class="learning-section" id="overview">
+          <h2>Overview</h2>
+          <p>Building on earlier topics, <strong>ReAct Pattern</strong> continues the Agentic AI track at the beginner level. Reasoning and acting interleaved in agent loops.</p>
+        <p><strong>ReAct</strong> (Reasoning + Acting) interleaves explicit reasoning traces with tool calls. The model emits Thought, Action, and Action Input; your runtime executes the action and appends Observation before the next LLM turn.</p>
+        <p>Compared to chain-of-thought hidden in the model, ReAct traces are inspectable. Support engineers replay Thought → Action → Observation sequences in LangSmith to see why an agent chose the wrong API or misread a tool result.</p>
+        <p>The pattern works with any tool-capable LLM — OpenAI function calling, Azure OpenAI, Anthropic tool use, or local models with structured output. The prompt contract matters more than the vendor.</p>
+        <p>ReAct struggles when tools return huge payloads (full HTML pages, wide SQL result sets). Summarize observations before re-prompting, or give the agent a “read_file_chunk” tool instead of dumping entire files into context.</p>
+        <p>Set <code>max_steps</code> aggressively. Five to ten iterations resolve most tasks; twenty steps often signals a confused loop. Log each step’s token count to catch runaway reasoning.</p>
+        <p>Combine ReAct with reflection (later in this path): after a draft answer, a critic pass checks completeness before returning to the user. Research agents use ReAct for gathering and reflection for synthesis quality.</p>
+        <p>The ReAct trace flow diagram shows one question branching through multiple thought-action cycles until Final Answer. Map your own agent’s logs to this template during debugging.</p>
+        <p>Hands-on: implement the loop in the code example without LangChain first — parse actions with regex or JSON mode, execute tools, append observations. Frameworks add ergonomics, not magic.</p>
+        </section>
+        
+      <section class="learning-section flow-diagram-section" id="flow-diagram">
+        <h2>ReAct Trace Flow</h2>
+        <p class="flow-diagram-desc">Interleaved reasoning and tool execution with explicit Thought → Action → Observation steps.</p>
+        <div class="flow-diagram-container">
+          <pre class="mermaid">flowchart TD
+    Q[User Question] --> T1[Thought: reason about next step]
+    T1 --> A1[Action: select tool]
+    A1 --> O1[Observation: tool result]
+    O1 --> T2[Thought: update plan]
+    T2 --> A2[Action: next tool or answer]
+    A2 --> FA[Final Answer]</pre>
+        </div>
+      </section>
+        <section class="learning-section" id="key-concepts">
+          <h2>Key Concepts</h2>
+          <ul class="concept-list"><li>ReAct Pattern — definition, motivation, and when to use it</li><li>Agent loop: observe → plan → act → reflect</li><li>Tool schemas and structured function calling</li><li>Context windows, memory tiers, and retrieval augmentation</li><li>Orchestration: single agent vs multi-agent graphs</li><li>Human-in-the-loop approval and escalation paths</li><li>Evaluation: trajectory analysis and task-level metrics</li><li>Security: prompt injection, tool sandboxing, least privilege</li><li>Thought → Action → Observation trace format</li></ul>
+        </section>
+        
+      <section class="learning-section" id="architecture">
+        <h2>Architecture Notes</h2>
+        <div class="de-architecture-block"><strong>System role:</strong> ReAct Pattern typically sits between the user interface and backend services. Flow: user goal → orchestrator → LLM planner → tool executor → memory store → response synthesis. Each layer should have clear contracts and timeouts.</div><div class="de-architecture-block"><strong>Component interaction:</strong> The LLM receives system prompts, tool definitions, and retrieved memory. The orchestrator manages state transitions, enforces max iteration limits, and routes to human reviewers when confidence is low or actions are high-risk.</div><div class="de-architecture-block"><strong>Data flow:</strong> Observations (tool results, API responses, file contents) flow back into the context window or vector store. Keep traces structured (JSON) so evaluators and debuggers can replay agent runs step by step.</div><div class="de-architecture-block"><strong>Operational model:</strong> Version prompts and tool schemas in Git, deploy agents as API services or background workers, monitor with LangSmith/OpenTelemetry, and run regression eval suites before each release.</div>
+      </section>
+        
+      <section class="learning-section de-detailed-notes" id="detailed-notes">
+        <h2>Detailed Notes</h2>
+        <p><strong>What it is:</strong> Reasoning and acting interleaved in agent loops. Agent implementations combine prompt engineering, tool APIs, and workflow graphs — not just a larger chat model.</p>
+        <p><strong>How it works:</strong> The orchestrator loads tools and memory, sends a structured prompt to the LLM, parses the model's tool call or final answer, executes tools, appends observations to state, and repeats until the task completes or limits are hit.</p>
+        <p><strong>When to use:</strong> Choose react pattern when tasks require interleaved reasoning and tool execution loops. Avoid agents when a fixed pipeline or single LLM call suffices — agents add latency, cost, and failure modes.</p>
+        <p><strong>Framework landscape:</strong> LangChain/LangGraph for graph-based flows, Microsoft AutoGen for conversational multi-agent, CrewAI for role-based teams, and custom FastAPI services for full control.</p>
+        <p><strong>ReAct specifics:</strong> Prompt the model to emit Thought, Action, and Action Input lines, execute the action, append Observation, and continue. This explicit trace improves debuggability versus opaque chain-of-thought.</p>
+      </section>
+        <section class="learning-section" id="what-youll-learn">
+          <h2>What You&apos;ll Learn</h2>
+          <ul class="learn-checklist"><li><span class="check-icon" aria-hidden="true">✓</span> Core theory behind react pattern in agentic AI systems</li><li><span class="check-icon" aria-hidden="true">✓</span> Animated walkthrough of the agent loop and component interactions</li><li><span class="check-icon" aria-hidden="true">✓</span> Architecture patterns for ReAct prompting pattern</li><li><span class="check-icon" aria-hidden="true">✓</span> Production best practices, pitfalls, and interview preparation</li><li><span class="check-icon" aria-hidden="true">✓</span> Hands-on Python/LangGraph code example you can adapt</li><li><span class="check-icon" aria-hidden="true">✓</span> How react pattern connects to prior and upcoming steps in this path</li></ul>
+        </section>
+        
+      <section class="learning-section" id="production-notes">
+        <h2>Production Notes</h2>
+        <div class="de-notes-grid"><div class="de-note-card"><h3>Best Practices</h3><ul><li>Cap agent loops with max_iterations to prevent runaway token spend</li><li>Use structured tool outputs (JSON schema) instead of parsing free-form text</li><li>Separate system prompts from user content; never trust user input inside tool arguments blindly</li><li>Log full trajectories (thought, action, observation) for debugging and evaluation</li><li>Implement idempotent tools where possible so retries are safe</li><li>Add human approval gates for destructive or financial actions</li><li>Run eval datasets on every prompt or tool schema change</li><li>Use smaller models for routing/planning and larger models for complex reasoning when cost matters</li></ul></div><div class="de-note-card"><h3>Common Pitfalls</h3><ul><li>Giving agents too many tools at once — causes wrong tool selection and context bloat</li><li>No timeout or retry policy — hung API calls block the entire agent loop</li><li>Storing secrets in prompts instead of secure credential stores</li><li>Skipping evaluation and shipping based on demo conversations only</li><li>Allowing agents to execute arbitrary code without sandboxing</li><li>Ignoring token growth from unbounded conversation history</li><li>Treating multi-agent systems as always better — coordination overhead can hurt simple tasks</li></ul></div><div class="de-note-card"><h3>Interview Preparation</h3><ul><li>Whiteboard the agent loop for react pattern: inputs, LLM calls, tools, memory, outputs</li><li>Discuss trade-offs: ReAct vs plan-and-execute, single vs multi-agent, sync vs async tools</li><li>Explain ReAct prompting pattern with a concrete example (research agent, coding agent, or data agent)</li><li>Cover failure modes: hallucinated tool args, infinite loops, prompt injection via retrieved docs</li><li>Mention observability: LangSmith traces, custom metrics, and A/B testing agent versions</li></ul></div></div>
+      </section>
+        
+      <section class="learning-section code-section" id="code-example">
+        <h2>Code Example</h2>
+        <pre class="code-block"><code class="language-python"># ReAct-style prompt and loop
+REACT_PROMPT = &quot;&quot;&quot;
+Answer using this format:
+Thought: &lt;reasoning&gt;
+Action: &lt;tool_name&gt;
+Action Input: &lt;json args&gt;
+Observation: (filled by system)
+... repeat until Final Answer
+&quot;&quot;&quot;
+
+def react_loop(llm, tools, question, max_steps=5):
+    trace = [f&quot;Question: {question}&quot;]
+    for _ in range(max_steps):
+        response = llm.complete(REACT_PROMPT + &quot;\n&quot;.join(trace))
+        if &quot;Final Answer:&quot; in response:
+            return response.split(&quot;Final Answer:&quot;)[-1].strip()
+        action, args = parse_action(response)
+        obs = tools[action](**args)
+        trace.append(f&quot;Observation: {obs}&quot;)
+    return &quot;Max steps reached&quot;</code></pre>
+      </section>
+        
+        <nav class="step-nav" aria-label="Learning path navigation"><a href="../../../ai/agentic-ai/agent-components/index.html" class="step-nav-link step-nav-prev">
+        <span class="step-nav-label">← Previous</span>
+        <span class="step-nav-title">Agent Components</span>
+      </a><a href="../../../ai/agentic-ai/tool-use/index.html" class="step-nav-link step-nav-next">
+        <span class="step-nav-label">Next →</span>
+        <span class="step-nav-title">Tool Use</span>
+      </a></nav>
+      </article>
+    </main>
+    <aside id="sidebar-right"></aside>
+  </div>
+  <div id="site-footer"></div>
+  <script src="../../../assets/js/main.js"></script>
+  
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        if (typeof mermaid !== 'undefined') {
+          mermaid.initialize({
+            startOnLoad: true,
+            theme: 'neutral',
+            securityLevel: 'loose',
+            themeVariables: {
+              primaryColor: '#e8f4fc',
+              primaryTextColor: '#1e293b',
+              primaryBorderColor: '#94a3b8',
+              lineColor: '#64748b',
+              secondaryColor: '#f1f5f9',
+              tertiaryColor: '#ffffff',
+              background: '#ffffff',
+              mainBkg: '#ffffff',
+              nodeBorder: '#94a3b8',
+              clusterBkg: '#f8fafc',
+              titleColor: '#0f172a',
+              edgeLabelBackground: '#ffffff'
+            }
+          });
+        }
+      });
+    </script>
+</body>
+</html>

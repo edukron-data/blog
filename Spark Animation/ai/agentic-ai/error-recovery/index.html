@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en" data-page="ai" data-category="ai" data-section="agentic-ai" data-topic="error-recovery" data-step="16" data-total-steps="24">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Error Recovery — EDUKRON BLOB</title>
+  <meta name="description" content="Error Recovery — Agentic AI. Retry logic, fallback tools, and graceful degradation.">
+  <link rel="stylesheet" href="../../../assets/css/style.css">
+  <link rel="stylesheet" href="../../../assets/css/flow-diagrams.css">
+</head>
+<body>
+  <div id="site-header"></div>
+  <div class="site-layout">
+    <aside id="sidebar-left"></aside>
+    <main class="main-content">
+      <nav class="breadcrumb" aria-label="Breadcrumb"><a href="../../../index.html">Home</a><span class="breadcrumb-sep">/</span><a href="../../../ai/index.html">AI</a><span class="breadcrumb-sep">/</span><a href="../../../ai/agentic-ai/index.html">Agentic AI</a><span class="breadcrumb-sep">/</span><span aria-current="page">Error Recovery</span></nav>
+      <header class="page-header">
+        <span class="badge">ai</span>
+        <h1>Error Recovery</h1>
+        <p class="page-subtitle">Retry logic, fallback tools, and graceful degradation.</p>
+      </header>
+      
+      <article class="learning-plan">
+        
+      <div class="learning-progress" aria-label="Learning path progress">
+        <div class="learning-progress-header">
+          <span class="phase-badge phase-advanced">Advanced</span>
+          <span class="read-time">~20 min read</span>
+        </div>
+        <div class="progress-bar-track" role="progressbar" aria-valuenow="16" aria-valuemin="1" aria-valuemax="24" aria-label="Progress through this learning path">
+          <div class="progress-bar-fill" style="width:67%"></div>
+        </div>
+      </div>
+        <section class="learning-section" id="objective">
+          <h2>Learning Objective</h2>
+          <ul class="checklist objectives-list"><li>Explain Error Recovery and how it fits into modern agentic AI systems</li><li>Design error recovery patterns using LLMs, tools, and orchestration patterns</li><li>Apply error recovery in advanced-level production scenarios</li><li>Identify security, cost, and reliability trade-offs for error recovery</li></ul>
+        </section>
+        <section class="learning-section" id="prerequisites">
+          <h2>Prerequisites</h2>
+          <ul class="prereq-list"><li><a href="../../../ai/agentic-ai/evaluation-agents/index.html">Evaluating Agents</a></li><li><a href="../../../ai/agentic-ai/human-in-loop/index.html">Human-in-the-Loop</a></li></ul>
+        </section>
+        <section class="learning-section" id="overview">
+          <h2>Overview</h2>
+          <p>Building on earlier topics, <strong>Error Recovery</strong> continues the Agentic AI track at the advanced level. Retry logic, fallback tools, and graceful degradation.</p>
+        <p><strong>Error Recovery</strong> handles tool timeouts, API 500s, malformed arguments, and model refusals without abandoning the user. Retries with exponential backoff are table stakes; intelligent fallbacks differentiate production agents.</p>
+        <p>Retry policies: max 3 attempts, jitter, idempotent tools only. Non-idempotent retries need deduplication keys.</p>
+        <p>Fallback tools: if primary search fails, try cache or narrower query. If SQL fails, return schema hint to the planner for rewrite.</p>
+        <p>Graceful degradation: “I could not fetch live data; here is last cached summary” beats silent failure or hallucinated numbers.</p>
+        <p>Circuit breakers stop calling a failing dependency after N errors — protect downstream SLAs and token spend.</p>
+        <p>Error messages feed reflection: pytest trace or API error body becomes Observation for the next LLM turn.</p>
+        <p>The error recovery diagram shows success path, retry, fallback, degrade. Map each tool in your registry to its recovery strategy.</p>
+        <p>Alert on recovery rate spikes — often signals upstream API outages before traditional monitors fire.</p>
+        </section>
+        
+      <section class="learning-section flow-diagram-section" id="flow-diagram">
+        <h2>Error Recovery Flow</h2>
+        <p class="flow-diagram-desc">Retries, fallbacks, and graceful degradation on tool failures.</p>
+        <div class="flow-diagram-container">
+          <pre class="mermaid">flowchart TD
+    CALL[Tool Call] --> OK{Success?}
+    OK -->|yes| NEXT[Continue]
+    OK -->|no| RET[Retry]
+    RET --> FB[Fallback Tool]
+    FB --> NEXT
+    RET -->|max retries| DEG[Degrade Response]</pre>
+        </div>
+      </section>
+        <section class="learning-section" id="key-concepts">
+          <h2>Key Concepts</h2>
+          <ul class="concept-list"><li>Error Recovery — definition, motivation, and when to use it</li><li>Agent loop: observe → plan → act → reflect</li><li>Tool schemas and structured function calling</li><li>Context windows, memory tiers, and retrieval augmentation</li><li>Orchestration: single agent vs multi-agent graphs</li><li>Human-in-the-loop approval and escalation paths</li><li>Evaluation: trajectory analysis and task-level metrics</li><li>Security: prompt injection, tool sandboxing, least privilege</li></ul>
+        </section>
+        
+      <section class="learning-section" id="architecture">
+        <h2>Architecture Notes</h2>
+        <div class="de-architecture-block"><strong>System role:</strong> Error Recovery typically sits between the user interface and backend services. Flow: user goal → orchestrator → LLM planner → tool executor → memory store → response synthesis. Each layer should have clear contracts and timeouts.</div><div class="de-architecture-block"><strong>Component interaction:</strong> The LLM receives system prompts, tool definitions, and retrieved memory. The orchestrator manages state transitions, enforces max iteration limits, and routes to human reviewers when confidence is low or actions are high-risk.</div><div class="de-architecture-block"><strong>Data flow:</strong> Observations (tool results, API responses, file contents) flow back into the context window or vector store. Keep traces structured (JSON) so evaluators and debuggers can replay agent runs step by step.</div><div class="de-architecture-block"><strong>Operational model:</strong> Version prompts and tool schemas in Git, deploy agents as API services or background workers, monitor with LangSmith/OpenTelemetry, and run regression eval suites before each release.</div>
+      </section>
+        
+      <section class="learning-section de-detailed-notes" id="detailed-notes">
+        <h2>Detailed Notes</h2>
+        <p><strong>What it is:</strong> Retry logic, fallback tools, and graceful degradation. Agent implementations combine prompt engineering, tool APIs, and workflow graphs — not just a larger chat model.</p>
+        <p><strong>How it works:</strong> The orchestrator loads tools and memory, sends a structured prompt to the LLM, parses the model's tool call or final answer, executes tools, appends observations to state, and repeats until the task completes or limits are hit.</p>
+        <p><strong>When to use:</strong> Choose error recovery when tasks require retries, fallbacks, and graceful degradation. Avoid agents when a fixed pipeline or single LLM call suffices — agents add latency, cost, and failure modes.</p>
+        <p><strong>Framework landscape:</strong> LangChain/LangGraph for graph-based flows, Microsoft AutoGen for conversational multi-agent, CrewAI for role-based teams, and custom FastAPI services for full control.</p>
+      </section>
+        <section class="learning-section" id="what-youll-learn">
+          <h2>What You&apos;ll Learn</h2>
+          <ul class="learn-checklist"><li><span class="check-icon" aria-hidden="true">✓</span> Core theory behind error recovery in agentic AI systems</li><li><span class="check-icon" aria-hidden="true">✓</span> Animated walkthrough of the agent loop and component interactions</li><li><span class="check-icon" aria-hidden="true">✓</span> Architecture patterns for error recovery patterns</li><li><span class="check-icon" aria-hidden="true">✓</span> Production best practices, pitfalls, and interview preparation</li><li><span class="check-icon" aria-hidden="true">✓</span> Hands-on Python/LangGraph code example you can adapt</li><li><span class="check-icon" aria-hidden="true">✓</span> How error recovery connects to prior and upcoming steps in this path</li></ul>
+        </section>
+        
+      <section class="learning-section" id="production-notes">
+        <h2>Production Notes</h2>
+        <div class="de-notes-grid"><div class="de-note-card"><h3>Best Practices</h3><ul><li>Cap agent loops with max_iterations to prevent runaway token spend</li><li>Use structured tool outputs (JSON schema) instead of parsing free-form text</li><li>Separate system prompts from user content; never trust user input inside tool arguments blindly</li><li>Log full trajectories (thought, action, observation) for debugging and evaluation</li><li>Implement idempotent tools where possible so retries are safe</li><li>Add human approval gates for destructive or financial actions</li><li>Run eval datasets on every prompt or tool schema change</li><li>Use smaller models for routing/planning and larger models for complex reasoning when cost matters</li></ul></div><div class="de-note-card"><h3>Common Pitfalls</h3><ul><li>Giving agents too many tools at once — causes wrong tool selection and context bloat</li><li>No timeout or retry policy — hung API calls block the entire agent loop</li><li>Storing secrets in prompts instead of secure credential stores</li><li>Skipping evaluation and shipping based on demo conversations only</li><li>Allowing agents to execute arbitrary code without sandboxing</li><li>Ignoring token growth from unbounded conversation history</li><li>Treating multi-agent systems as always better — coordination overhead can hurt simple tasks</li></ul></div><div class="de-note-card"><h3>Interview Preparation</h3><ul><li>Whiteboard the agent loop for error recovery: inputs, LLM calls, tools, memory, outputs</li><li>Discuss trade-offs: ReAct vs plan-and-execute, single vs multi-agent, sync vs async tools</li><li>Explain error recovery patterns with a concrete example (research agent, coding agent, or data agent)</li><li>Cover failure modes: hallucinated tool args, infinite loops, prompt injection via retrieved docs</li><li>Mention observability: LangSmith traces, custom metrics, and A/B testing agent versions</li></ul></div></div>
+      </section>
+        
+      <section class="learning-section code-section" id="code-example">
+        <h2>Code Example</h2>
+        <pre class="code-block"><code class="language-python"># Retry with fallback tool
+def call_tool_with_recovery(tool_fn, fallback_fn, args, max_retries=3):
+    for attempt in range(max_retries):
+        try:
+            return tool_fn(**args)
+        except ToolTimeout:
+            if attempt == max_retries - 1:
+                return fallback_fn(**args)
+            time.sleep(2 ** attempt)</code></pre>
+      </section>
+        
+        <nav class="step-nav" aria-label="Learning path navigation"><a href="../../../ai/agentic-ai/evaluation-agents/index.html" class="step-nav-link step-nav-prev">
+        <span class="step-nav-label">← Previous</span>
+        <span class="step-nav-title">Evaluating Agents</span>
+      </a><a href="../../../ai/agentic-ai/security-agents/index.html" class="step-nav-link step-nav-next">
+        <span class="step-nav-label">Next →</span>
+        <span class="step-nav-title">Agent Security</span>
+      </a></nav>
+      </article>
+    </main>
+    <aside id="sidebar-right"></aside>
+  </div>
+  <div id="site-footer"></div>
+  <script src="../../../assets/js/main.js"></script>
+  
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        if (typeof mermaid !== 'undefined') {
+          mermaid.initialize({
+            startOnLoad: true,
+            theme: 'neutral',
+            securityLevel: 'loose',
+            themeVariables: {
+              primaryColor: '#e8f4fc',
+              primaryTextColor: '#1e293b',
+              primaryBorderColor: '#94a3b8',
+              lineColor: '#64748b',
+              secondaryColor: '#f1f5f9',
+              tertiaryColor: '#ffffff',
+              background: '#ffffff',
+              mainBkg: '#ffffff',
+              nodeBorder: '#94a3b8',
+              clusterBkg: '#f8fafc',
+              titleColor: '#0f172a',
+              edgeLabelBackground: '#ffffff'
+            }
+          });
+        }
+      });
+    </script>
+</body>
+</html>

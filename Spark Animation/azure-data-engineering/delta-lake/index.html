@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en" data-page="azure-data-engineering" data-category="azure-data-engineering" data-section="delta-lake" data-topic="index">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Delta Lake — EDUKRON BLOB</title>
+  <meta name="description" content="Delta Lake — Azure Data Engineering learning path on EDUKRON BLOB.">
+  <link rel="stylesheet" href="../../assets/css/style.css">
+  <link rel="stylesheet" href="../../assets/css/flow-diagrams.css">
+</head>
+<body>
+  <div id="site-header"></div>
+  <div class="site-layout">
+    <aside id="sidebar-left"></aside>
+    <main class="main-content">
+      <nav class="breadcrumb" aria-label="Breadcrumb"><a href="../../index.html">Home</a><span class="breadcrumb-sep">/</span><a href="../../azure-data-engineering/index.html">Azure Data Engineering</a><span class="breadcrumb-sep">/</span><span aria-current="page">Delta Lake</span></nav>
+      <header class="page-header">
+        <span class="badge">azure data engineering</span>
+        <h1>Delta Lake</h1>
+        <p class="page-subtitle">Azure Data Engineering · Delta Lake</p>
+      </header>
+      
+      <article class="learning-plan topic-index">
+        <section class="learning-section">
+          <h2>Learning Path Overview</h2>
+          <p>The <strong>Delta Lake</strong> learning path provides structured lessons from fundamentals through advanced production patterns.</p>
+          <p class="learning-callout">Work through the topics below in order for the best experience — each lesson builds on the previous one from beginner through advanced.</p>
+        </section>
+        
+      <section class="learning-section flow-diagram-section" id="flow-diagram">
+        <h2>Delta Lake — Learning Path Overview</h2>
+        <p class="flow-diagram-desc">Topics progress from foundations through advanced production patterns. Follow the path in order for the best learning experience.</p>
+        <div class="flow-diagram-container">
+          <pre class="mermaid">flowchart LR
+    S0["Delta Lake Overview"]
+    S1["Delta Table Basics"]
+    S2["Transaction Log"]
+    S3["ACID Transactions"]
+    S4["…"]
+    S5["Unity Catalog & Delta"]
+    S6["Delta Performance"]
+    S7["Migration to Delta"]
+    S8["Delta Lake Capstone"]
+    S0 --> S1
+    S1 --> S2
+    S2 --> S3
+    S3 --> S4
+    S4 --> S5
+    S5 --> S6
+    S6 --> S7
+    S7 --> S8</pre>
+        </div>
+      </section>
+        <section class="learning-section">
+          <h2>Path Phases</h2>
+          <div class="de-notes-grid">
+          <div class="de-note-card">
+            <h3>Phase 1: Foundations</h3>
+            <p>Core concepts, terminology, and first hands-on exercises.</p>
+          </div>
+          <div class="de-note-card">
+            <h3>Phase 2: Intermediate</h3>
+            <p>Applied patterns, integration, and real-world scenarios.</p>
+          </div>
+          <div class="de-note-card">
+            <h3>Phase 3: Advanced</h3>
+            <p>Production tuning, architecture, capstone, and interview readiness.</p>
+          </div></div>
+        </section>
+        <section class="learning-section">
+          <h2>Prerequisites</h2>
+          <ul class="prereq-list"><li>Willingness to learn sequentially</li><li>Dev environment setup for hands-on examples</li></ul>
+        </section>
+        <section class="learning-section">
+          <h2>What You Will Achieve</h2>
+          <ul class="learn-checklist"><li><span class="check-icon" aria-hidden="true">✓</span> Apply Delta Lake concepts in practical projects</li><li><span class="check-icon" aria-hidden="true">✓</span> Understand architecture and production trade-offs</li><li><span class="check-icon" aria-hidden="true">✓</span> Build portfolio-ready artifacts from capstone steps</li></ul>
+        </section>
+        <section class="learning-section">
+          <h2>All Topics</h2>
+          <ol class="path-step-list">
+        <li class="path-step-item">
+          <div class="path-step-body">
+            <a href="delta-overview/index.html">Delta Lake Overview</a>
+            <p>Open format, ACID on data lakes, and the transaction log.</p>
+          </div>
+        </li>
+        <li class="path-step-item">
+          <div class="path-step-body">
+            <a href="delta-table-basics/index.html">Delta Table Basics</a>
+            <p>Creating, reading, and writing Delta tables in Spark.</p>
+          </div>
+        </li>
+        <li class="path-step-item">
+          <div class="path-step-body">
+            <a href="transaction-log/index.html">Transaction Log</a>
+            <p>JSON commit files, checkpointing, and log compaction.</p>
+          </div>
+        </li>
+        <li class="path-step-item">
+          <div class="path-step-body">
+            <a href="acid-transactions/index.html">ACID Transactions</a>
+            <p>Atomicity, consistency, isolation, and durability guarantees.</p>
+          </div>
+        </li>
+        <li class="path-step-item">
+          <div class="path-step-body">
+            <a href="schema-enforcement/index.html">Schema Enforcement</a>
+            <p>Schema on write, evolution, and mergeSchema option.</p>
+          </div>
+        </li>
+        <li class="path-step-item">
+          <div class="path-step-body">
+            <a href="time-travel/index.html">Time Travel</a>
+            <p>Version history, timestamp queries, and data recovery.</p>
+          </div>
+        </li>
+        <li class="path-step-item">
+          <div class="path-step-body">
+            <a href="merge-upsert/index.html">MERGE &amp; Upsert</a>
+            <p>Delta MERGE syntax, SCD Type 2, and CDC patterns.</p>
+          </div>
+        </li>
+        <li class="path-step-item">
+          <div class="path-step-body">
+            <a href="optimize/index.html">OPTIMIZE</a>
+            <p>File compaction, bin-packing, and reducing small files.</p>
+          </div>
+        </li>
+        <li class="path-step-item">
+          <div class="path-step-body">
+            <a href="z-order/index.html">Z-Ordering</a>
+            <p>Multi-dimensional clustering for query performance.</p>
+          </div>
+        </li>
+        <li class="path-step-item">
+          <div class="path-step-body">
+            <a href="vacuum/index.html">VACUUM</a>
+            <p>Removing old files, retention policies, and storage cleanup.</p>
+          </div>
+        </li>
+        <li class="path-step-item">
+          <div class="path-step-body">
+            <a href="change-data-feed/index.html">Change Data Feed</a>
+            <p>CDC streams from Delta tables for downstream consumers.</p>
+          </div>
+        </li>
+        <li class="path-step-item">
+          <div class="path-step-body">
+            <a href="constraints/index.html">Delta Constraints</a>
+            <p>CHECK constraints and data quality enforcement.</p>
+          </div>
+        </li>
+        <li class="path-step-item">
+          <div class="path-step-body">
+            <a href="streaming-delta/index.html">Streaming &amp; Delta</a>
+            <p>Structured Streaming sink and source with Delta Lake.</p>
+          </div>
+        </li>
+        <li class="path-step-item">
+          <div class="path-step-body">
+            <a href="unity-catalog-delta/index.html">Unity Catalog &amp; Delta</a>
+            <p>Managed tables, sharing, and governance.</p>
+          </div>
+        </li>
+        <li class="path-step-item">
+          <div class="path-step-body">
+            <a href="performance-delta/index.html">Delta Performance</a>
+            <p>Statistics, data skipping, and query optimization.</p>
+          </div>
+        </li>
+        <li class="path-step-item">
+          <div class="path-step-body">
+            <a href="migration-delta/index.html">Migration to Delta</a>
+            <p>Converting Parquet/Hive tables to Delta format.</p>
+          </div>
+        </li>
+        <li class="path-step-item">
+          <div class="path-step-body">
+            <a href="delta-capstone/index.html">Delta Lake Capstone</a>
+            <p>Implement SCD Type 2 with MERGE and time travel.</p>
+          </div>
+        </li></ol>
+        </section>
+      </article>
+    </main>
+    <aside id="sidebar-right"></aside>
+  </div>
+  <div id="site-footer"></div>
+  <script src="../../assets/js/main.js"></script>
+  
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        if (typeof mermaid !== 'undefined') {
+          mermaid.initialize({
+            startOnLoad: true,
+            theme: 'neutral',
+            securityLevel: 'loose',
+            themeVariables: {
+              primaryColor: '#e8f4fc',
+              primaryTextColor: '#1e293b',
+              primaryBorderColor: '#94a3b8',
+              lineColor: '#64748b',
+              secondaryColor: '#f1f5f9',
+              tertiaryColor: '#ffffff',
+              background: '#ffffff',
+              mainBkg: '#ffffff',
+              nodeBorder: '#94a3b8',
+              clusterBkg: '#f8fafc',
+              titleColor: '#0f172a',
+              edgeLabelBackground: '#ffffff'
+            }
+          });
+        }
+      });
+    </script>
+</body>
+</html>

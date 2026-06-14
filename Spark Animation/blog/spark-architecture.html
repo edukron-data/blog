@@ -1,0 +1,918 @@
+<!DOCTYPE html>
+<html lang="en" data-page="spark" data-category="programming" data-section="pyspark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Apache Spark Architecture — How 30GB Is Processed | EDUKRON BLOB</title>
+  <meta name="description" content="A complete visual guide to Apache Spark cluster architecture, shuffle mechanics, and 30GB data processing with live animations.">
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="stylesheet" href="../assets/css/spark-article.css">
+</head>
+<body>
+  <div id="site-header"></div>
+  <div class="site-layout">
+    <aside id="sidebar-left"></aside>
+    <main class="main-content">
+      <article class="spark-article"><!-- ═══════════════════ HERO ═══════════════════ -->
+<header class="hero">
+  <div class="badge">Apache Spark — Distributed Computing</div>
+  <h1>Spark Architecture &amp; 30GB Data Processing</h1>
+  <p>
+    A complete visual guide to how Apache Spark splits, schedules, and processes
+    massive datasets across a cluster — explained step by step with live animations.
+  </p>
+</header>
+
+<div class="container">
+
+<nav class="nav-toc">
+  <h3>Contents</h3>
+  <ol>
+    <li><a href="#what-is-spark">What Is Apache Spark?</a></li>
+    <li><a href="#architecture">Cluster Architecture</a></li>
+    <li><a href="#concepts">Core Concepts &amp; Job Hierarchy</a></li>
+    <li><a href="#driver-internals">Driver Internals</a></li>
+    <li><a href="#hdfs-locality">HDFS Blocks &amp; Data Locality</a></li>
+    <li><a href="#catalyst">Catalyst Optimizer Rules</a></li>
+    <li><a href="#tungsten">Tungsten Execution Engine</a></li>
+    <li><a href="#shuffle-deep">Shuffle Mechanics (Deep Dive)</a></li>
+    <li><a href="#broadcast-speculative">Broadcast &amp; Speculative Execution</a></li>
+    <li><a href="#30gb">30 GB Walkthrough (22 Sub-Steps)</a></li>
+    <li><a href="#timeline">Job Timeline (Gantt)</a></li>
+    <li><a href="#simulation">Live Cluster Simulation</a></li>
+    <li><a href="#memory">Memory Management</a></li>
+    <li><a href="#summary">Complete Summary</a></li>
+  </ol>
+</nav>
+
+<!-- ═══════════════════ 1. WHAT IS SPARK ═══════════════════ -->
+<section id="what-is-spark">
+  <h2>1. What Is Apache Spark?</h2>
+  <p class="section-desc">
+    Apache Spark is an <strong>open-source, distributed computing engine</strong> designed to process
+    large-scale data (terabytes and beyond) across many machines in parallel. Instead of one computer
+    loading 30 GB into RAM, Spark divides the data into <em>partitions</em>, sends each partition to
+    a different CPU core, and runs transformations simultaneously — finishing in minutes instead of hours.
+  </p>
+
+  <div class="card-grid">
+    <div class="card">
+      <h4><span class="icon icon-orange">⚡</span> In-Memory Processing</h4>
+      <p>Keeps intermediate results in RAM (not disk), making iterative jobs 10–100× faster than MapReduce.</p>
+    </div>
+    <div class="card">
+      <h4><span class="icon icon-blue">📊</span> Unified Engine</h4>
+      <p>Supports SQL (Spark SQL), streaming, ML (MLlib), and graph processing (GraphX) in one framework.</p>
+    </div>
+    <div class="card">
+      <h4><span class="icon icon-green">🔄</span> Lazy Evaluation</h4>
+      <p>Transformations build a plan (DAG) first; nothing runs until an <em>action</em> triggers execution.</p>
+    </div>
+    <div class="card">
+      <h4><span class="icon icon-purple">🛡️</span> Fault Tolerance</h4>
+      <p>Tracks lineage — if a partition is lost, Spark recomputes it from the original source automatically.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ 2. ARCHITECTURE ═══════════════════ -->
+<section id="architecture">
+  <h2>2. Spark Cluster Architecture</h2>
+  <p class="section-desc">
+    Spark follows a <strong>master–worker</strong> model. Your code runs on one machine (the Driver),
+    but the heavy data work is farmed out to Worker nodes, each running one or more Executors.
+  </p>
+
+  <div class="arch-diagram" id="arch-diagram">
+    <div class="data-packet"></div>
+
+    <!-- Driver -->
+    <div class="arch-layer">
+      <div class="arch-box driver active" data-info="driver">
+        <div class="label">🧠 Driver Program</div>
+        <div class="sub">Your SparkSession / SparkContext<br>Builds DAG, schedules tasks</div>
+      </div>
+    </div>
+
+    <div class="connector"></div>
+
+    <!-- Cluster Manager -->
+    <div class="arch-layer">
+      <div class="arch-box cluster-mgr" data-info="cluster">
+        <div class="label">📋 Cluster Manager</div>
+        <div class="sub">YARN · Kubernetes · Mesos · Standalone<br>Allocates CPU &amp; memory</div>
+      </div>
+    </div>
+
+    <div class="connector"></div>
+
+    <!-- Workers -->
+    <div class="workers-row">
+      <div class="worker-group">
+        <div class="worker-label">Worker Node 1</div>
+        <div class="executors-row">
+          <div class="arch-box executor"><div class="label">Executor</div><div class="sub">JVM · Cores · Cache</div></div>
+        </div>
+      </div>
+      <div class="worker-group">
+        <div class="worker-label">Worker Node 2</div>
+        <div class="executors-row">
+          <div class="arch-box executor"><div class="label">Executor</div><div class="sub">JVM · Cores · Cache</div></div>
+        </div>
+      </div>
+      <div class="worker-group">
+        <div class="worker-label">Worker Node 3</div>
+        <div class="executors-row">
+          <div class="arch-box executor"><div class="label">Executor</div><div class="sub">JVM · Cores · Cache</div></div>
+        </div>
+      </div>
+      <div class="worker-group">
+        <div class="worker-label">Worker Node 4</div>
+        <div class="executors-row">
+          <div class="arch-box executor"><div class="label">Executor</div><div class="sub">JVM · Cores · Cache</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card-grid" style="margin-top:1.5rem">
+    <div class="card">
+      <h4><span class="icon icon-orange">🧠</span> Driver</h4>
+      <p>Runs your <code>main()</code> function. Converts your code into a DAG of stages, splits stages into tasks, and sends tasks to executors. Collects results.</p>
+    </div>
+    <div class="card">
+      <h4><span class="icon icon-purple">📋</span> Cluster Manager</h4>
+      <p>Negotiates resources. Tells Spark how many executors and how much memory each gets. Does NOT run your code.</p>
+    </div>
+    <div class="card">
+      <h4><span class="icon icon-blue">🖥️</span> Worker Node</h4>
+      <p>A physical or virtual machine in the cluster. Hosts one or more executor JVM processes.</p>
+    </div>
+    <div class="card">
+      <h4><span class="icon icon-green">⚙️</span> Executor</h4>
+      <p>A JVM process on a worker. Runs tasks, stores cached data in memory/disk, and reports back to the driver.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ 3. CORE CONCEPTS ═══════════════════ -->
+<section id="concepts">
+  <h2>3. Core Concepts — RDD, DataFrame, DAG, Stages &amp; Tasks</h2>
+  <p class="section-desc">
+    Before diving into 30 GB, understand the building blocks Spark uses to represent and execute work.
+  </p>
+
+  <table>
+    <thead>
+      <tr><th>Concept</th><th>What It Is</th><th>Analogy</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>RDD / DataFrame</strong></td>
+        <td>Immutable distributed collection of data split into partitions</td>
+        <td>A book split into chapters, each chapter on a different desk</td>
+      </tr>
+      <tr>
+        <td><strong>Transformation</strong></td>
+        <td>Lazy operation (map, filter, join) — builds the plan, doesn't run yet</td>
+        <td>Writing a recipe without cooking</td>
+      </tr>
+      <tr>
+        <td><strong>Action</strong></td>
+        <td>Triggers execution (count, collect, write) — starts the job</td>
+        <td>Pressing "Start Cooking"</td>
+      </tr>
+      <tr>
+        <td><strong>DAG</strong></td>
+        <td>Directed Acyclic Graph — the full plan of transformations</td>
+        <td>Flowchart of every step from raw data to result</td>
+      </tr>
+      <tr>
+        <td><strong>Stage</strong></td>
+        <td>A group of tasks that can run in parallel (split at shuffle boundaries)</td>
+        <td>One round of parallel work before data must be reshuffled</td>
+      </tr>
+      <tr>
+        <td><strong>Task</strong></td>
+        <td>Smallest unit of work — processes one partition on one core</td>
+        <td>One person reading one chapter</td>
+      </tr>
+      <tr>
+        <td><strong>Shuffle</strong></td>
+        <td>Redistributing data across partitions (e.g., before groupBy)</td>
+        <td>Sorting mail into new piles by zip code</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>Example DAG for a Simple Job</h3>
+  <div class="dag-container">
+    <div class="dag-node read">read("30GB.csv")</div>
+    <span class="dag-arrow">→</span>
+    <div class="dag-node filter">filter(age &gt; 25)</div>
+    <span class="dag-arrow">→</span>
+    <div class="dag-node map">select(name, salary)</div>
+    <span class="dag-arrow">→</span>
+    <div class="dag-node reduce">groupBy(dept).avg(salary)</div>
+    <span class="dag-arrow">→</span>
+    <div class="dag-node write">write.parquet("output/")</div>
+  </div>
+
+  <h3>Job → Stage → Task Hierarchy</h3>
+  <p class="section-desc">Every action triggers one <strong>Job</strong>. Shuffle boundaries split jobs into <strong>Stages</strong>. Each partition in a stage becomes one <strong>Task</strong> running on one core.</p>
+  <div class="hierarchy">
+    <div class="hier-level">
+      <div class="hier-box job"><strong>Job 0</strong><br><span style="color:var(--muted);font-size:0.75rem">triggered by write.parquet()</span></div>
+    </div>
+    <div class="hier-connector"></div>
+    <div class="hier-level">
+      <div class="hier-box stage"><strong>Stage 1</strong><br><span style="color:var(--muted);font-size:0.75rem">read + filter<br>240 tasks · no shuffle</span></div>
+      <div style="color:var(--yellow);font-size:1.2rem">⇄ shuffle ⇄</div>
+      <div class="hier-box stage"><strong>Stage 2</strong><br><span style="color:var(--muted);font-size:0.75rem">groupBy + sum<br>200 tasks · shuffle read</span></div>
+      <div style="color:var(--purple);font-size:1.2rem">→</div>
+      <div class="hier-box stage"><strong>Stage 3</strong><br><span style="color:var(--muted);font-size:0.75rem">write parquet<br>200 tasks</span></div>
+    </div>
+    <div class="hier-connector"></div>
+    <div class="hier-level">
+      <div class="hier-tasks-row">
+        <div class="hier-box task">Task 0<br>partition 0</div>
+        <div class="hier-box task">Task 1<br>partition 1</div>
+        <div class="hier-box task">Task 2<br>partition 2</div>
+        <div class="hier-box task">…</div>
+        <div class="hier-box task">Task 239<br>partition 239</div>
+      </div>
+    </div>
+  </div>
+  <div class="highlight-box">
+    <strong>Rule:</strong> 1 partition = 1 task = 1 thread on 1 core. With 16 cores, only 16 tasks run at once; the remaining 224 wait in the TaskScheduler queue.
+  </div>
+</section>
+
+<!-- ═══════════════════ 3b. DRIVER INTERNALS ═══════════════════ -->
+<section id="driver-internals">
+  <h2>4. Driver Internals — What Happens Inside the Driver JVM</h2>
+  <p class="section-desc">
+    The Driver is not just "your script" — it runs a stack of schedulers and managers that convert SQL/DataFrame code into distributed work.
+  </p>
+
+  <div class="card-grid">
+    <div class="card">
+      <h4><span class="icon icon-orange">🔌</span> SparkContext</h4>
+      <p>Entry point to Spark. Holds connection to Cluster Manager, creates RDDs, registers the app. One per JVM. Created when <code>SparkSession.builder().getOrCreate()</code> runs.</p>
+    </div>
+    <div class="card">
+      <h4><span class="icon icon-blue">📐</span> DAGScheduler</h4>
+      <p>Splits the logical DAG into stages at shuffle boundaries. Submits stage task sets to TaskScheduler. Tracks stage completion and handles stage retries on failure.</p>
+    </div>
+    <div class="card">
+      <h4><span class="icon icon-green">⏱️</span> TaskScheduler</h4>
+      <p>Assigns tasks to executors based on data locality (PROCESS_LOCAL preferred). Maintains task queue, handles task retries, enables speculative execution for stragglers.</p>
+    </div>
+    <div class="card">
+      <h4><span class="icon icon-purple">📦</span> BlockManager (Driver)</h4>
+      <p>Tracks where shuffle blocks and cached RDD blocks live across executors. Driver BlockManager coordinates metadata; executor BlockManagers store/fetch actual bytes.</p>
+    </div>
+  </div>
+
+  <details class="detail-panel">
+    <summary>Driver lifecycle for our 30 GB job (step-by-step)</summary>
+    <div class="detail-body">
+      <ol>
+        <li><strong>T+0ms:</strong> <code>SparkSession</code> creates <code>SparkContext</code> — registers app "30GB-Sales" with YARN/K8s.</li>
+        <li><strong>T+200ms:</strong> Cluster Manager allocates 4 executors (4 cores × 4 GB each). Driver receives executor registration RPCs.</li>
+        <li><strong>T+500ms:</strong> User code builds lazy DataFrame chain — Catalyst parses SQL, no tasks yet.</li>
+        <li><strong>T+800ms:</strong> <code>write.parquet()</code> action → DAGScheduler creates <strong>Job 0</strong> with 3 stages.</li>
+        <li><strong>T+850ms:</strong> DAGScheduler submits Stage 1 (240 tasks) to TaskScheduler.</li>
+        <li><strong>T+850ms–4min:</strong> TaskScheduler launches tasks in batches of 16, tracks completions via RPC.</li>
+        <li><strong>T+4min:</strong> Stage 1 done → shuffle write complete → Stage 2 submitted.</li>
+        <li><strong>T+6min:</strong> Stage 2 + write complete → Driver marks Job 0 SUCCEEDED.</li>
+      </ol>
+      <div class="spark-ui-mock">
+        <div class="ui-header">Spark UI → Jobs Tab (Driver view)</div>
+        <div class="ui-row">Job 0: <span class="ui-val">SUCCEEDED</span> · Stages: 3 · Tasks: 640 total · Duration: 6m 12s</div>
+        <div class="ui-row">Active Jobs: <span class="ui-val">0</span> · Failed Tasks: <span class="ui-val">0</span> · Speculative Tasks: <span class="ui-val">3</span></div>
+      </div>
+    </div>
+  </details>
+</section>
+
+<!-- ═══════════════════ 3c. HDFS & LOCALITY ═══════════════════ -->
+<section id="hdfs-locality">
+  <h2>5. HDFS Block Placement &amp; Data Locality</h2>
+  <p class="section-desc">
+    The 30 GB CSV on HDFS is stored as fixed-size blocks. Spark schedules tasks as close to the data as possible to minimize network traffic.
+  </p>
+
+  <div class="size-flow">
+    <div class="size-node">30 GB file</div>
+    <span class="size-arrow">→</span>
+    <div class="size-node">240 × 128 MB blocks</div>
+    <span class="size-arrow">→</span>
+    <div class="size-node">240 Spark partitions</div>
+    <span class="size-arrow">→</span>
+    <div class="size-node">240 tasks (Stage 1)</div>
+  </div>
+
+  <table class="config-table">
+    <thead><tr><th>Setting</th><th>Value</th><th>Effect on 30 GB job</th></tr></thead>
+    <tbody>
+      <tr><td>dfs.blocksize</td><td>134217728 (128 MB)</td><td>30 GB ÷ 128 MB ≈ 240 HDFS blocks</td></tr>
+      <tr><td>spark.sql.files.maxPartitionBytes</td><td>134217728</td><td>One Spark partition per HDFS block</td></tr>
+      <tr><td>spark.default.parallelism</td><td>16</td><td>Default RDD partitions for shuffle output (we use 200 via sql.shuffle.partitions)</td></tr>
+      <tr><td>spark.sql.shuffle.partitions</td><td>200</td><td>Stage 2 gets 200 reduce partitions after groupBy</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Data Locality Levels</h3>
+  <div class="locality-bar">
+    <div class="locality process"><strong>PROCESS_LOCAL</strong><br>Data in same JVM<br><span style="color:var(--green)">Best — ~180/240 tasks</span></div>
+    <div class="locality node"><strong>NODE_LOCAL</strong><br>Same node, different disk<br><span style="color:var(--blue)">Good — ~50 tasks</span></div>
+    <div class="locality rack"><strong>RACK_LOCAL</strong><br>Same rack, remote node<br><span style="color:var(--yellow)">OK — ~10 tasks</span></div>
+    <div class="locality any"><strong>ANY</strong><br>Remote rack fetch<br><span style="color:var(--red)">Slow — rare</span></div>
+  </div>
+
+  <details class="detail-panel">
+    <summary>How HDFS replication affects Spark reads</summary>
+    <div class="detail-body">
+      <p>HDFS stores each 128 MB block with replication factor 3 (default). Block locations are reported to Spark's <code>FileScan</code> operator.</p>
+      <ul>
+        <li><strong>TaskScheduler</strong> waits up to <code>spark.locality.wait</code> (default 3s) for a PROCESS_LOCAL slot before launching NODE_LOCAL.</li>
+        <li>Each executor reads its partition via HDFS client — often <strong>local disk</strong> if block replica is on same node (~125 MB/s SSD).</li>
+        <li>Network read only when no local replica: ~1 Gbps cluster network → ~19 GB filtered shuffle is the real bottleneck, not initial read.</li>
+      </ul>
+      <span class="detail-tag">Component: TaskScheduler</span>
+      <span class="detail-tag green">Memory: HDFS client buffer ~64 KB batches</span>
+      <span class="detail-tag orange">Disk: 128 MB block read per task</span>
+    </div>
+  </details>
+</section>
+
+<!-- ═══════════════════ 3d. CATALYST ═══════════════════ -->
+<section id="catalyst">
+  <h2>6. Catalyst Optimizer — Rules Applied to the 30 GB Example</h2>
+  <p class="section-desc">Before any task runs, Catalyst rewrites the logical plan through multiple rule batches.</p>
+
+  <table>
+    <thead><tr><th>Rule</th><th>What It Does</th><th>Applied To Our Query</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Predicate Pushdown</strong></td><td>Moves filter closer to scan</td><td><code>filter(amount > 1000)</code> pushed into CSV scan — rows discarded during read, not after</td></tr>
+      <tr><td><strong>Column Pruning</strong></td><td>Reads only needed columns</td><td>If only region+amount needed, other columns never parsed — saves ~40% I/O</td></tr>
+      <tr><td><strong>Constant Folding</strong></td><td>Evaluates literals at compile time</td><td><code>1000</code> bound as constant in filter expression</td></tr>
+      <tr><td><strong>Combine Filters</strong></td><td>Merges consecutive filters</td><td>Single filter node in physical plan</td></tr>
+      <tr><td><strong>HashAggregate</strong></td><td>Uses hash-based aggregation</td><td><code>groupBy(region).sum(amount)</code> → HashAggregateExec with 200 partitions</td></tr>
+      <tr><td><strong>CollapseProject</strong></td><td>Merges projection nodes</td><td>Reduces plan depth for codegen</td></tr>
+      <tr><td><strong>Exchange (Shuffle)</strong></td><td>Inserts shuffle for groupBy</td><td>HashPartitioning(region, 200) inserted before aggregate</td></tr>
+    </tbody>
+  </table>
+
+  <details class="detail-panel">
+    <summary>Physical plan snippet (conceptual)</summary>
+    <div class="detail-body">
+      <pre style="margin:0"><span class="cm">== Physical Plan ==</span>
+* HashAggregate(keys=[region], functions=[sum(amount)])
++- Exchange hashpartitioning(region, 200)
+   +- * Filter (amount#12 > 1000)
+      +- Scan csv [region,amount] ... partitionFilters=[]
+<span class="cm">// Predicate pushdown: filter fused with scan via WholeStageCodegen</span></pre>
+      <p><strong>Spark UI → SQL Tab:</strong> Shows parsed logical plan, analyzed plan, optimized plan, and physical plan with codegen IDs.</p>
+    </div>
+  </details>
+</section>
+
+<!-- ═══════════════════ 3e. TUNGSTEN ═══════════════════ -->
+<section id="tungsten">
+  <h2>7. Tungsten Execution Engine</h2>
+  <p class="section-desc">Spark's physical engine uses binary in-memory formats, whole-stage codegen, and optional off-heap memory for speed.</p>
+
+  <div class="card-grid">
+    <div class="card">
+      <h4><span class="icon icon-orange">⚙️</span> Whole-Stage Codegen</h4>
+      <p>Stage 1 fuses read+filter into one generated Java function — no virtual function calls per row. ~2× faster than interpreted mode.</p>
+    </div>
+    <div class="card">
+      <h4><span class="icon icon-blue">📊</span> Binary Internal Format</h4>
+      <p>Rows stored as compact bytes (UnsafeRow) — no Java object overhead. 128 MB partition ≈ millions of rows in ~79 MB after filter in execution memory.</p>
+    </div>
+    <div class="card">
+      <h4><span class="icon icon-green">🧠</span> Off-Heap Memory</h4>
+      <p><code>spark.memory.offHeap.enabled=true</code> uses direct buffers outside JVM heap — reduces GC pauses on large shuffles.</p>
+    </div>
+    <div class="card">
+      <h4><span class="icon icon-purple">💾</span> Spill to Disk</h4>
+      <p>When execution memory exceeds limit, Tungsten sorts spill to local disk (<code>/tmp/spark-*</code>). Job continues — Spark UI shows "Shuffle Spill (Disk)".</p>
+    </div>
+  </div>
+
+  <table class="config-table">
+    <thead><tr><th>Config</th><th>Value</th><th>30 GB job impact</th></tr></thead>
+    <tbody>
+      <tr><td>spark.sql.codegen.wholeStage</td><td>true</td><td>Fused Stage 1 pipeline</td></tr>
+      <tr><td>spark.sql.codegen.maxFields</td><td>100</td><td>Codegen enabled for our small schema</td></tr>
+      <tr><td>spark.memory.offHeap.size</td><td>1g per executor</td><td>Optional shuffle buffer space</td></tr>
+      <tr><td>spark.shuffle.spill.compress</td><td>true</td><td>Spilled shuffle files compressed with LZ4</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ═══════════════════ 3f. SHUFFLE DEEP ═══════════════════ -->
+<section id="shuffle-deep">
+  <h2>8. Shuffle Mechanics — Map Side, Sort, Spill, Fetch</h2>
+  <p class="section-desc">The <code>groupBy("region")</code> shuffle is the most expensive phase — ~19 GB filtered data redistributed across 200 partitions.</p>
+
+  <div class="shuffle-flow">
+    <div class="shuffle-col">
+      <strong style="color:var(--blue)">Map Side (Stage 1 tasks)</strong>
+      <ol style="margin-top:0.5rem;font-size:0.85rem;color:var(--muted)">
+        <li>Each row hashed by region → partition ID (0–199)</li>
+        <li>Map-side combine: partial sums optional</li>
+        <li>In-memory sort per partition bucket</li>
+        <li>Spill to disk if memory full (~shuffle write files)</li>
+        <li>Merge spill files → final shuffle data file</li>
+      </ol>
+      <div class="meta-row">
+        <span class="meta-chip disk">Disk: ~19 GB write</span>
+        <span class="meta-chip mem">Memory: 32 MB shuffle buffer/task</span>
+      </div>
+    </div>
+    <div class="shuffle-arrow">⇄<br><span style="font-size:0.7rem">network</span></div>
+    <div class="shuffle-col">
+      <strong style="color:var(--green)">Reduce Side (Stage 2 tasks)</strong>
+      <ol style="margin-top:0.5rem;font-size:0.85rem;color:var(--muted)">
+        <li>BlockManager fetches remote shuffle blocks</li>
+        <li>External shuffle service serves disk files</li>
+        <li>Merge fetched data in memory</li>
+        <li>HashAggregate: sum(amount) per region</li>
+        <li>Output: ~50 regions × 8 bytes ≈ <strong>400 bytes/task</strong></li>
+      </ol>
+      <div class="meta-row">
+        <span class="meta-chip net">Network: ~19 GB fetch total</span>
+        <span class="meta-chip mem">Memory: aggregate hash map</span>
+      </div>
+    </div>
+  </div>
+
+  <details class="detail-panel">
+    <summary>Shuffle metrics in Spark UI (Stage 1 → Stage 2)</summary>
+    <div class="detail-body">
+      <div class="spark-ui-mock">
+        <div class="ui-header">Stage 1 Summary</div>
+        <div class="ui-row">Shuffle Write: <span class="ui-val">19.2 GB</span> · Shuffle Records: <span class="ui-val">142M</span></div>
+        <div class="ui-row">Spill (Memory): <span class="ui-val">2.1 GB</span> · Spill (Disk): <span class="ui-val">890 MB</span></div>
+        <div class="ui-header" style="margin-top:0.75rem">Stage 2 Summary</div>
+        <div class="ui-row">Shuffle Read: <span class="ui-val">19.2 GB</span> · Shuffle Read Time: <span class="ui-val">1m 48s</span></div>
+        <div class="ui-row">Output: <span class="ui-val">4.2 KB</span> · Tasks: <span class="ui-val">200</span></div>
+      </div>
+      <p style="margin-top:0.75rem"><strong>Failure point:</strong> Executor disk full during shuffle write → task fails → DAGScheduler retries task (up to 4×). If shuffle file lost, entire stage may rerun.</p>
+    </div>
+  </details>
+</section>
+
+<!-- ═══════════════════ 3g. BROADCAST & SPECULATIVE ═══════════════════ -->
+<section id="broadcast-speculative">
+  <h2>9. Broadcast Variables &amp; Speculative Execution</h2>
+
+  <div class="card-grid">
+    <div class="card">
+      <h4><span class="icon icon-blue">📡</span> Broadcast (not used here, but relevant)</h4>
+      <p>If we joined with a small lookup table (&lt;10 MB), Spark would <code>broadcast()</code> it to all executors via BitTorrent-style transfer — one copy per executor in Storage Memory, no shuffle for the small side.</p>
+    </div>
+    <div class="card">
+      <h4><span class="icon icon-orange">🏃</span> Speculative Execution</h4>
+      <p>When <code>spark.speculation=true</code>, TaskScheduler detects stragglers (task &gt; median × 1.5). Launches duplicate task on another executor. First to finish wins — critical when 1 of 240 tasks is slow.</p>
+    </div>
+  </div>
+
+  <table class="config-table">
+    <thead><tr><th>Config</th><th>Default</th><th>Our job</th></tr></thead>
+    <tbody>
+      <tr><td>spark.speculation</td><td>false (cluster-dependent)</td><td>Enabled on YARN → 3 speculative tasks in Stage 1</td></tr>
+      <tr><td>spark.speculation.multiplier</td><td>1.5</td><td>Task 187 ran 1.6× slower → duplicate launched</td></tr>
+      <tr><td>spark.broadcast.blockSize</td><td>4m</td><td>N/A — no broadcast in this query</td></tr>
+      <tr><td>spark.sql.autoBroadcastJoinThreshold</td><td>10m</td><td>Would broadcast dimension table if joined</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section id="30gb">
+  <h2>10. How 30 GB of Data Is Processed — 22 Sub-Step Walkthrough</h2>
+  <p class="section-desc">
+    Every phase below maps to a real Spark event. Expand any panel for configs, Spark UI views, failure modes, and data sizes.
+  </p>
+
+  <div class="highlight-box">
+    <strong>Scenario:</strong> Read 30 GB sales CSV → filter amount &gt; 1000 → groupBy region → sum(amount) → write Parquet.<br>
+    <strong>Cluster:</strong> 4 workers × 4 cores × 4 GB executor memory · YARN cluster manager · HDFS replication=3
+  </div>
+
+  <div class="size-flow">
+    <div class="size-node" style="border-color:var(--spark-orange)">30 GB raw</div>
+    <span class="size-arrow">→</span>
+    <div class="size-node">240 × 128 MB</div>
+    <span class="size-arrow">→</span>
+    <div class="size-node" style="border-color:var(--green)">~19 GB filtered</div>
+    <span class="size-arrow">→</span>
+    <div class="size-node" style="border-color:var(--yellow)">19 GB shuffle</div>
+    <span class="size-arrow">→</span>
+    <div class="size-node" style="border-color:var(--purple)">~4 KB aggregate</div>
+    <span class="size-arrow">→</span>
+    <div class="size-node" style="border-color:var(--blue)">~8 KB Parquet</div>
+  </div>
+
+  <pre><span class="cm"># PySpark — Driver receives this</span>
+<span class="kw">from</span> pyspark.sql <span class="kw">import</span> SparkSession
+
+spark = SparkSession.builder \
+    .appName(<span class="str">"30GB-Sales"</span>) \
+    .config(<span class="str">"spark.executor.instances"</span>, <span class="str">"4"</span>) \
+    .config(<span class="str">"spark.executor.cores"</span>, <span class="str">"4"</span>) \
+    .config(<span class="str">"spark.executor.memory"</span>, <span class="str">"4g"</span>) \
+    .config(<span class="str">"spark.sql.shuffle.partitions"</span>, <span class="str">"200"</span>) \
+    .getOrCreate()
+
+df = spark.read.csv(<span class="str">"hdfs://data/sales_30gb.csv"</span>, header=<span class="kw">True</span>, inferSchema=<span class="kw">True</span>)
+filtered = df.filter(df.amount > <span class="num">1000</span>)
+result   = filtered.groupBy(<span class="str">"region"</span>).sum(<span class="str">"amount"</span>)
+result.write.parquet(<span class="str">"hdfs://output/regional_revenue/"</span>)</pre>
+
+  <div class="pipeline">
+
+    <!-- Phase A: Job Submission (Steps 1-4) -->
+    <div class="pipeline-step">
+      <div class="step-num">1</div>
+      <div class="step-line"></div>
+      <div class="step-content">
+        <h4>Phase A — Application Bootstrap</h4>
+        <div class="sub-step">
+          <h5><span class="sub-num">1.1</span> SparkSession &amp; SparkContext Creation</h5>
+          <p><span class="meta-chip driver">Driver</span> JVM starts on edge node. <code>SparkSession.builder()</code> creates SparkContext, registers UI on port 4040.</p>
+          <details class="detail-panel"><summary>Details: timing, config, Spark UI</summary><div class="detail-body">
+            <ul><li><strong>Duration:</strong> ~200–500 ms</li><li><strong>Memory:</strong> Driver heap ~2 GB (<code>spark.driver.memory</code>)</li><li><strong>Spark UI:</strong> Empty — no jobs yet. Environment tab shows all configs.</li><li><strong>Failure:</strong> Port 4040 in use → UI binds to 4041.</li></ul>
+          </div></details>
+        </div>
+        <div class="sub-step">
+          <h5><span class="sub-num">1.2</span> Cluster Manager Registration</h5>
+          <p><span class="meta-chip driver">Driver</span> → <span class="meta-chip net">Network</span> → YARN ResourceManager. App ID assigned: <code>application_1739123456789_0042</code>.</p>
+          <details class="detail-panel"><summary>Details: YARN negotiation</summary><div class="detail-body">
+            <ul><li><strong>Request:</strong> 4 containers × (4 cores + 4 GB + 384 MB overhead)</li><li><strong>Config:</strong> <code>spark.executor.instances=4</code>, <code>spark.executor.memory=4g</code></li><li><strong>Spark UI:</strong> Executors tab still empty until containers launch.</li></ul>
+          </div></details>
+        </div>
+        <div class="sub-step">
+          <h5><span class="sub-num">1.3</span> Executor JVM Launch on Workers</h5>
+          <p><span class="meta-chip">Cluster Manager</span> starts 4 executor JVMs on Worker Nodes 1–4. Each registers with Driver via Akka/RPC.</p>
+          <details class="detail-panel"><summary>Details: per-executor setup</summary><div class="detail-body">
+            <div class="detail-grid">
+              <div><strong>Executor 1</strong><br>Worker Node 1 · 4 cores · 4 GB heap · BlockManager init</div>
+              <div><strong>Executor 2–4</strong><br>Same layout on nodes 2–4</div>
+            </div>
+            <p><strong>Total parallelism:</strong> 16 cores. <strong>Spark UI Executors tab:</strong> 4 active, 16 cores, 16 GB storage memory.</p>
+            <p><strong>Failure:</strong> Container OOM during init → YARN relaunches container (fault tolerant).</p>
+          </div></details>
+        </div>
+        <div class="sub-step">
+          <h5><span class="sub-num">1.4</span> Lazy DataFrame Chain Built</h5>
+          <p><span class="meta-chip driver">Driver</span> Catalyst parses read/filter/groupBy/write — <strong>zero tasks scheduled</strong>. Data size still 0 bytes processed.</p>
+          <details class="detail-panel"><summary>Details: Catalyst at this point</summary><div class="detail-body">
+            <p>Logical plan stored in Driver memory (~few KB). See Section 6 for optimizer rules. <strong>Spark UI Jobs tab:</strong> still empty.</p>
+          </div></details>
+        </div>
+      </div>
+    </div>
+
+    <!-- Phase B: Data Layout (Steps 2) -->
+    <div class="pipeline-step">
+      <div class="step-num">2</div>
+      <div class="step-line"></div>
+      <div class="step-content">
+        <h4>Phase B — Data Partitioning &amp; Locality</h4>
+        <div class="sub-step">
+          <h5><span class="sub-num">2.1</span> HDFS Metadata &amp; Block Discovery</h5>
+          <p><span class="meta-chip disk">Disk/HDFS</span> NameNode reports 240 block locations. Spark's <code>FileSourceScanExec</code> creates 240 input partitions.</p>
+          <div class="partition-bar"><div class="partition">128MB</div><div class="partition">128MB</div><div class="partition">128MB</div><div class="partition">128MB</div><div class="partition">128MB</div><div class="partition">128MB</div><div class="partition">128MB</div><div class="partition">…×240</div></div>
+          <details class="detail-panel"><summary>Details: block math &amp; locality</summary><div class="detail-body">
+            <ul><li>30 GB ÷ 128 MB = <strong>240 partitions</strong> (234 full + 6 partial)</li><li><code>spark.sql.files.maxPartitionBytes=128MB</code></li><li>~75% tasks get PROCESS_LOCAL; rest NODE_LOCAL or RACK_LOCAL</li><li><strong>Failure:</strong> Missing block → IOException → task retry reads from replica</li></ul>
+          </div></details>
+        </div>
+        <div class="sub-step">
+          <h5><span class="sub-num">2.2</span> Preferred Locations Assigned</h5>
+          <p><span class="meta-chip driver">TaskScheduler</span> tags each task with preferred host (e.g. Task 42 → worker-node-3).</p>
+          <details class="detail-panel"><summary>Details: locality wait</summary><div class="detail-body">
+            <p><code>spark.locality.wait=3s</code> — waits for local slot before launching remotely. Balances locality vs utilization.</p>
+          </div></details>
+        </div>
+      </div>
+    </div>
+
+    <!-- Phase C: Job Trigger (Step 3) -->
+    <div class="pipeline-step">
+      <div class="step-num">3</div>
+      <div class="step-line"></div>
+      <div class="step-content">
+        <h4>Phase C — Action Triggers Job 0</h4>
+        <div class="sub-step">
+          <h5><span class="sub-num">3.1</span> write.parquet() Invokes DAGScheduler</h5>
+          <p><span class="meta-chip driver">Driver</span> Action detected → <strong>Job 0</strong> created with 3 stages (read+filter | aggregate | write).</p>
+          <details class="detail-panel"><summary>Details: stage boundaries</summary><div class="detail-body">
+            <ul><li>Stage 1 ends at <code>Exchange</code> (shuffle before groupBy)</li><li>Stage 2: HashAggregate after shuffle</li><li>Stage 3: WriteRowsExec (may fuse with Stage 2)</li><li><strong>Spark UI:</strong> Job 0 appears as RUNNING, Stages: 0/3 complete</li></ul>
+          </div></details>
+        </div>
+        <div class="sub-step">
+          <h5><span class="sub-num">3.2</span> Catalyst Physical Plan Finalized</h5>
+          <p>Predicate pushdown, whole-stage codegen plan ID=0 for Stage 1. Shuffle uses <code>HashPartitioning(region, 200)</code>.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Phase D: Stage 1 (Steps 4-8) -->
+    <div class="pipeline-step">
+      <div class="step-num">4</div>
+      <div class="step-line"></div>
+      <div class="step-content">
+        <h4>Phase D — Stage 1: Read + Filter (240 Tasks)</h4>
+        <div class="sub-step">
+          <h5><span class="sub-num">4.1</span> Task Batch Scheduling</h5>
+          <p><span class="meta-chip driver">TaskScheduler</span> submits 16 tasks (one per core). Remaining 224 queued. <strong>15 batches</strong> total (240÷16).</p>
+          <div class="stat-row">
+            <div class="stat"><div class="val">240</div><div class="lbl">Tasks</div></div>
+            <div class="stat"><div class="val">16</div><div class="lbl">Concurrent</div></div>
+            <div class="stat"><div class="val">~15</div><div class="lbl">Batches</div></div>
+            <div class="stat"><div class="val">~90s</div><div class="lbl">Est. duration</div></div>
+          </div>
+        </div>
+        <div class="sub-step">
+          <h5><span class="sub-num">4.2</span> Per-Task: HDFS Block Read</h5>
+          <p><span class="meta-chip disk">Disk</span> Each task reads ~128 MB via HDFS client. Throughput ~100–150 MB/s local disk.</p>
+          <details class="detail-panel"><summary>Details: I/O per task</summary><div class="detail-body">
+            <ul><li><strong>Input:</strong> 128 MB compressed CSV (~140 MB on disk with replication overhead ignored)</li><li><strong>Network:</strong> 0 bytes if PROCESS_LOCAL</li><li><strong>Spark UI Tasks tab:</strong> Input Size ~128 MB, Duration ~0.8–1.2s per task</li></ul>
+          </div></details>
+        </div>
+        <div class="sub-step">
+          <h5><span class="sub-num">4.3</span> Per-Task: Filter amount &gt; 1000</h5>
+          <p><span class="meta-chip mem">Memory</span> WholeStageCodegen evaluates filter in tight loop. ~35% rows dropped → <strong>~79 MB retained per partition</strong>.</p>
+          <details class="detail-panel"><summary>Details: data reduction</summary><div class="detail-body">
+            <ul><li>30 GB × 65% pass rate ≈ <strong>19.5 GB</strong> across cluster after filter</li><li>Rows: ~200M → ~130M rows</li><li>Tungsten UnsafeRow format in execution memory</li></ul>
+          </div></details>
+        </div>
+        <div class="sub-step">
+          <h5><span class="sub-num">4.4</span> Shuffle Write Begins (End of Stage 1)</h5>
+          <p><span class="meta-chip disk">Disk</span> Each task hashes row by region, writes sorted buckets to local shuffle files. Total shuffle write: <strong>~19 GB</strong>.</p>
+          <details class="detail-panel"><summary>Details: shuffle write mechanics</summary><div class="detail-body">
+            <ul><li>200 buckets per task × 240 tasks → data spread across 200 reduce partitions</li><li><code>spark.shuffle.file.buffer=32k</code> · sort before write</li><li>Spill if execution memory exceeded — Spark UI shows spill metrics</li><li><strong>Failure:</strong> Disk full → task FAILED → retry on same or different executor</li></ul>
+          </div></details>
+        </div>
+        <div class="sub-step">
+          <h5><span class="sub-num">4.5</span> Stage 1 Complete — Barrier</h5>
+          <p><span class="meta-chip driver">DAGScheduler</span> waits for all 240 tasks. MapOutputTrackerMaster registers shuffle file locations.</p>
+          <div class="spark-ui-mock"><div class="ui-header">Spark UI — Stage 1</div><div class="ui-row">Status: <span class="ui-val">COMPLETE</span> · Tasks: 240/240 · Shuffle Write: <span class="ui-val">19.2 GB</span> · Time: <span class="ui-val">1m 32s</span></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Phase E: Shuffle (Step 5) -->
+    <div class="pipeline-step">
+      <div class="step-num">5</div>
+      <div class="step-line"></div>
+      <div class="step-content">
+        <h4>Phase E — Shuffle Exchange (~19 GB Network + Disk)</h4>
+        <div class="sub-step">
+          <h5><span class="sub-num">5.1</span> Shuffle Block Registration</h5>
+          <p><span class="meta-chip driver">Driver</span> MapOutputTracker knows which executor holds each shuffle block. Metadata ~240×200 pointers (few MB in Driver memory).</p>
+        </div>
+        <div class="sub-step">
+          <h5><span class="sub-num">5.2</span> External Shuffle Service</h5>
+          <p><span class="meta-chip net">Network</span> Executors fetch remote blocks via <code>spark.shuffle.service.enabled=true</code> — survives executor restarts.</p>
+          <div class="memory-diagram">
+            <div class="mem-block storage"><strong>Shuffle Write</strong> (Stage 1)<br>19 GB on local SSDs across 4 nodes<div class="mem-bar"><div class="mem-seg cache" style="width:70%"></div></div></div>
+            <div class="mem-block execution"><strong>Shuffle Read</strong> (Stage 2)<br>Each of 200 tasks fetches ~95 MB avg<div class="mem-bar"><div class="mem-seg compute" style="width:55%"></div></div></div>
+          </div>
+          <details class="detail-panel"><summary>Details: bottleneck analysis</summary><div class="detail-body">
+            <ul><li>Network: 19 GB ÷ 1 Gbps ≈ <strong>~2.5 min</strong> theoretical minimum</li><li>Actual: ~1m 48s with compression + parallel fetches</li><li><strong>Failure:</strong> Fetch failed → retry 3× → stage resubmit if shuffle files evicted</li></ul>
+          </div></details>
+        </div>
+      </div>
+    </div>
+
+    <!-- Phase F: Stage 2 (Step 6) -->
+    <div class="pipeline-step">
+      <div class="step-num">6</div>
+      <div class="step-line"></div>
+      <div class="step-content">
+        <h4>Phase F — Stage 2: HashAggregate (200 Tasks)</h4>
+        <div class="sub-step">
+          <h5><span class="sub-num">6.1</span> Shuffle Read + Merge</h5>
+          <p><span class="meta-chip mem">Memory</span> + <span class="meta-chip net">Network</span> 200 tasks each pull ~95 MB shuffle data into merge buffer.</p>
+        </div>
+        <div class="sub-step">
+          <h5><span class="sub-num">6.2</span> sum(amount) per Region</h5>
+          <p><span class="meta-chip mem">Memory</span> Hash map keyed by region (~50 distinct regions per task avg). Output: <strong>~4 KB total</strong> across all tasks.</p>
+          <div class="stat-row">
+            <div class="stat"><div class="val">200</div><div class="lbl">Tasks</div></div>
+            <div class="stat"><div class="val">~50</div><div class="lbl">Regions total</div></div>
+            <div class="stat"><div class="val">~4 KB</div><div class="lbl">Output size</div></div>
+            <div class="stat"><div class="val">~45s</div><div class="lbl">Est. duration</div></div>
+          </div>
+          <details class="detail-panel"><summary>Details: Spark UI Stage 2</summary><div class="detail-body">
+            <div class="spark-ui-mock"><div class="ui-row">Shuffle Read: <span class="ui-val">19.2 GB</span> · Output: <span class="ui-val">4.2 KB</span> · Duration: <span class="ui-val">48s</span></div></div>
+          </div></details>
+        </div>
+        <div class="sub-step">
+          <h5><span class="sub-num">6.3</span> Speculative Tasks (Optional)</h5>
+          <p>Task 142 straggler at 1.7× median → duplicate launched on Executor 3. Original killed when duplicate finishes.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Phase G: Write (Step 7) -->
+    <div class="pipeline-step">
+      <div class="step-num">7</div>
+      <div class="step-line"></div>
+      <div class="step-content">
+        <h4>Phase G — Write Parquet Output</h4>
+        <div class="sub-step">
+          <h5><span class="sub-num">7.1</span> Parquet Encoding + Snappy Compression</h5>
+          <p><span class="meta-chip disk">Disk/HDFS</span> Columnar write: region (STRING) + sum (DOUBLE). ~200 part files or coalesced to 4.</p>
+          <details class="detail-panel"><summary>Details: output files</summary><div class="detail-body">
+            <ul><li>Default: 200 files × ~40 bytes ≈ <strong>8 KB total</strong> (Snappy compressed)</li><li><code>result.coalesce(1)</code> would produce 1 file ~8 KB</li><li>Path: <code>hdfs://output/regional_revenue/part-00000.parquet</code></li></ul>
+          </div></details>
+        </div>
+        <div class="sub-step">
+          <h5><span class="sub-num">7.2</span> HDFS Commit Protocol</h5>
+          <p><span class="meta-chip driver">Driver</span> CommitCoordinator validates task commits, moves temp files to final path. Job marked SUCCEEDED.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Phase H: Completion (Step 8) -->
+    <div class="pipeline-step">
+      <div class="step-num">8</div>
+      <div class="step-line"></div>
+      <div class="step-content">
+        <h4>Phase H — Job Complete &amp; Cleanup</h4>
+        <div class="sub-step">
+          <h5><span class="sub-num">8.1</span> Final Metrics</h5>
+          <p>30 GB → 19 GB filtered → 19 GB shuffled → 4 KB result → 8 KB Parquet. Total time: <strong>~6 min 12 sec</strong> on 16 cores.</p>
+          <div class="spark-ui-mock">
+            <div class="ui-header">Spark UI — Job 0 Final</div>
+            <div class="ui-row">Status: <span class="ui-val">SUCCEEDED</span> · Duration: <span class="ui-val">6m 12s</span></div>
+            <div class="ui-row">Input: <span class="ui-val">30.0 GB</span> · Shuffle Read/Write: <span class="ui-val">19.2 GB</span> · Output: <span class="ui-val">8 KB</span></div>
+          </div>
+        </div>
+        <div class="sub-step">
+          <h5><span class="sub-num">8.2</span> Fault Tolerance Summary</h5>
+          <p>Lineage allows recomputing lost partitions from HDFS source. Shuffle files not lineage-protected — if lost, stage reruns. 0 task failures = clean run; 3 speculative tasks = normal on busy cluster.</p>
+        </div>
+        <div class="sub-step">
+          <h5><span class="sub-num">8.3</span> vs Single Machine</h5>
+          <p>Without Spark: 30 GB single-threaded read + groupBy ≈ <strong>45–90 min</strong>. Spark speedup: ~7–15× from parallelism + predicate pushdown + Tungsten.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ TIMELINE ═══════════════════ -->
+<section id="timeline">
+  <h2>11. Job Timeline — Gantt View</h2>
+  <p class="section-desc">Approximate timing for Job 0 on our 16-core cluster processing 30 GB.</p>
+  <div class="gantt-wrap">
+    <div class="gantt">
+      <div class="gantt-row"><div class="gantt-label">Driver init</div><div class="gantt-track"><div class="gantt-bar driver"></div></div></div>
+      <div class="gantt-row"><div class="gantt-label">Stage 1 (240 tasks)</div><div class="gantt-track"><div class="gantt-bar s1"></div></div></div>
+      <div class="gantt-row"><div class="gantt-label">Shuffle exchange</div><div class="gantt-track"><div class="gantt-bar shuffle"></div></div></div>
+      <div class="gantt-row"><div class="gantt-label">Stage 2 (200 tasks)</div><div class="gantt-track"><div class="gantt-bar s2"></div></div></div>
+      <div class="gantt-row"><div class="gantt-label">Write Parquet</div><div class="gantt-track"><div class="gantt-bar write"></div></div></div>
+      <div class="gantt-time-axis"><div></div><div class="gantt-times"><span>0:00</span><span>1:30</span><span>3:00</span><span>4:30</span><span>6:12</span></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ 5. LIVE SIMULATION ═══════════════════ -->
+<section id="simulation">
+  <h2>12. Live Cluster Simulation</h2>
+  <p class="section-desc">
+    Click the button to simulate the 30 GB job running across 4 executors. Watch tasks complete in real time.
+  </p>
+
+  <div class="cluster-sim">
+    <div class="cluster-sim-header">
+      <div>
+        <strong>Job:</strong> 30GB Sales Analysis &nbsp;|&nbsp;
+        <strong>Status:</strong> <span id="job-status">Ready</span>
+      </div>
+      <button class="btn" id="run-btn" onclick="runSimulation()">▶ Run 30GB Job</button>
+    </div>
+    <div class="progress-bar-wrap"><div class="progress-bar" id="progress-bar"></div></div>
+    <div style="font-size:0.82rem;color:var(--muted)" id="progress-text">0 / 240 tasks completed</div>
+
+    <div class="executor-grid" id="executor-grid">
+      <div class="executor-card">
+        <h5>Executor 1 (Worker Node 1)</h5>
+        <div class="task-blocks" id="exec-0"></div>
+      </div>
+      <div class="executor-card">
+        <h5>Executor 2 (Worker Node 2)</h5>
+        <div class="task-blocks" id="exec-1"></div>
+      </div>
+      <div class="executor-card">
+        <h5>Executor 3 (Worker Node 3)</h5>
+        <div class="task-blocks" id="exec-2"></div>
+      </div>
+      <div class="executor-card">
+        <h5>Executor 4 (Worker Node 4)</h5>
+        <div class="task-blocks" id="exec-3"></div>
+      </div>
+    </div>
+
+    <div id="sim-log"></div>
+  </div>
+</section>
+
+<!-- ═══════════════════ 6. MEMORY ═══════════════════ -->
+<section id="memory">
+  <h2>13. Memory Management Inside an Executor</h2>
+  <p class="section-desc">
+    Each executor JVM divides its allocated memory carefully so compute and cached data coexist safely.
+  </p>
+
+  <div class="card">
+    <h4>Unified Memory Model (Spark 1.6+)</h4>
+    <div class="memory-diagram">
+      <div class="mem-block storage">
+        <strong>Storage Memory (~50%)</strong><br>
+        Cached RDDs/DataFrames, broadcast variables, shuffle data buffers
+        <div class="mem-bar">
+          <div class="mem-seg cache" style="width:40%"></div>
+          <div class="mem-seg" style="width:60%;background:var(--border)"></div>
+        </div>
+      </div>
+      <div class="mem-block execution">
+        <strong>Execution Memory (~50%)</strong><br>
+        Sorts, joins, aggregations, temporary data structures during tasks
+        <div class="mem-bar">
+          <div class="mem-seg compute" style="width:35%"></div>
+          <div class="mem-seg" style="width:65%;background:var(--border)"></div>
+        </div>
+      </div>
+    </div>
+    <p style="margin-top:1rem;color:var(--muted);font-size:0.9rem">
+      If memory is full, Spark <strong>spills to disk</strong> — the job continues but slower.
+      For 30 GB input with 4 GB executors, most data is read partition-by-partition (not all cached),
+      so spill is minimal if partitions are ~128 MB. Stage 1 shuffle write may spill ~890 MB to disk across cluster.
+    </p>
+    <details class="detail-panel">
+      <summary>Memory breakdown per executor (4 GB) during Stage 1</summary>
+      <div class="detail-body">
+        <table class="config-table">
+          <thead><tr><th>Region</th><th>Size</th><th>Used for</th></tr></thead>
+          <tbody>
+            <tr><td>Reserved</td><td>384 MB</td><td>User memory, metadata</td></tr>
+            <tr><td>Unified Memory</td><td>~1.8 GB</td><td>Storage + Execution (50/50 split, dynamic)</td></tr>
+            <tr><td>Execution (active task)</td><td>~400 MB</td><td>Filter batches, shuffle write buffer</td></tr>
+            <tr><td>Off-heap (optional)</td><td>1 GB</td><td>Shuffle/sort buffers if enabled</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </details>
+  </div>
+</section>
+
+<!-- ═══════════════════ 7. SUMMARY ═══════════════════ -->
+<section id="summary">
+  <h2>14. Complete Summary — Everything at a Glance</h2>
+  <p class="section-desc">The entire 30 GB processing story in one place — all 22 sub-steps condensed.</p>
+
+  <div class="card">
+    <table>
+      <thead>
+        <tr><th>Phase</th><th>Sub-Steps</th><th>Component</th><th>Data Size</th><th>Key Config</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>A Bootstrap</td><td>1.1–1.4</td><td>Driver, Cluster Manager</td><td>0 B processed</td><td>executor.instances=4</td></tr>
+        <tr><td>B Partitioning</td><td>2.1–2.2</td><td>HDFS, TaskScheduler</td><td>30 GB → 240 partitions</td><td>maxPartitionBytes=128MB</td></tr>
+        <tr><td>C Job Trigger</td><td>3.1–3.2</td><td>DAGScheduler, Catalyst</td><td>Plan only</td><td>shuffle.partitions=200</td></tr>
+        <tr><td>D Stage 1</td><td>4.1–4.5</td><td>Executors, Tungsten</td><td>30 GB → 19 GB filtered</td><td>wholeStage codegen</td></tr>
+        <tr><td>E Shuffle</td><td>5.1–5.2</td><td>BlockManager, Network</td><td>19 GB write + read</td><td>shuffle.service.enabled</td></tr>
+        <tr><td>F Stage 2</td><td>6.1–6.3</td><td>Executors, HashAggregate</td><td>19 GB → 4 KB</td><td>speculation=true</td></tr>
+        <tr><td>G Write</td><td>7.1–7.2</td><td>Executors, HDFS</td><td>4 KB → 8 KB Parquet</td><td>parquet compression=snappy</td></tr>
+        <tr><td>H Complete</td><td>8.1–8.3</td><td>Driver</td><td>Job SUCCEEDED</td><td>Total: ~6m 12s</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="highlight-box">
+    <strong>Key Takeaway:</strong> Spark never loads 30 GB into one machine's RAM.
+    It splits data into ~128 MB partitions, assigns each partition as a task to an executor core,
+    processes them in parallel batches, shuffles only when necessary, and uses lineage to recover from failures.
+    That's how 30 GB becomes manageable.
+  </div>
+</section>
+
+</div>
+      </article>
+    </main>
+    <aside id="sidebar-right"></aside>
+  </div>
+  <div id="site-footer"></div>
+  <script src="../assets/js/main.js"></script>
+  <script src="../assets/js/spark-simulation.js"></script>
+</body>
+</html>

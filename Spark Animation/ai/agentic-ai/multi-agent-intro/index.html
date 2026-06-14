@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en" data-page="ai" data-category="ai" data-section="agentic-ai" data-topic="multi-agent-intro" data-step="9" data-total-steps="24">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Multi-Agent Introduction — EDUKRON BLOB</title>
+  <meta name="description" content="Multi-Agent Introduction — Agentic AI. Why multiple agents and collaboration patterns.">
+  <link rel="stylesheet" href="../../../assets/css/style.css">
+  <link rel="stylesheet" href="../../../assets/css/flow-diagrams.css">
+</head>
+<body>
+  <div id="site-header"></div>
+  <div class="site-layout">
+    <aside id="sidebar-left"></aside>
+    <main class="main-content">
+      <nav class="breadcrumb" aria-label="Breadcrumb"><a href="../../../index.html">Home</a><span class="breadcrumb-sep">/</span><a href="../../../ai/index.html">AI</a><span class="breadcrumb-sep">/</span><a href="../../../ai/agentic-ai/index.html">Agentic AI</a><span class="breadcrumb-sep">/</span><span aria-current="page">Multi-Agent Introduction</span></nav>
+      <header class="page-header">
+        <span class="badge">ai</span>
+        <h1>Multi-Agent Introduction</h1>
+        <p class="page-subtitle">Why multiple agents and collaboration patterns.</p>
+      </header>
+      
+      <article class="learning-plan">
+        
+      <div class="learning-progress" aria-label="Learning path progress">
+        <div class="learning-progress-header">
+          <span class="phase-badge phase-intermediate">Intermediate</span>
+          <span class="read-time">~16 min read</span>
+        </div>
+        <div class="progress-bar-track" role="progressbar" aria-valuenow="9" aria-valuemin="1" aria-valuemax="24" aria-label="Progress through this learning path">
+          <div class="progress-bar-fill" style="width:38%"></div>
+        </div>
+      </div>
+        <section class="learning-section" id="objective">
+          <h2>Learning Objective</h2>
+          <ul class="checklist objectives-list"><li>Explain Multi-Agent Introduction and how it fits into modern agentic AI systems</li><li>Design multi-agent systems using LLMs, tools, and orchestration patterns</li><li>Apply multi-agent introduction in intermediate-level production scenarios</li><li>Identify security, cost, and reliability trade-offs for multi-agent introduction</li></ul>
+        </section>
+        <section class="learning-section" id="prerequisites">
+          <h2>Prerequisites</h2>
+          <ul class="prereq-list"><li><a href="../../../ai/agentic-ai/reflection/index.html">Self-Reflection</a></li><li><a href="../../../ai/agentic-ai/planning-agents/index.html">Planning Agents</a></li></ul>
+        </section>
+        <section class="learning-section" id="overview">
+          <h2>Overview</h2>
+          <p>Building on earlier topics, <strong>Multi-Agent Introduction</strong> continues the Agentic AI track at the intermediate level. Why multiple agents and collaboration patterns.</p>
+        <p><strong>Multi-Agent Introduction</strong> covers when multiple LLM agents beat one generalist. Specialists carry focused tool sets and prompts; an orchestrator delegates and merges results. Coordination overhead is real — simple tasks stay single-agent.</p>
+        <p>Use multi-agent when domains differ sharply: research + coding + legal review need different guardrails and tools. A single agent with all tools often picks wrong actions.</p>
+        <p>Collaboration patterns include sequential handoffs (pipeline), parallel fan-out (map), debate (two agents argue), and hierarchical orchestration (manager-workers). AutoGen emphasizes conversation; CrewAI emphasizes roles; LangGraph models all as graphs.</p>
+        <p>Shared state vs message passing: shared state (dict in LangGraph) is simpler for small teams; message buses scale when agents run on different services.</p>
+        <p>Failure modes: agents talk past each other, duplicate work, or contradict final answers. The orchestrator must synthesize with explicit merge logic, not hope the last agent is correct.</p>
+        <p>Cost multiplies with agents — parallel research agents can 3× token spend. Route cheap models for routing and expensive models for synthesis.</p>
+        <p>The multi-agent orchestration diagram shows orchestrator hub with specialist spokes and shared memory. Interview: explain one scenario where multi-agent failed and you reverted to single-agent.</p>
+        <p>Next steps deepen roles, communication protocols, and framework-specific orchestration patterns.</p>
+        </section>
+        
+      <section class="learning-section flow-diagram-section" id="flow-diagram">
+        <h2>Multi-Agent Orchestration</h2>
+        <p class="flow-diagram-desc">Orchestrator delegates to specialist agents and synthesizes results.</p>
+        <div class="flow-diagram-container">
+          <pre class="mermaid">flowchart TB
+    U[User Goal] --> O[Orchestrator]
+    O --> R[Research Agent]
+    O --> A[Analyst Agent]
+    O --> W[Writer Agent]
+    R --> S[Shared State / Memory]
+    A --> S
+    W --> S
+    S --> O
+    O --> OUT[Final Response]</pre>
+        </div>
+      </section>
+        <section class="learning-section" id="key-concepts">
+          <h2>Key Concepts</h2>
+          <ul class="concept-list"><li>Multi-Agent Introduction — definition, motivation, and when to use it</li><li>Agent loop: observe → plan → act → reflect</li><li>Tool schemas and structured function calling</li><li>Context windows, memory tiers, and retrieval augmentation</li><li>Orchestration: single agent vs multi-agent graphs</li><li>Human-in-the-loop approval and escalation paths</li><li>Evaluation: trajectory analysis and task-level metrics</li><li>Security: prompt injection, tool sandboxing, least privilege</li><li>Orchestrator-worker and specialist agent patterns</li></ul>
+        </section>
+        
+      <section class="learning-section" id="architecture">
+        <h2>Architecture Notes</h2>
+        <div class="de-architecture-block"><strong>System role:</strong> Multi-Agent Introduction typically sits between the user interface and backend services. Flow: user goal → orchestrator → LLM planner → tool executor → memory store → response synthesis. Each layer should have clear contracts and timeouts.</div><div class="de-architecture-block"><strong>Component interaction:</strong> The LLM receives system prompts, tool definitions, and retrieved memory. The orchestrator manages state transitions, enforces max iteration limits, and routes to human reviewers when confidence is low or actions are high-risk.</div><div class="de-architecture-block"><strong>Data flow:</strong> Observations (tool results, API responses, file contents) flow back into the context window or vector store. Keep traces structured (JSON) so evaluators and debuggers can replay agent runs step by step.</div><div class="de-architecture-block"><strong>Operational model:</strong> Version prompts and tool schemas in Git, deploy agents as API services or background workers, monitor with LangSmith/OpenTelemetry, and run regression eval suites before each release.</div>
+      </section>
+        
+      <section class="learning-section de-detailed-notes" id="detailed-notes">
+        <h2>Detailed Notes</h2>
+        <p><strong>What it is:</strong> Why multiple agents and collaboration patterns. Agent implementations combine prompt engineering, tool APIs, and workflow graphs — not just a larger chat model.</p>
+        <p><strong>How it works:</strong> The orchestrator loads tools and memory, sends a structured prompt to the LLM, parses the model's tool call or final answer, executes tools, appends observations to state, and repeats until the task completes or limits are hit.</p>
+        <p><strong>When to use:</strong> Choose multi-agent introduction when tasks require collaboration patterns and when to use multiple agents. Avoid agents when a fixed pipeline or single LLM call suffices — agents add latency, cost, and failure modes.</p>
+        <p><strong>Framework landscape:</strong> LangChain/LangGraph for graph-based flows, Microsoft AutoGen for conversational multi-agent, CrewAI for role-based teams, and custom FastAPI services for full control.</p>
+      </section>
+        <section class="learning-section" id="what-youll-learn">
+          <h2>What You&apos;ll Learn</h2>
+          <ul class="learn-checklist"><li><span class="check-icon" aria-hidden="true">✓</span> Core theory behind multi-agent introduction in agentic AI systems</li><li><span class="check-icon" aria-hidden="true">✓</span> Animated walkthrough of the agent loop and component interactions</li><li><span class="check-icon" aria-hidden="true">✓</span> Architecture patterns for multi-agent systems</li><li><span class="check-icon" aria-hidden="true">✓</span> Production best practices, pitfalls, and interview preparation</li><li><span class="check-icon" aria-hidden="true">✓</span> Hands-on Python/LangGraph code example you can adapt</li><li><span class="check-icon" aria-hidden="true">✓</span> How multi-agent introduction connects to prior and upcoming steps in this path</li></ul>
+        </section>
+        
+      <section class="learning-section" id="production-notes">
+        <h2>Production Notes</h2>
+        <div class="de-notes-grid"><div class="de-note-card"><h3>Best Practices</h3><ul><li>Cap agent loops with max_iterations to prevent runaway token spend</li><li>Use structured tool outputs (JSON schema) instead of parsing free-form text</li><li>Separate system prompts from user content; never trust user input inside tool arguments blindly</li><li>Log full trajectories (thought, action, observation) for debugging and evaluation</li><li>Implement idempotent tools where possible so retries are safe</li><li>Add human approval gates for destructive or financial actions</li><li>Run eval datasets on every prompt or tool schema change</li><li>Use smaller models for routing/planning and larger models for complex reasoning when cost matters</li></ul></div><div class="de-note-card"><h3>Common Pitfalls</h3><ul><li>Giving agents too many tools at once — causes wrong tool selection and context bloat</li><li>No timeout or retry policy — hung API calls block the entire agent loop</li><li>Storing secrets in prompts instead of secure credential stores</li><li>Skipping evaluation and shipping based on demo conversations only</li><li>Allowing agents to execute arbitrary code without sandboxing</li><li>Ignoring token growth from unbounded conversation history</li><li>Treating multi-agent systems as always better — coordination overhead can hurt simple tasks</li></ul></div><div class="de-note-card"><h3>Interview Preparation</h3><ul><li>Whiteboard the agent loop for multi-agent introduction: inputs, LLM calls, tools, memory, outputs</li><li>Discuss trade-offs: ReAct vs plan-and-execute, single vs multi-agent, sync vs async tools</li><li>Explain multi-agent systems with a concrete example (research agent, coding agent, or data agent)</li><li>Cover failure modes: hallucinated tool args, infinite loops, prompt injection via retrieved docs</li><li>Mention observability: LangSmith traces, custom metrics, and A/B testing agent versions</li></ul></div></div>
+      </section>
+        
+      <section class="learning-section code-section" id="code-example">
+        <h2>Code Example</h2>
+        <pre class="code-block"><code class="language-python"># AutoGen-style orchestrator + specialists
+from autogen import AssistantAgent, UserProxyAgent
+
+researcher = AssistantAgent(&quot;researcher&quot;, system_message=&quot;Search and summarize only.&quot;)
+writer = AssistantAgent(&quot;writer&quot;, system_message=&quot;Draft reports from research notes.&quot;)
+user_proxy = UserProxyAgent(&quot;user&quot;, human_input_mode=&quot;NEVER&quot;)
+user_proxy.initiate_chat(researcher, message=&quot;Research LangGraph vs AutoGen&quot;)</code></pre>
+      </section>
+        
+        <nav class="step-nav" aria-label="Learning path navigation"><a href="../../../ai/agentic-ai/reflection/index.html" class="step-nav-link step-nav-prev">
+        <span class="step-nav-label">← Previous</span>
+        <span class="step-nav-title">Self-Reflection</span>
+      </a><a href="../../../ai/agentic-ai/agent-roles/index.html" class="step-nav-link step-nav-next">
+        <span class="step-nav-label">Next →</span>
+        <span class="step-nav-title">Agent Roles</span>
+      </a></nav>
+      </article>
+    </main>
+    <aside id="sidebar-right"></aside>
+  </div>
+  <div id="site-footer"></div>
+  <script src="../../../assets/js/main.js"></script>
+  
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        if (typeof mermaid !== 'undefined') {
+          mermaid.initialize({
+            startOnLoad: true,
+            theme: 'neutral',
+            securityLevel: 'loose',
+            themeVariables: {
+              primaryColor: '#e8f4fc',
+              primaryTextColor: '#1e293b',
+              primaryBorderColor: '#94a3b8',
+              lineColor: '#64748b',
+              secondaryColor: '#f1f5f9',
+              tertiaryColor: '#ffffff',
+              background: '#ffffff',
+              mainBkg: '#ffffff',
+              nodeBorder: '#94a3b8',
+              clusterBkg: '#f8fafc',
+              titleColor: '#0f172a',
+              edgeLabelBackground: '#ffffff'
+            }
+          });
+        }
+      });
+    </script>
+</body>
+</html>

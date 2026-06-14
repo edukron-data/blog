@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en" data-page="azure-devops" data-category="azure-devops" data-section="kubernetes" data-topic="index">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kubernetes — EDUKRON BLOB</title>
+  <meta name="description" content="Kubernetes — Azure DevOps learning path on EDUKRON BLOB.">
+  <link rel="stylesheet" href="../../assets/css/style.css">
+  <link rel="stylesheet" href="../../assets/css/flow-diagrams.css">
+</head>
+<body>
+  <div id="site-header"></div>
+  <div class="site-layout">
+    <aside id="sidebar-left"></aside>
+    <main class="main-content">
+      <nav class="breadcrumb" aria-label="Breadcrumb"><a href="../../index.html">Home</a><span class="breadcrumb-sep">/</span><a href="../../azure-devops/index.html">Azure DevOps</a><span class="breadcrumb-sep">/</span><span aria-current="page">Kubernetes</span></nav>
+      <header class="page-header">
+        <span class="badge">azure devops</span>
+        <h1>Kubernetes</h1>
+        <p class="page-subtitle">Azure DevOps · Kubernetes</p>
+      </header>
+      
+      <article class="learning-plan topic-index">
+        <section class="learning-section">
+          <h2>Learning Path Overview</h2>
+          <p><strong>Kubernetes</strong> covers architecture, kubectl, workloads, networking, storage, Helm intro, security, and production patterns.</p>
+          <p class="learning-callout">Work through the topics below in order for the best experience — each lesson builds on the previous one from beginner through advanced.</p>
+        </section>
+        
+      <section class="learning-section flow-diagram-section" id="flow-diagram">
+        <h2>Kubernetes — Learning Path Overview</h2>
+        <p class="flow-diagram-desc">Topics progress from foundations through advanced production patterns. Follow the path in order for the best learning experience.</p>
+        <div class="flow-diagram-container">
+          <pre class="mermaid">flowchart LR
+    S0["Kubernetes Overview"]
+    S1["Cluster Architecture"]
+    S2["kubectl Basics"]
+    S3["Pods"]
+    S4["…"]
+    S5["Helm Introduction"]
+    S6["Network Policies"]
+    S7["Troubleshooting K8s"]
+    S8["Kubernetes Capstone"]
+    S0 --> S1
+    S1 --> S2
+    S2 --> S3
+    S3 --> S4
+    S4 --> S5
+    S5 --> S6
+    S6 --> S7
+    S7 --> S8</pre>
+        </div>
+      </section>
+        <section class="learning-section">
+          <h2>Path Phases</h2>
+          <div class="de-notes-grid">
+          <div class="de-note-card">
+            <h3>Phase 1: K8s Foundations</h3>
+            <p>Architecture, kubectl, pods, replicas, deployments, services, namespaces.</p>
+          </div>
+          <div class="de-note-card">
+            <h3>Phase 2: Workload Design</h3>
+            <p>ConfigMaps, secrets, volumes, ingress, labels, probes, resources, scheduling.</p>
+          </div>
+          <div class="de-note-card">
+            <h3>Phase 3: Production K8s</h3>
+            <p>Helm, monitoring, security, troubleshooting, patterns, capstone manifest set.</p>
+          </div></div>
+        </section>
+        <section class="learning-section">
+          <h2>Prerequisites</h2>
+          <ul class="prereq-list"><li>Docker fundamentals</li><li>YAML syntax</li></ul>
+        </section>
+        <section class="learning-section">
+          <h2>What You Will Achieve</h2>
+          <ul class="learn-checklist"><li><span class="check-icon" aria-hidden="true">✓</span> Deploy and troubleshoot Kubernetes workloads</li><li><span class="check-icon" aria-hidden="true">✓</span> Configure services, ingress, and config/secrets</li><li><span class="check-icon" aria-hidden="true">✓</span> Apply resource limits and health probes</li></ul>
+        </section>
+        <section class="learning-section">
+          <h2>All Topics</h2>
+          <ol class="path-step-list">
+        <li class="path-step-item">
+          <div class="path-step-body">
+            <a href="k8s-overview/index.html">Kubernetes Overview</a>
+            <p>Orchestration, control plane, and worker node architecture.</p>
+          </div>
+        </li>
+        <li class="path-step-item">
+          <div class="path-step-body">
+            <a href="cluster-architecture/index.html">Cluster Architecture</a>
+            <p>API server, etcd, scheduler, controller manager, kubelet.</p>
+          </div>
+        </li>
+        <li class="path-step-item">
+          <div class="path-step-body">
+            <a href="kubectl-basics/index.html">kubectl Basics</a>
+            <p>Config, get, describe, apply, and delete commands.</p>
+          </div>
+        </li>
+        <li class="path-step-item">
+          <div class="path-step-body">
+            <a href="pods/index.html">Pods</a>
+            <p>Pod lifecycle, multi-container pods, and restart policies.</p>
+          </div>
+        </li>
+        <li class="path-step-item">
+          <div class="path-step-body">
+            <a href="deployments/index.html">Deployments</a>
+            <p>ReplicaSets, rolling updates, and rollback.</p>
+          </div>
+        </li>
+        <li class="path-step-item">
+          <div class="path-step-body">
+            <a href="services/index.html">Services</a>
+            <p>ClusterIP, NodePort, LoadBalancer, and service discovery.</p>
+          </div>
+        </li>
+        <li class="path-step-item">
+          <div class="path-step-body">
+            <a href="configmaps/index.html">ConfigMaps</a>
+            <p>Configuration data injection via env vars and volumes.</p>
+          </div>
+        </li>
+        <li class="path-step-item">
+          <div class="path-step-body">
+            <a href="secrets/index.html">Secrets</a>
+            <p>Secret management, base64 encoding, and external secret operators.</p>
+          </div>
+        </li>
+        <li class="path-step-item">
+          <div class="path-step-body">
+            <a href="ingress/index.html">Ingress</a>
+            <p>Ingress controllers, rules, TLS, and path-based routing.</p>
+          </div>
+        </li>
+        <li class="path-step-item">
+          <div class="path-step-body">
+            <a href="namespaces/index.html">Namespaces</a>
+            <p>Resource isolation, quotas, and multi-tenancy.</p>
+          </div>
+        </li>
+        <li class="path-step-item">
+          <div class="path-step-body">
+            <a href="labels-selectors/index.html">Labels &amp; Selectors</a>
+            <p>Labeling resources and selector-based operations.</p>
+          </div>
+        </li>
+        <li class="path-step-item">
+          <div class="path-step-body">
+            <a href="resource-limits/index.html">Resource Limits</a>
+            <p>Requests, limits, QoS classes, and resource quotas.</p>
+          </div>
+        </li>
+        <li class="path-step-item">
+          <div class="path-step-body">
+            <a href="health-probes/index.html">Health Probes</a>
+            <p>Liveness, readiness, and startup probes.</p>
+          </div>
+        </li>
+        <li class="path-step-item">
+          <div class="path-step-body">
+            <a href="persistent-volumes/index.html">Persistent Volumes</a>
+            <p>PV, PVC, StorageClass, and dynamic provisioning.</p>
+          </div>
+        </li>
+        <li class="path-step-item">
+          <div class="path-step-body">
+            <a href="statefulsets/index.html">StatefulSets</a>
+            <p>Stable network identity and ordered deployment for stateful apps.</p>
+          </div>
+        </li>
+        <li class="path-step-item">
+          <div class="path-step-body">
+            <a href="daemonsets/index.html">DaemonSets</a>
+            <p>Running pods on every node for logging and monitoring agents.</p>
+          </div>
+        </li>
+        <li class="path-step-item">
+          <div class="path-step-body">
+            <a href="jobs-cronjobs/index.html">Jobs &amp; CronJobs</a>
+            <p>Batch workloads and scheduled tasks in Kubernetes.</p>
+          </div>
+        </li>
+        <li class="path-step-item">
+          <div class="path-step-body">
+            <a href="helm-intro/index.html">Helm Introduction</a>
+            <p>Charts, releases, and package management for K8s.</p>
+          </div>
+        </li>
+        <li class="path-step-item">
+          <div class="path-step-body">
+            <a href="network-policies/index.html">Network Policies</a>
+            <p>Pod-to-pod traffic control and micro-segmentation.</p>
+          </div>
+        </li>
+        <li class="path-step-item">
+          <div class="path-step-body">
+            <a href="troubleshooting/index.html">Troubleshooting K8s</a>
+            <p>Common failure modes, events, and debugging workflows.</p>
+          </div>
+        </li>
+        <li class="path-step-item">
+          <div class="path-step-body">
+            <a href="k8s-capstone/index.html">Kubernetes Capstone</a>
+            <p>Deploy a multi-tier app with Deployment, Service, and Ingress.</p>
+          </div>
+        </li></ol>
+        </section>
+      </article>
+    </main>
+    <aside id="sidebar-right"></aside>
+  </div>
+  <div id="site-footer"></div>
+  <script src="../../assets/js/main.js"></script>
+  
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        if (typeof mermaid !== 'undefined') {
+          mermaid.initialize({
+            startOnLoad: true,
+            theme: 'neutral',
+            securityLevel: 'loose',
+            themeVariables: {
+              primaryColor: '#e8f4fc',
+              primaryTextColor: '#1e293b',
+              primaryBorderColor: '#94a3b8',
+              lineColor: '#64748b',
+              secondaryColor: '#f1f5f9',
+              tertiaryColor: '#ffffff',
+              background: '#ffffff',
+              mainBkg: '#ffffff',
+              nodeBorder: '#94a3b8',
+              clusterBkg: '#f8fafc',
+              titleColor: '#0f172a',
+              edgeLabelBackground: '#ffffff'
+            }
+          });
+        }
+      });
+    </script>
+</body>
+</html>

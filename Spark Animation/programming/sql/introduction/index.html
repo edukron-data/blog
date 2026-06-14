@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en" data-page="programming" data-category="programming" data-section="sql" data-topic="introduction" data-step="1" data-total-steps="30">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Introduction to SQL — EDUKRON BLOB</title>
+  <meta name="description" content="Introduction to SQL — SQL. Relational databases, SQL dialects, and the query execution model.">
+  <link rel="stylesheet" href="../../../assets/css/style.css">
+  <link rel="stylesheet" href="../../../assets/css/flow-diagrams.css">
+</head>
+<body>
+  <div id="site-header"></div>
+  <div class="site-layout">
+    <aside id="sidebar-left"></aside>
+    <main class="main-content">
+      <nav class="breadcrumb" aria-label="Breadcrumb"><a href="../../../index.html">Home</a><span class="breadcrumb-sep">/</span><a href="../../../programming/index.html">Programming</a><span class="breadcrumb-sep">/</span><a href="../../../programming/sql/index.html">SQL</a><span class="breadcrumb-sep">/</span><span aria-current="page">Introduction to SQL</span></nav>
+      <header class="page-header">
+        <span class="badge">programming</span>
+        <h1>Introduction to SQL</h1>
+        <p class="page-subtitle">Relational databases, SQL dialects, and the query execution model.</p>
+      </header>
+      
+      <article class="learning-plan">
+        
+      <div class="learning-progress" aria-label="Learning path progress">
+        <div class="learning-progress-header">
+          <span class="phase-badge phase-beginner">Beginner</span>
+          <span class="read-time">~10 min read</span>
+        </div>
+        <div class="progress-bar-track" role="progressbar" aria-valuenow="1" aria-valuemin="1" aria-valuemax="30" aria-label="Progress through this learning path">
+          <div class="progress-bar-fill" style="width:3%"></div>
+        </div>
+      </div>
+        <section class="learning-section" id="objective">
+          <h2>Learning Objective</h2>
+          <ul class="checklist objectives-list"><li>Define Introduction to SQL and explain its role in SQL and relational analytics</li><li>Implement introduction to sql using ANSI SQL in beginner-level scenarios</li><li>Design conceptual architecture and learning roadmap that integrates with warehouses, lakehouse SQL endpoints, and reporting layers</li><li>Evaluate trade-offs, failure modes, and monitoring signals for introduction to sql</li><li>Connect introduction to sql to adjacent topics in the SQL path</li></ul>
+        </section>
+        <section class="learning-section" id="prerequisites">
+          <h2>Prerequisites</h2>
+          <p class="prereq-none">No prerequisites — this is an early step in the path.</p>
+        </section>
+        <section class="learning-section" id="overview">
+          <h2>Overview</h2>
+          <p><strong>Introduction to SQL</strong> is a core topic in the SQL learning path. Relational databases, SQL dialects, and the query execution model.</p>
+        <p>SQL and relational analytics teams rely on introduction to sql when delivering foundational vocabulary, scope, and problem framing. At this beginner stage, you will work with <strong>conceptual architecture and learning roadmap</strong> using ANSI SQL, T-SQL, PostgreSQL, window functions, execution plans.</p>
+        <p>Industry practitioners treat introduction to sql as more than syntax — it shapes how you architect pipelines, debug incidents, and communicate in design reviews. Understanding the underlying mechanics helps you choose the right tool when multiple options exist (ANSI SQL, T-SQL, PostgreSQL, window functions, execution plans).</p>
+        <p>Production systems add constraints tutorials often skip: authentication, idempotency, observability, cost controls, and rollback paths. This lesson covers those operational realities alongside theory so you can reason about introduction to sql in real deployments.</p>
+        <p>Align your local practice environment with ANSI SQL, T-SQL, PostgreSQL, window functions, execution plans so examples transfer directly to work projects.</p>
+        <p>Work through the architecture notes, detailed explanations, production guidance, and code example below. Modify the sample for your domain, explain it aloud, and note one trade-off you would discuss in an interview.</p>
+        <p>The next steps extend introduction to sql into more complex SQL and relational analytics scenarios — revisit this page if later topics feel unclear.</p>
+        </section>
+        
+      <section class="learning-section flow-diagram-section" id="flow-diagram">
+        <h2>Introduction to SQL — Process Flow</h2>
+        <p class="flow-diagram-desc">Relational databases, SQL dialects, and the query execution model.</p>
+        <div class="flow-diagram-container">
+          <pre class="mermaid">flowchart LR
+    N0["Connect to database"]
+    N1["Step focus: Introduction to SQL"]
+    N2["Relational databases"]
+    N3["SQL dialects"]
+    N4["And the query execution model"]
+    N5["Introduction — Introduction to SQL step 1"]
+    N6["Validate introduction to sql output"]
+    N7["Introduction to SQL workflow — introduction"]
+    N8["Validate query in explain plan"]
+    N0 --> N1
+    N1 --> N2
+    N2 --> N3
+    N3 --> N4
+    N4 --> N5
+    N5 --> N6
+    N6 --> N7
+    N7 --> N8</pre>
+        </div>
+      </section>
+        <section class="learning-section" id="key-concepts">
+          <h2>Key Concepts</h2>
+          <ul class="concept-list"><li>Introduction to SQL — definition, motivation, and when to apply it</li><li>SQL and relational analytics vocabulary and mental models for conceptual architecture and learning roadmap</li><li>Foundational vocabulary, scope, and problem framing</li><li>Integration with ANSI SQL and  T-SQL</li><li>Input/output contracts, validation, and error boundaries</li><li>Testing strategy: unit, integration, and smoke checks</li><li>Performance, scalability, and cost levers</li><li>Security, secrets handling, and least privilege</li><li>Observability: logs, metrics, traces, and runbooks</li><li>Common anti-patterns and how teams avoid them</li><li>Historical context in introduction to sql contexts</li><li>Problem taxonomy in introduction to sql contexts</li><li>Toolchain overview in introduction to sql contexts</li><li>Career relevance in introduction to sql contexts</li></ul>
+        </section>
+        
+      <section class="learning-section" id="architecture">
+        <h2>Architecture Notes</h2>
+        <div class="de-architecture-block"><strong>System role:</strong> Introduction to SQL sits in the SQL and relational analytics workflow as a component for conceptual architecture and learning roadmap. Map inputs (sources, APIs, user actions), transformations (business rules, model inference, aggregations), and outputs (tables, APIs, dashboards). Define failure boundaries and retry semantics at each hop.</div><div class="de-architecture-block"><strong>Component interaction:</strong> Upstream producers and downstream consumers depend on stable contracts. Document schemas, SLAs, and versioning for interfaces touched by introduction to sql. Use feature flags or config-driven behavior when rolling out changes.</div><div class="de-architecture-block"><strong>Data & control flow:</strong> Trace how information moves when applying introduction to sql — including foundational vocabulary, scope, and problem framing. Identify synchronous vs asynchronous steps, batch vs streaming paths, and where state persists between invocations.</div><div class="de-architecture-block"><strong>Operational model:</strong> Production usage requires structured logging, metrics (latency, error rate, throughput), alerting, runbooks, and rollback plans. Store infrastructure and application config in version control; automate deployments where possible.</div><div class="de-architecture-block"><strong>Platform context:</strong> On Azure SQL Database, Synapse, PostgreSQL, SQL Server, introduction to sql typically integrates with managed services, identity (managed identity / service principal), and regional redundancy. Follow well-architected pillars: reliability, security, cost, operations, performance.</div>
+      </section>
+        
+      <section class="learning-section de-detailed-notes" id="detailed-notes">
+        <h2>Detailed Notes</h2>
+        <p><strong>What it is:</strong> Relational databases, SQL dialects, and the query execution model. In SQL and relational analytics, this typically involves foundational vocabulary, scope, and problem framing.</p>
+        <p><strong>Why it matters:</strong> Teams encounter introduction to sql when shipping conceptual architecture and learning roadmap. Gaps here surface as production bugs, slow queries, model drift, pipeline failures, or failed interviews.</p>
+        <p><strong>How it works:</strong> Break the problem into inputs, processing steps, and outputs. For each step, specify validation rules, expected latency, and idempotency. Use ANSI SQL as your primary implementation surface.</p>
+        <p><strong>When to use:</strong> Apply introduction to sql when requirements align with foundational vocabulary, scope, and problem framing. Avoid forcing this pattern when a simpler batch job, SQL view, or single API call suffices.</p>
+        <p><strong>How to practice:</strong> Run the code example locally or in a sandbox subscription. Change one parameter at a time, predict the outcome, then verify. Write a one-paragraph explanation suitable for a stand-up or PR description.</p>
+      </section>
+        <section class="learning-section" id="what-youll-learn">
+          <h2>What You&apos;ll Learn</h2>
+          <ul class="learn-checklist"><li><span class="check-icon" aria-hidden="true">✓</span> Theory and motivation behind introduction to sql in SQL and relational analytics</li><li><span class="check-icon" aria-hidden="true">✓</span> Key terminology for conceptual architecture and learning roadmap</li><li><span class="check-icon" aria-hidden="true">✓</span> Architecture and component interaction patterns</li><li><span class="check-icon" aria-hidden="true">✓</span> Production best practices, pitfalls, and interview preparation</li><li><span class="check-icon" aria-hidden="true">✓</span> Hands-on example using ANSI SQL</li><li><span class="check-icon" aria-hidden="true">✓</span> Clear linkage to prior and upcoming learning steps</li></ul>
+        </section>
+        
+      <section class="learning-section" id="production-notes">
+        <h2>Production Notes</h2>
+        <div class="de-notes-grid"><div class="de-note-card"><h3>Best Practices</h3><ul><li>Start with the simplest design that meets requirements — add complexity only with measured need</li><li>Pin tool and library versions; reproduce environments with containers or IaC</li><li>Write automated tests for critical paths before expanding scope</li><li>Document assumptions, inputs, outputs, SLAs, and known limitations in team wikis</li><li>Use structured logging with correlation IDs for cross-service debugging</li><li>Monitor key metrics from day one — latency, errors, cost, data freshness</li><li>Apply least-privilege access for credentials, API keys, and cloud roles</li><li>Peer-review introduction to sql changes; treat learning-path code as a draft requiring hardening for prod</li></ul></div><div class="de-note-card"><h3>Common Pitfalls</h3><ul><li>Skipping fundamentals and jumping to advanced introduction to sql patterns prematurely</li><li>Copy-pasting examples without understanding trade-offs or edge cases</li><li>Ignoring error handling, timeouts, and partial-failure recovery</li><li>Not validating outputs against representative production-scale data</li><li>Hard-coding secrets, connection strings, or environment-specific paths</li><li>Omitting observability — flying blind during incidents</li><li>Treating notebook or tutorial code as production-ready without tests and review</li></ul></div><div class="de-note-card"><h3>Interview Preparation</h3><ul><li>Open with a crisp definition of introduction to sql, then walk through a concrete SQL and relational analytics example</li><li>Discuss trade-offs for conceptual architecture and learning roadmap — interviewers reward reasoning over memorization</li><li>Mention tools: ANSI SQL,  T-SQL,  PostgreSQL and when you would choose each</li><li>Cover failure modes, debugging steps, and how you would monitor in production</li><li>Connect to a project story: problem, approach, metrics improved, lessons learned</li><li>Whiteboard the data/control flow for introduction to sql including one optimization you would make</li></ul></div></div>
+      </section>
+        
+      <section class="learning-section code-section" id="code-example">
+        <h2>Code Example</h2>
+        <pre class="code-block"><code class="language-sql">-- Introduction to SQL — analytical query with CTE
+WITH active_users AS (
+  SELECT user_id
+  FROM events
+  WHERE event_date &gt;= CURRENT_DATE - INTERVAL '30' DAY
+  GROUP BY user_id
+  HAVING COUNT(*) &gt;= 5
+)
+SELECT p.plan_name, COUNT(DISTINCT s.user_id) AS active_subscribers
+FROM subscriptions s
+JOIN plans p ON p.plan_id = s.plan_id
+JOIN active_users a ON a.user_id = s.user_id
+WHERE s.status = 'active'
+GROUP BY p.plan_name
+ORDER BY active_subscribers DESC;</code></pre>
+      </section>
+        
+        <nav class="step-nav" aria-label="Learning path navigation"><span class="step-nav-spacer"></span><a href="../../../programming/sql/select-basics/index.html" class="step-nav-link step-nav-next">
+        <span class="step-nav-label">Next →</span>
+        <span class="step-nav-title">SELECT Basics</span>
+      </a></nav>
+      </article>
+    </main>
+    <aside id="sidebar-right"></aside>
+  </div>
+  <div id="site-footer"></div>
+  <script src="../../../assets/js/main.js"></script>
+  
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        if (typeof mermaid !== 'undefined') {
+          mermaid.initialize({
+            startOnLoad: true,
+            theme: 'neutral',
+            securityLevel: 'loose',
+            themeVariables: {
+              primaryColor: '#e8f4fc',
+              primaryTextColor: '#1e293b',
+              primaryBorderColor: '#94a3b8',
+              lineColor: '#64748b',
+              secondaryColor: '#f1f5f9',
+              tertiaryColor: '#ffffff',
+              background: '#ffffff',
+              mainBkg: '#ffffff',
+              nodeBorder: '#94a3b8',
+              clusterBkg: '#f8fafc',
+              titleColor: '#0f172a',
+              edgeLabelBackground: '#ffffff'
+            }
+          });
+        }
+      });
+    </script>
+</body>
+</html>

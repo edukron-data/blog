@@ -1,0 +1,369 @@
+/* Azure Data Engineering — animated learning diagrams */
+
+.de-anim-section {
+  margin-bottom: 2rem;
+}
+
+.de-anim-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.de-anim-controls {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.de-anim-btn {
+  padding: 0.35rem 0.85rem;
+  font-size: 0.82rem;
+  font-weight: 600;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--surface2);
+  color: var(--text);
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s;
+}
+
+.de-anim-btn:hover {
+  border-color: var(--spark-orange);
+  background: var(--surface);
+}
+
+.de-anim-btn.active {
+  border-color: var(--spark-orange);
+  background: rgba(249, 115, 22, 0.12);
+  color: var(--spark-orange);
+}
+
+.de-anim-canvas {
+  position: relative;
+  background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+  border: 1px solid #334155;
+  border-radius: 12px;
+  padding: 1.5rem;
+  min-height: 280px;
+  overflow: hidden;
+}
+
+.de-anim-desc {
+  color: var(--muted);
+  font-size: 0.92rem;
+  margin-bottom: 1rem;
+}
+
+/* Step indicator */
+.de-anim-steps {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: 1rem;
+}
+
+.de-anim-step-pill {
+  padding: 0.3rem 0.65rem;
+  font-size: 0.75rem;
+  border-radius: 20px;
+  background: #334155;
+  color: #94a3b8;
+  border: 1px solid transparent;
+  transition: all 0.35s ease;
+}
+
+.de-anim-step-pill.active {
+  background: rgba(249, 115, 22, 0.2);
+  color: #fb923c;
+  border-color: #f97316;
+}
+
+.de-anim-step-pill.done {
+  background: rgba(34, 197, 94, 0.15);
+  color: #4ade80;
+  border-color: #22c55e;
+}
+
+/* Pipeline flow */
+.de-flow-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  padding: 1rem 0;
+}
+
+.de-flow-node {
+  position: relative;
+  min-width: 110px;
+  padding: 0.75rem 0.9rem;
+  background: #1e293b;
+  border: 2px solid #475569;
+  border-radius: 10px;
+  text-align: center;
+  transition: border-color 0.4s, box-shadow 0.4s, transform 0.4s;
+}
+
+.de-flow-node.active {
+  border-color: #f97316;
+  box-shadow: 0 0 20px rgba(249, 115, 22, 0.35);
+  transform: scale(1.05);
+}
+
+.de-flow-node.done {
+  border-color: #22c55e;
+}
+
+.de-flow-node .de-node-icon {
+  font-size: 1.4rem;
+  display: block;
+  margin-bottom: 0.25rem;
+}
+
+.de-flow-node .de-node-label {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: #e2e8f0;
+  line-height: 1.3;
+}
+
+.de-flow-arrow {
+  color: #64748b;
+  font-size: 1.2rem;
+  transition: color 0.4s;
+}
+
+.de-flow-arrow.active {
+  color: #f97316;
+}
+
+/* Data packet animation */
+.de-packet {
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  background: #f97316;
+  border-radius: 50%;
+  box-shadow: 0 0 10px #f97316;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.de-packet.flying {
+  opacity: 1;
+  animation: de-packet-fly 1.2s ease-in-out forwards;
+}
+
+@keyframes de-packet-fly {
+  0% { opacity: 0; transform: translate(0, 0) scale(0.5); }
+  15% { opacity: 1; transform: scale(1); }
+  85% { opacity: 1; }
+  100% { opacity: 0; transform: translate(var(--tx, 120px), var(--ty, 0)) scale(0.5); }
+}
+
+/* Medallion layers */
+.de-medallion-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.de-medallion-layer {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 1.25rem;
+  border-radius: 10px;
+  border: 2px solid transparent;
+  transition: all 0.5s ease;
+}
+
+.de-medallion-layer.bronze { background: rgba(180, 83, 9, 0.15); }
+.de-medallion-layer.silver { background: rgba(148, 163, 184, 0.15); }
+.de-medallion-layer.gold { background: rgba(234, 179, 8, 0.15); }
+
+.de-medallion-layer.active {
+  border-color: #f97316;
+  box-shadow: 0 0 16px rgba(249, 115, 22, 0.3);
+  transform: translateX(8px);
+}
+
+.de-medallion-layer.done { opacity: 0.85; }
+
+.de-layer-badge {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 0.7rem;
+  flex-shrink: 0;
+}
+
+.de-medallion-layer.bronze .de-layer-badge { background: #b45309; color: #fff; }
+.de-medallion-layer.silver .de-layer-badge { background: #94a3b8; color: #1e293b; }
+.de-medallion-layer.gold .de-layer-badge { background: #eab308; color: #1e293b; }
+
+.de-layer-text {
+  color: #e2e8f0;
+  font-size: 0.85rem;
+  line-height: 1.4;
+}
+
+.de-layer-text strong {
+  display: block;
+  font-size: 0.95rem;
+  margin-bottom: 0.15rem;
+}
+
+/* Delta log */
+.de-delta-log {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  max-width: 560px;
+  margin: 0 auto;
+}
+
+.de-delta-files, .de-delta-commits {
+  background: #0f172a;
+  border: 1px solid #334155;
+  border-radius: 8px;
+  padding: 0.75rem;
+}
+
+.de-delta-files h4, .de-delta-commits h4 {
+  font-size: 0.75rem;
+  color: #94a3b8;
+  margin: 0 0 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.de-file-block, .de-commit-entry {
+  padding: 0.4rem 0.6rem;
+  margin-bottom: 0.35rem;
+  border-radius: 4px;
+  font-size: 0.72rem;
+  font-family: var(--mono);
+  background: #1e293b;
+  color: #94a3b8;
+  border-left: 3px solid transparent;
+  transition: all 0.4s;
+}
+
+.de-file-block.active, .de-commit-entry.active {
+  border-left-color: #f97316;
+  color: #fb923c;
+  background: rgba(249, 115, 22, 0.1);
+}
+
+.de-file-block.done, .de-commit-entry.done {
+  border-left-color: #22c55e;
+  color: #4ade80;
+}
+
+/* Storage zones */
+.de-zones-row {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  padding: 1rem 0;
+}
+
+.de-zone-box {
+  width: 130px;
+  padding: 1rem 0.75rem;
+  border-radius: 10px;
+  text-align: center;
+  border: 2px solid #475569;
+  background: #1e293b;
+  transition: all 0.45s ease;
+}
+
+.de-zone-box.active {
+  border-color: #3b82f6;
+  box-shadow: 0 0 18px rgba(59, 130, 246, 0.35);
+  transform: translateY(-6px);
+}
+
+.de-zone-box.done { border-color: #22c55e; }
+
+.de-zone-box .de-zone-name {
+  font-weight: 700;
+  font-size: 0.85rem;
+  color: #e2e8f0;
+  margin-bottom: 0.35rem;
+}
+
+.de-zone-box .de-zone-desc {
+  font-size: 0.68rem;
+  color: #94a3b8;
+  line-height: 1.3;
+}
+
+/* Notes grid */
+.de-notes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1rem;
+  margin-top: 0.5rem;
+}
+
+.de-note-card {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem 1.1rem;
+}
+
+.de-note-card h3 {
+  font-size: 0.95rem;
+  font-weight: 700;
+  margin: 0 0 0.6rem;
+  color: var(--text);
+}
+
+.de-note-card ul {
+  margin: 0;
+  padding: 0 0 0 1.1rem;
+  font-size: 0.88rem;
+  line-height: 1.55;
+  color: var(--text);
+}
+
+.de-note-card li { margin-bottom: 0.35rem; }
+
+.de-architecture-block {
+  background: var(--surface2);
+  border-left: 4px solid var(--blue);
+  border-radius: 0 8px 8px 0;
+  padding: 1rem 1.25rem;
+  margin-bottom: 0.85rem;
+  font-size: 0.92rem;
+  line-height: 1.65;
+}
+
+.de-architecture-block:last-child { margin-bottom: 0; }
+
+.de-detailed-notes p {
+  margin-bottom: 0.85rem;
+  line-height: 1.7;
+}
+
+@media (max-width: 640px) {
+  .de-flow-row { gap: 0.35rem; }
+  .de-flow-node { min-width: 85px; padding: 0.5rem; font-size: 0.65rem; }
+  .de-flow-arrow { font-size: 0.9rem; }
+  .de-delta-log { grid-template-columns: 1fr; }
+}

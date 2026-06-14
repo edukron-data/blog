@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en" data-page="interview-questions" data-category="interview-questions" data-section="azure-devops-interview-questions" data-topic="ci-interview" data-step="5" data-total-steps="20">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Continuous Integration — EDUKRON BLOB</title>
+  <meta name="description" content="Continuous Integration — Azure DevOps Interview Questions. Build automation, test gates, and CI best practices.">
+  <link rel="stylesheet" href="../../../assets/css/style.css">
+  
+</head>
+<body>
+  <div id="site-header"></div>
+  <div class="site-layout">
+    <aside id="sidebar-left"></aside>
+    <main class="main-content">
+      <nav class="breadcrumb" aria-label="Breadcrumb"><a href="../../../index.html">Home</a><span class="breadcrumb-sep">/</span><a href="../../../interview-questions/index.html">Interview Questions</a><span class="breadcrumb-sep">/</span><a href="../../../interview-questions/azure-devops-interview-questions/index.html">Azure DevOps Interview Questions</a><span class="breadcrumb-sep">/</span><span aria-current="page">Continuous Integration</span></nav>
+      <header class="page-header">
+        <span class="badge">interview questions</span>
+        <h1>Continuous Integration</h1>
+        <p class="page-subtitle">Build automation, test gates, and CI best practices.</p>
+      </header>
+      
+      <article class="learning-plan">
+        
+      <div class="learning-progress" aria-label="Learning path progress">
+        <div class="learning-progress-header">
+          <span class="phase-badge phase-beginner">Beginner</span>
+          <span class="read-time">~13 min read</span>
+        </div>
+        <div class="progress-bar-track" role="progressbar" aria-valuenow="5" aria-valuemin="1" aria-valuemax="20" aria-label="Progress through this learning path">
+          <div class="progress-bar-fill" style="width:25%"></div>
+        </div>
+      </div>
+        <section class="learning-section" id="objective">
+          <h2>Learning Objective</h2>
+          <ul class="checklist objectives-list"><li>Master continuous integration Azure DevOps interview questions at foundational depth</li><li>Practice structured answers with examples, metrics, and trade-offs</li><li>Review Git, YAML pipelines, Docker, Kubernetes, Terraform concepts commonly probed in follow-ups</li><li>Identify weak areas and map them to DevSpark learning path steps</li><li>Build a personal anecdote bank connecting theory to project experience</li></ul>
+        </section>
+        <section class="learning-section" id="prerequisites">
+          <h2>Prerequisites</h2>
+          <ul class="prereq-list"><li><a href="../../../interview-questions/azure-devops-interview-questions/yaml-pipelines-interview/index.html">YAML Pipelines</a></li><li><a href="../../../interview-questions/azure-devops-interview-questions/azure-repos-interview/index.html">Azure Repos</a></li></ul>
+        </section>
+        <section class="learning-section" id="overview">
+          <h2>Overview</h2>
+          <p><strong>Continuous Integration</strong> — Build automation, test gates, and CI best practices.</p>
+        <p>This page contains <strong>10 curated Q&amp;A pairs</strong> focused on Azure DevOps interviews — not generic placeholders. Each answer models how senior engineers communicate: precise definitions, concrete examples, and trade-offs.</p>
+        <p>Interviewers at foundational difficulty expect you to connect continuous integration to Git, YAML pipelines, Docker, Kubernetes, Terraform. Practice aloud, time yourself (2–3 minutes per answer), and prepare one personal project story that touches these themes.</p>
+        <p>After reviewing all questions, attempt mock interviews with a peer. Have them ask unpredictable follow-ups — "What if data volume 10x?" or "How would you test this?" — and refine your responses.</p>
+        <p>Continue to the next interview page to broaden coverage across the Azure DevOps competency map.</p>
+        </section>
+        
+        <section class="learning-section" id="key-concepts">
+          <h2>Key Concepts</h2>
+          <ul class="concept-list"><li>Continuous Integration core topics</li><li>Azure DevOps terminology and patterns</li><li>Answer structuring (STAR / definition-example-tradeoff)</li><li>Whiteboard and live coding etiquette</li><li>Follow-up depth areas</li><li>Common mistakes that fail interviews</li><li>Metrics and business impact framing</li><li>Testing and production hardening talking points</li><li>Security and compliance angles</li><li>Resources for continued drill practice</li></ul>
+        </section>
+        
+        
+        <section class="learning-section" id="what-youll-learn">
+          <h2>What You&apos;ll Learn</h2>
+          <ul class="learn-checklist"><li><span class="check-icon" aria-hidden="true">✓</span> High-frequency question patterns at this difficulty</li><li><span class="check-icon" aria-hidden="true">✓</span> Model answers with examples and trade-offs</li><li><span class="check-icon" aria-hidden="true">✓</span> Follow-up topics interviewers commonly probe</li><li><span class="check-icon" aria-hidden="true">✓</span> Red flags that weaken technical interviews</li><li><span class="check-icon" aria-hidden="true">✓</span> Whiteboard/live-coding strategies</li><li><span class="check-icon" aria-hidden="true">✓</span> How to tie answers to measurable business outcomes</li></ul>
+        </section>
+        
+        
+        
+      <section class="learning-section" id="interview-qa">
+        <h2>Interview Questions &amp; Answers</h2>
+        <div class="interview-qa-list">
+        <div class="interview-qa-item">
+          <h3 class="qa-question">Q1: Terraform state locking — why important?</h3>
+          <p class="qa-answer"><strong>Answer:</strong> Prevents concurrent apply corrupting state. Remote backend (Azure Storage + blob lease) enables team collaboration. Never commit secrets in state — use sensitive outputs carefully.</p>
+        </div>
+        <div class="interview-qa-item">
+          <h3 class="qa-question">Q2: How do you secure pipeline secrets?</h3>
+          <p class="qa-answer"><strong>Answer:</strong> Azure DevOps variable groups linked to Key Vault, secret variables never logged, OIDC federated credentials to Azure instead of long-lived SP secrets, least privilege service connections.</p>
+        </div>
+        <div class="interview-qa-item">
+          <h3 class="qa-question">Q3: AKS networking: Azure CNI vs kubenet.</h3>
+          <p class="qa-answer"><strong>Answer:</strong> Azure CNI assigns VNet IPs to pods — better integration with NSGs/private endpoints, consumes IP space. Kubenet uses overlay — simpler IP management, different routing constraints. Choose based on IP capacity and security requirements.</p>
+        </div>
+        <div class="interview-qa-item">
+          <h3 class="qa-question">Q4: Incident response steps for failed production deployment.</h3>
+          <p class="qa-answer"><strong>Answer:</strong> Detect via alerts, assess blast radius, rollback release or redeploy last good artifact, communicate status, root cause with timeline, add automated test/gate preventing recurrence, postmortem blameless.</p>
+        </div>
+        <div class="interview-qa-item">
+          <h3 class="qa-question">Q5: Design CI/CD for microservices monorepo.</h3>
+          <p class="qa-answer"><strong>Answer:</strong> Path filters triggering service-specific pipelines, shared template library, independent versioning/tags, contract tests, deployment rings, artifact promotion across environments, observability per service.</p>
+        </div>
+        <div class="interview-qa-item">
+          <h3 class="qa-question">Q6: Explain CI vs CD vs continuous deployment.</h3>
+          <p class="qa-answer"><strong>Answer:</strong> CI integrates code frequently with automated build/test. CD ensures artifact is always deployable. Continuous deployment auto-releases to prod after gates. Discuss approval environments and feature flags for risk control.</p>
+        </div>
+        <div class="interview-qa-item">
+          <h3 class="qa-question">Q7: How do branch policies improve quality?</h3>
+          <p class="qa-answer"><strong>Answer:</strong> Require reviewers, build validation, comment resolution, merge restrictions. Prevents direct pushes to main, enforces tests and code review — critical for regulated industries.</p>
+        </div>
+        <div class="interview-qa-item">
+          <h3 class="qa-question">Q8: Compare blue-green vs canary deployments.</h3>
+          <p class="qa-answer"><strong>Answer:</strong> Blue-green swaps traffic between two full environments — fast rollback, double infra cost. Canary routes small traffic percentage to new version, monitors metrics, gradually increases — lower blast radius, needs traffic routing (Ingress/service mesh).</p>
+        </div>
+        <div class="interview-qa-item">
+          <h3 class="qa-question">Q9: What follow-ups might interviewers ask after continuous integration questions?</h3>
+          <p class="qa-answer"><strong>Answer:</strong> Expect depth on edge cases, trade-offs between Git, YAML pipelines, Docker, Kubernetes, Terraform, failure recovery, and how your answer changes at scale or under compliance constraints (HIPAA, SOC2).</p>
+        </div>
+        <div class="interview-qa-item">
+          <h3 class="qa-question">Q10: How do you communicate continuous integration answers clearly in a live interview?</h3>
+          <p class="qa-answer"><strong>Answer:</strong> Use structure: definition → example → trade-offs → production consideration. Write clean code or SQL incrementally, state assumptions, and narrate your thinking while validating with a small test case.</p>
+        </div></div>
+      </section>
+        <nav class="step-nav" aria-label="Learning path navigation"><a href="../../../interview-questions/azure-devops-interview-questions/yaml-pipelines-interview/index.html" class="step-nav-link step-nav-prev">
+        <span class="step-nav-label">← Previous</span>
+        <span class="step-nav-title">YAML Pipelines</span>
+      </a><a href="../../../interview-questions/azure-devops-interview-questions/cd-interview/index.html" class="step-nav-link step-nav-next">
+        <span class="step-nav-label">Next →</span>
+        <span class="step-nav-title">Continuous Deployment</span>
+      </a></nav>
+      </article>
+    </main>
+    <aside id="sidebar-right"></aside>
+  </div>
+  <div id="site-footer"></div>
+  <script src="../../../assets/js/main.js"></script>
+  
+</body>
+</html>

@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en" data-page="azure-devops" data-category="azure-devops" data-section="ci-cd" data-topic="index">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CI/CD — EDUKRON BLOB</title>
+  <meta name="description" content="CI/CD — Azure DevOps learning path on EDUKRON BLOB.">
+  <link rel="stylesheet" href="../../assets/css/style.css">
+  <link rel="stylesheet" href="../../assets/css/flow-diagrams.css">
+</head>
+<body>
+  <div id="site-header"></div>
+  <div class="site-layout">
+    <aside id="sidebar-left"></aside>
+    <main class="main-content">
+      <nav class="breadcrumb" aria-label="Breadcrumb"><a href="../../index.html">Home</a><span class="breadcrumb-sep">/</span><a href="../../azure-devops/index.html">Azure DevOps</a><span class="breadcrumb-sep">/</span><span aria-current="page">CI/CD</span></nav>
+      <header class="page-header">
+        <span class="badge">azure devops</span>
+        <h1>CI/CD</h1>
+        <p class="page-subtitle">Azure DevOps · CI/CD</p>
+      </header>
+      
+      <article class="learning-plan topic-index">
+        <section class="learning-section">
+          <h2>Learning Path Overview</h2>
+          <p>The <strong>CI/CD</strong> path covers principles, pipeline design, testing automation, deployment strategies (blue-green, canary), GitOps, and organizational maturity.</p>
+          <p class="learning-callout">Work through the topics below in order for the best experience — each lesson builds on the previous one from beginner through advanced.</p>
+        </section>
+        
+      <section class="learning-section flow-diagram-section" id="flow-diagram">
+        <h2>CI/CD — Learning Path Overview</h2>
+        <p class="flow-diagram-desc">Topics progress from foundations through advanced production patterns. Follow the path in order for the best learning experience.</p>
+        <div class="flow-diagram-container">
+          <pre class="mermaid">flowchart LR
+    S0["CI/CD Overview"]
+    S1["CI Principles"]
+    S2["CD Principles"]
+    S3["Pipeline Design"]
+    S4["…"]
+    S5["DORA Metrics"]
+    S6["CI/CD Maturity Model"]
+    S7["Trunk-Based Developm…"]
+    S8["CI/CD Capstone"]
+    S0 --> S1
+    S1 --> S2
+    S2 --> S3
+    S3 --> S4
+    S4 --> S5
+    S5 --> S6
+    S6 --> S7
+    S7 --> S8</pre>
+        </div>
+      </section>
+        <section class="learning-section">
+          <h2>Path Phases</h2>
+          <div class="de-notes-grid">
+          <div class="de-note-card">
+            <h3>Phase 1: CI/CD Foundations</h3>
+            <p>Definitions, CI/CD principles, pipeline design, branching, automated testing.</p>
+          </div>
+          <div class="de-note-card">
+            <h3>Phase 2: Delivery Patterns</h3>
+            <p>Artifact promotion, environments, strategies, feature flags, GitOps, DORA metrics.</p>
+          </div>
+          <div class="de-note-card">
+            <h3>Phase 3: Organizational CI/CD</h3>
+            <p>Security in pipeline, compliance, monorepo patterns, maturity models, capstone.</p>
+          </div></div>
+        </section>
+        <section class="learning-section">
+          <h2>Prerequisites</h2>
+          <ul class="prereq-list"><li>Azure Pipelines or similar CI tool exposure helpful</li></ul>
+        </section>
+        <section class="learning-section">
+          <h2>What You Will Achieve</h2>
+          <ul class="learn-checklist"><li><span class="check-icon" aria-hidden="true">✓</span> Design CI/CD workflows for microservices</li><li><span class="check-icon" aria-hidden="true">✓</span> Choose deployment strategies for risk tolerance</li><li><span class="check-icon" aria-hidden="true">✓</span> Measure DORA metrics and improve release frequency</li></ul>
+        </section>
+        <section class="learning-section">
+          <h2>All Topics</h2>
+          <ol class="path-step-list">
+        <li class="path-step-item">
+          <div class="path-step-body">
+            <a href="cicd-overview/index.html">CI/CD Overview</a>
+            <p>Continuous integration, delivery, and deployment definitions.</p>
+          </div>
+        </li>
+        <li class="path-step-item">
+          <div class="path-step-body">
+            <a href="ci-principles/index.html">CI Principles</a>
+            <p>Frequent commits, automated builds, and fast feedback loops.</p>
+          </div>
+        </li>
+        <li class="path-step-item">
+          <div class="path-step-body">
+            <a href="cd-principles/index.html">CD Principles</a>
+            <p>Automated releases, deployment pipelines, and rollback.</p>
+          </div>
+        </li>
+        <li class="path-step-item">
+          <div class="path-step-body">
+            <a href="pipeline-design/index.html">Pipeline Design</a>
+            <p>Stage ordering, artifact flow, and environment promotion.</p>
+          </div>
+        </li>
+        <li class="path-step-item">
+          <div class="path-step-body">
+            <a href="branching-cicd/index.html">Branching for CI/CD</a>
+            <p>Feature branches, main protection, and release branches.</p>
+          </div>
+        </li>
+        <li class="path-step-item">
+          <div class="path-step-body">
+            <a href="automated-testing/index.html">Automated Testing in CI</a>
+            <p>Unit, integration, and E2E tests in the pipeline.</p>
+          </div>
+        </li>
+        <li class="path-step-item">
+          <div class="path-step-body">
+            <a href="deployment-strategies/index.html">Deployment Strategies</a>
+            <p>Blue-green, canary, rolling, and feature flags.</p>
+          </div>
+        </li>
+        <li class="path-step-item">
+          <div class="path-step-body">
+            <a href="infrastructure-cicd/index.html">Infrastructure CI/CD</a>
+            <p>Terraform/Bicep in pipelines and IaC validation.</p>
+          </div>
+        </li>
+        <li class="path-step-item">
+          <div class="path-step-body">
+            <a href="database-cicd/index.html">Database CI/CD</a>
+            <p>Schema migrations, flyway, and database deployment patterns.</p>
+          </div>
+        </li>
+        <li class="path-step-item">
+          <div class="path-step-body">
+            <a href="container-cicd/index.html">Container CI/CD</a>
+            <p>Build, scan, push, and deploy container images.</p>
+          </div>
+        </li>
+        <li class="path-step-item">
+          <div class="path-step-body">
+            <a href="gitops/index.html">GitOps</a>
+            <p>Declarative deployments, Argo CD, and Flux concepts.</p>
+          </div>
+        </li>
+        <li class="path-step-item">
+          <div class="path-step-body">
+            <a href="feature-flags/index.html">Feature Flags</a>
+            <p>Progressive delivery and LaunchDarkly-style rollouts.</p>
+          </div>
+        </li>
+        <li class="path-step-item">
+          <div class="path-step-body">
+            <a href="rollback-strategies/index.html">Rollback Strategies</a>
+            <p>Automated rollback, health checks, and smoke tests.</p>
+          </div>
+        </li>
+        <li class="path-step-item">
+          <div class="path-step-body">
+            <a href="environment-config/index.html">Environment Configuration</a>
+            <p>Dev, staging, prod parity and config management.</p>
+          </div>
+        </li>
+        <li class="path-step-item">
+          <div class="path-step-body">
+            <a href="secrets-cicd/index.html">Secrets in CI/CD</a>
+            <p>Key Vault integration, secret rotation, and pipeline security.</p>
+          </div>
+        </li>
+        <li class="path-step-item">
+          <div class="path-step-body">
+            <a href="compliance-gates/index.html">Compliance Gates</a>
+            <p>Audit trails, approval workflows, and change management.</p>
+          </div>
+        </li>
+        <li class="path-step-item">
+          <div class="path-step-body">
+            <a href="dora-metrics/index.html">DORA Metrics</a>
+            <p>Deployment frequency, lead time, MTTR, and change failure rate.</p>
+          </div>
+        </li>
+        <li class="path-step-item">
+          <div class="path-step-body">
+            <a href="cicd-maturity/index.html">CI/CD Maturity Model</a>
+            <p>Assessing and improving your delivery pipeline maturity.</p>
+          </div>
+        </li>
+        <li class="path-step-item">
+          <div class="path-step-body">
+            <a href="trunk-based/index.html">Trunk-Based Development</a>
+            <p>Short-lived branches and continuous integration at scale.</p>
+          </div>
+        </li>
+        <li class="path-step-item">
+          <div class="path-step-body">
+            <a href="cicd-capstone/index.html">CI/CD Capstone</a>
+            <p>Design a CI/CD strategy for a microservices application.</p>
+          </div>
+        </li></ol>
+        </section>
+      </article>
+    </main>
+    <aside id="sidebar-right"></aside>
+  </div>
+  <div id="site-footer"></div>
+  <script src="../../assets/js/main.js"></script>
+  
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        if (typeof mermaid !== 'undefined') {
+          mermaid.initialize({
+            startOnLoad: true,
+            theme: 'neutral',
+            securityLevel: 'loose',
+            themeVariables: {
+              primaryColor: '#e8f4fc',
+              primaryTextColor: '#1e293b',
+              primaryBorderColor: '#94a3b8',
+              lineColor: '#64748b',
+              secondaryColor: '#f1f5f9',
+              tertiaryColor: '#ffffff',
+              background: '#ffffff',
+              mainBkg: '#ffffff',
+              nodeBorder: '#94a3b8',
+              clusterBkg: '#f8fafc',
+              titleColor: '#0f172a',
+              edgeLabelBackground: '#ffffff'
+            }
+          });
+        }
+      });
+    </script>
+</body>
+</html>

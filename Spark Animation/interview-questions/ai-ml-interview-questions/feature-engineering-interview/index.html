@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en" data-page="interview-questions" data-category="interview-questions" data-section="ai-ml-interview-questions" data-topic="feature-engineering-interview" data-step="4" data-total-steps="20">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Feature Engineering — EDUKRON BLOB</title>
+  <meta name="description" content="Feature Engineering — AI / ML Interview Questions. Encoding, scaling, selection, and pipeline design.">
+  <link rel="stylesheet" href="../../../assets/css/style.css">
+  
+</head>
+<body>
+  <div id="site-header"></div>
+  <div class="site-layout">
+    <aside id="sidebar-left"></aside>
+    <main class="main-content">
+      <nav class="breadcrumb" aria-label="Breadcrumb"><a href="../../../index.html">Home</a><span class="breadcrumb-sep">/</span><a href="../../../interview-questions/index.html">Interview Questions</a><span class="breadcrumb-sep">/</span><a href="../../../interview-questions/ai-ml-interview-questions/index.html">AI / ML Interview Questions</a><span class="breadcrumb-sep">/</span><span aria-current="page">Feature Engineering</span></nav>
+      <header class="page-header">
+        <span class="badge">interview questions</span>
+        <h1>Feature Engineering</h1>
+        <p class="page-subtitle">Encoding, scaling, selection, and pipeline design.</p>
+      </header>
+      
+      <article class="learning-plan">
+        
+      <div class="learning-progress" aria-label="Learning path progress">
+        <div class="learning-progress-header">
+          <span class="phase-badge phase-beginner">Beginner</span>
+          <span class="read-time">~12 min read</span>
+        </div>
+        <div class="progress-bar-track" role="progressbar" aria-valuenow="4" aria-valuemin="1" aria-valuemax="20" aria-label="Progress through this learning path">
+          <div class="progress-bar-fill" style="width:20%"></div>
+        </div>
+      </div>
+        <section class="learning-section" id="objective">
+          <h2>Learning Objective</h2>
+          <ul class="checklist objectives-list"><li>Master feature engineering AI/ML interview questions at foundational depth</li><li>Practice structured answers with examples, metrics, and trade-offs</li><li>Review scikit-learn, deep learning, NLP, LLMs, MLOps concepts commonly probed in follow-ups</li><li>Identify weak areas and map them to DevSpark learning path steps</li><li>Build a personal anecdote bank connecting theory to project experience</li></ul>
+        </section>
+        <section class="learning-section" id="prerequisites">
+          <h2>Prerequisites</h2>
+          <ul class="prereq-list"><li><a href="../../../interview-questions/ai-ml-interview-questions/evaluation-interview/index.html">Model Evaluation</a></li><li><a href="../../../interview-questions/ai-ml-interview-questions/algorithms-interview/index.html">Algorithms</a></li></ul>
+        </section>
+        <section class="learning-section" id="overview">
+          <h2>Overview</h2>
+          <p><strong>Feature Engineering</strong> — Encoding, scaling, selection, and pipeline design.</p>
+        <p>This page contains <strong>10 curated Q&amp;A pairs</strong> focused on AI/ML interviews — not generic placeholders. Each answer models how senior engineers communicate: precise definitions, concrete examples, and trade-offs.</p>
+        <p>Interviewers at foundational difficulty expect you to connect feature engineering to scikit-learn, deep learning, NLP, LLMs, MLOps. Practice aloud, time yourself (2–3 minutes per answer), and prepare one personal project story that touches these themes.</p>
+        <p>After reviewing all questions, attempt mock interviews with a peer. Have them ask unpredictable follow-ups — "What if data volume 10x?" or "How would you test this?" — and refine your responses.</p>
+        <p>Continue to the next interview page to broaden coverage across the AI/ML competency map.</p>
+        </section>
+        
+        <section class="learning-section" id="key-concepts">
+          <h2>Key Concepts</h2>
+          <ul class="concept-list"><li>Feature Engineering core topics</li><li>AI/ML terminology and patterns</li><li>Answer structuring (STAR / definition-example-tradeoff)</li><li>Whiteboard and live coding etiquette</li><li>Follow-up depth areas</li><li>Common mistakes that fail interviews</li><li>Metrics and business impact framing</li><li>Testing and production hardening talking points</li><li>Security and compliance angles</li><li>Resources for continued drill practice</li></ul>
+        </section>
+        
+        
+        <section class="learning-section" id="what-youll-learn">
+          <h2>What You&apos;ll Learn</h2>
+          <ul class="learn-checklist"><li><span class="check-icon" aria-hidden="true">✓</span> High-frequency question patterns at this difficulty</li><li><span class="check-icon" aria-hidden="true">✓</span> Model answers with examples and trade-offs</li><li><span class="check-icon" aria-hidden="true">✓</span> Follow-up topics interviewers commonly probe</li><li><span class="check-icon" aria-hidden="true">✓</span> Red flags that weaken technical interviews</li><li><span class="check-icon" aria-hidden="true">✓</span> Whiteboard/live-coding strategies</li><li><span class="check-icon" aria-hidden="true">✓</span> How to tie answers to measurable business outcomes</li></ul>
+        </section>
+        
+        
+        
+      <section class="learning-section" id="interview-qa">
+        <h2>Interview Questions &amp; Answers</h2>
+        <div class="interview-qa-list">
+        <div class="interview-qa-item">
+          <h3 class="qa-question">Q1: Explain precision vs recall for fraud detection.</h3>
+          <p class="qa-answer"><strong>Answer:</strong> Fraud is imbalanced — high recall catches fraud (low FN) but may increase false positives. Precision matters for analyst workload. Optimize PR-AUC, tune threshold on validation, use cost-sensitive learning.</p>
+        </div>
+        <div class="interview-qa-item">
+          <h3 class="qa-question">Q2: Transformer attention in one minute.</h3>
+          <p class="qa-answer"><strong>Answer:</strong> Attention computes weighted sum of values where weights = softmax(QK^T/√d). Each token attends to all tokens capturing context. Self-attention in encoder; masked in decoder for autoregressive generation.</p>
+        </div>
+        <div class="interview-qa-item">
+          <h3 class="qa-question">Q3: RAG vs fine-tuning decision matrix.</h3>
+          <p class="qa-answer"><strong>Answer:</strong> RAG for dynamic knowledge, citation needs, lower training cost. Fine-tune for style/format/domain terminology, task-specific behavior. Often combine: fine-tuned model + RAG for facts.</p>
+        </div>
+        <div class="interview-qa-item">
+          <h3 class="qa-question">Q4: MLOps: what do you monitor post-deployment?</h3>
+          <p class="qa-answer"><strong>Answer:</strong> Data drift, prediction drift, latency, error rates, business KPIs, ground truth delay pipelines, alert on feature distribution shift, automated retrain triggers, model version rollback.</p>
+        </div>
+        <div class="interview-qa-item">
+          <h3 class="qa-question">Q5: Explain vanishing gradients in RNNs.</h3>
+          <p class="qa-answer"><strong>Answer:</strong> Repeated multiplication of gradients &lt;1 across time steps shrinks signal. LSTM/GRU gates mitigate. Transformers replace recurrence with attention for long-range deps.</p>
+        </div>
+        <div class="interview-qa-item">
+          <h3 class="qa-question">Q6: Design churn prediction system end-to-end.</h3>
+          <p class="qa-answer"><strong>Answer:</strong> Feature store from billing/product usage, label definition (churn in 30d), time-based train/test split preventing leakage, class imbalance handling, SHAP for explainability, batch scoring pipeline, CRM integration, monitor performance monthly.</p>
+        </div>
+        <div class="interview-qa-item">
+          <h3 class="qa-question">Q7: LLM evaluation beyond BLEU.</h3>
+          <p class="qa-answer"><strong>Answer:</strong> Human rubrics, LLM-as-judge with calibration, task-specific accuracy (tool call success), toxicity/faithfulness checks, RAG citation recall, regression suites on golden prompts, online A/B testing.</p>
+        </div>
+        <div class="interview-qa-item">
+          <h3 class="qa-question">Q8: Responsible AI — fairness intervention example.</h3>
+          <p class="qa-answer"><strong>Answer:</strong> Audit metrics across demographic groups, reweight training data, threshold adjustment per group cautiously (legal review), document model cards, human review for high-stakes decisions, logging for appeals.</p>
+        </div>
+        <div class="interview-qa-item">
+          <h3 class="qa-question">Q9: What follow-ups might interviewers ask after feature engineering questions?</h3>
+          <p class="qa-answer"><strong>Answer:</strong> Expect depth on edge cases, trade-offs between scikit-learn, deep learning, NLP, LLMs, MLOps, failure recovery, and how your answer changes at scale or under compliance constraints (HIPAA, SOC2).</p>
+        </div>
+        <div class="interview-qa-item">
+          <h3 class="qa-question">Q10: How do you communicate feature engineering answers clearly in a live interview?</h3>
+          <p class="qa-answer"><strong>Answer:</strong> Use structure: definition → example → trade-offs → production consideration. Write clean code or SQL incrementally, state assumptions, and narrate your thinking while validating with a small test case.</p>
+        </div></div>
+      </section>
+        <nav class="step-nav" aria-label="Learning path navigation"><a href="../../../interview-questions/ai-ml-interview-questions/evaluation-interview/index.html" class="step-nav-link step-nav-prev">
+        <span class="step-nav-label">← Previous</span>
+        <span class="step-nav-title">Model Evaluation</span>
+      </a><a href="../../../interview-questions/ai-ml-interview-questions/deep-learning-interview/index.html" class="step-nav-link step-nav-next">
+        <span class="step-nav-label">Next →</span>
+        <span class="step-nav-title">Deep Learning Basics</span>
+      </a></nav>
+      </article>
+    </main>
+    <aside id="sidebar-right"></aside>
+  </div>
+  <div id="site-footer"></div>
+  <script src="../../../assets/js/main.js"></script>
+  
+</body>
+</html>

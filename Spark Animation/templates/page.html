@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" data-page="{{PAGE_ID}}" data-category="{{CATEGORY_ID}}" data-section="{{TOPIC_ID}}" data-topic="{{SLUG}}"{{STEP_META}}>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{TITLE}} — EDUKRON BLOB</title>
+  <meta name="description" content="{{DESCRIPTION}}">
+  <link rel="stylesheet" href="{{ASSET_PREFIX}}assets/css/style.css">
+  {{EXTRA_HEAD}}
+</head>
+<body>
+  <div id="site-header"></div>
+  <div class="site-layout">
+    <aside id="sidebar-left"></aside>
+    <main class="main-content">
+      <nav class="breadcrumb" aria-label="Breadcrumb">{{BREADCRUMB}}</nav>
+      <header class="page-header">
+        <span class="badge">{{CATEGORY_LABEL}}</span>
+        <h1>{{HEADING}}</h1>
+        <p class="page-subtitle">{{SUBTITLE}}</p>
+      </header>
+      {{BODY}}
+    </main>
+    <aside id="sidebar-right"></aside>
+  </div>
+  <div id="site-footer"></div>
+  <script src="{{ASSET_PREFIX}}assets/js/main.js"></script>
+  {{EXTRA_SCRIPTS}}
+</body>
+</html>

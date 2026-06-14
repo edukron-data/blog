@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en" data-page="interview-questions" data-category="interview-questions" data-section="sql-interview-questions" data-topic="basics-select" data-step="1" data-total-steps="20">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SELECT Fundamentals — EDUKRON BLOB</title>
+  <meta name="description" content="SELECT Fundamentals — SQL Interview Questions. Basic queries, filtering, sorting, and aggregation questions.">
+  <link rel="stylesheet" href="../../../assets/css/style.css">
+  
+</head>
+<body>
+  <div id="site-header"></div>
+  <div class="site-layout">
+    <aside id="sidebar-left"></aside>
+    <main class="main-content">
+      <nav class="breadcrumb" aria-label="Breadcrumb"><a href="../../../index.html">Home</a><span class="breadcrumb-sep">/</span><a href="../../../interview-questions/index.html">Interview Questions</a><span class="breadcrumb-sep">/</span><a href="../../../interview-questions/sql-interview-questions/index.html">SQL Interview Questions</a><span class="breadcrumb-sep">/</span><span aria-current="page">SELECT Fundamentals</span></nav>
+      <header class="page-header">
+        <span class="badge">interview questions</span>
+        <h1>SELECT Fundamentals</h1>
+        <p class="page-subtitle">Basic queries, filtering, sorting, and aggregation questions.</p>
+      </header>
+      
+      <article class="learning-plan">
+        
+      <div class="learning-progress" aria-label="Learning path progress">
+        <div class="learning-progress-header">
+          <span class="phase-badge phase-beginner">Beginner</span>
+          <span class="read-time">~12 min read</span>
+        </div>
+        <div class="progress-bar-track" role="progressbar" aria-valuenow="1" aria-valuemin="1" aria-valuemax="20" aria-label="Progress through this learning path">
+          <div class="progress-bar-fill" style="width:5%"></div>
+        </div>
+      </div>
+        <section class="learning-section" id="objective">
+          <h2>Learning Objective</h2>
+          <ul class="checklist objectives-list"><li>Master select fundamentals SQL interview questions at foundational depth</li><li>Practice structured answers with examples, metrics, and trade-offs</li><li>Review joins, window functions, query plans, indexing concepts commonly probed in follow-ups</li><li>Identify weak areas and map them to DevSpark learning path steps</li><li>Build a personal anecdote bank connecting theory to project experience</li></ul>
+        </section>
+        <section class="learning-section" id="prerequisites">
+          <h2>Prerequisites</h2>
+          <p class="prereq-none">No prerequisites — this is an early step in the path.</p>
+        </section>
+        <section class="learning-section" id="overview">
+          <h2>Overview</h2>
+          <p><strong>SELECT Fundamentals</strong> — Basic queries, filtering, sorting, and aggregation questions.</p>
+        <p>This page contains <strong>10 curated Q&amp;A pairs</strong> focused on SQL interviews — not generic placeholders. Each answer models how senior engineers communicate: precise definitions, concrete examples, and trade-offs.</p>
+        <p>Interviewers at foundational difficulty expect you to connect select fundamentals to joins, window functions, query plans, indexing. Practice aloud, time yourself (2–3 minutes per answer), and prepare one personal project story that touches these themes.</p>
+        <p>After reviewing all questions, attempt mock interviews with a peer. Have them ask unpredictable follow-ups — "What if data volume 10x?" or "How would you test this?" — and refine your responses.</p>
+        <p>Continue to the next interview page to broaden coverage across the SQL competency map.</p>
+        </section>
+        
+        <section class="learning-section" id="key-concepts">
+          <h2>Key Concepts</h2>
+          <ul class="concept-list"><li>SELECT Fundamentals core topics</li><li>SQL terminology and patterns</li><li>Answer structuring (STAR / definition-example-tradeoff)</li><li>Whiteboard and live coding etiquette</li><li>Follow-up depth areas</li><li>Common mistakes that fail interviews</li><li>Metrics and business impact framing</li><li>Testing and production hardening talking points</li><li>Security and compliance angles</li><li>Resources for continued drill practice</li></ul>
+        </section>
+        
+        
+        <section class="learning-section" id="what-youll-learn">
+          <h2>What You&apos;ll Learn</h2>
+          <ul class="learn-checklist"><li><span class="check-icon" aria-hidden="true">✓</span> High-frequency question patterns at this difficulty</li><li><span class="check-icon" aria-hidden="true">✓</span> Model answers with examples and trade-offs</li><li><span class="check-icon" aria-hidden="true">✓</span> Follow-up topics interviewers commonly probe</li><li><span class="check-icon" aria-hidden="true">✓</span> Red flags that weaken technical interviews</li><li><span class="check-icon" aria-hidden="true">✓</span> Whiteboard/live-coding strategies</li><li><span class="check-icon" aria-hidden="true">✓</span> How to tie answers to measurable business outcomes</li></ul>
+        </section>
+        
+        
+        
+      <section class="learning-section" id="interview-qa">
+        <h2>Interview Questions &amp; Answers</h2>
+        <div class="interview-qa-list">
+        <div class="interview-qa-item">
+          <h3 class="qa-question">Q1: Describe isolation levels and a phantom read scenario.</h3>
+          <p class="qa-answer"><strong>Answer:</strong> READ UNCOMMITTED allows dirty reads; READ COMMITTED prevents them; REPEATABLE READ prevents non-repeatable reads; SERIALIZABLE prevents phantoms. Explain trade-off between consistency and concurrency; SQL Server/Snapshot isolation variants.</p>
+        </div>
+        <div class="interview-qa-item">
+          <h3 class="qa-question">Q2: Write an approach for top-N per group without correlated subqueries.</h3>
+          <p class="qa-answer"><strong>Answer:</strong> Use ROW_NUMBER() OVER (PARTITION BY group ORDER BY metric DESC) in CTE, filter rn &lt;= N. Discuss index on (group, metric) for performance vs RANK ties handling.</p>
+        </div>
+        <div class="interview-qa-item">
+          <h3 class="qa-question">Q3: How do you diagnose a slow query in production?</h3>
+          <p class="qa-answer"><strong>Answer:</strong> Capture actual execution plan, check row estimates vs actuals, look for scans vs seeks, missing indexes, implicit conversions, parameter sniffing. Use Query Store on Azure SQL, EXPLAIN on Postgres.</p>
+        </div>
+        <div class="interview-qa-item">
+          <h3 class="qa-question">Q4: Explain MERGE pitfalls.</h3>
+          <p class="qa-answer"><strong>Answer:</strong> Race conditions without proper keys, accidental cartesian matches, non-deterministic WHEN MATCHED if duplicates exist in source. Recommend staging dedup, transactions, and validation counts post-MERGE.</p>
+        </div>
+        <div class="interview-qa-item">
+          <h3 class="qa-question">Q5: Star schema vs snowflake — interview trade-offs.</h3>
+          <p class="qa-answer"><strong>Answer:</strong> Star: denormalized dimensions, simpler joins, faster BI queries. Snowflake: normalized dimensions, less redundancy, more joins. Lakehouse often uses star/silver-gold with dimension tables in Delta.</p>
+        </div>
+        <div class="interview-qa-item">
+          <h3 class="qa-question">Q6: How would you implement SCD Type 2 in SQL?</h3>
+          <p class="qa-answer"><strong>Answer:</strong> Track effective_start, effective_end, is_current flag or end_date sentinel. On change, close current row and insert new version. Delta MERGE is common on Azure; discuss surrogate keys and indexing current rows.</p>
+        </div>
+        <div class="interview-qa-item">
+          <h3 class="qa-question">Q7: What is parameter sniffing and how do you mitigate it?</h3>
+          <p class="qa-answer"><strong>Answer:</strong> Optimizer caches plan for first parameter values which may be suboptimal for others. Mitigations: OPTIMIZE FOR UNKNOWN, recompile hints, Query Store plan forcing, local variable workaround (careful), updated statistics.</p>
+        </div>
+        <div class="interview-qa-item">
+          <h3 class="qa-question">Q8: Explain the difference between WHERE and HAVING.</h3>
+          <p class="qa-answer"><strong>Answer:</strong> WHERE filters rows before aggregation; HAVING filters groups after GROUP BY. You cannot reference aggregate aliases in WHERE without a subquery/CTE. Example: HAVING SUM(amount) &gt; 1000 for high-spend customers.</p>
+        </div>
+        <div class="interview-qa-item">
+          <h3 class="qa-question">Q9: What follow-ups might interviewers ask after select fundamentals questions?</h3>
+          <p class="qa-answer"><strong>Answer:</strong> Expect depth on edge cases, trade-offs between joins, window functions, query plans, indexing, failure recovery, and how your answer changes at scale or under compliance constraints (HIPAA, SOC2).</p>
+        </div>
+        <div class="interview-qa-item">
+          <h3 class="qa-question">Q10: How do you communicate select fundamentals answers clearly in a live interview?</h3>
+          <p class="qa-answer"><strong>Answer:</strong> Use structure: definition → example → trade-offs → production consideration. Write clean code or SQL incrementally, state assumptions, and narrate your thinking while validating with a small test case.</p>
+        </div></div>
+      </section>
+        <nav class="step-nav" aria-label="Learning path navigation"><span class="step-nav-spacer"></span><a href="../../../interview-questions/sql-interview-questions/joins-interview/index.html" class="step-nav-link step-nav-next">
+        <span class="step-nav-label">Next →</span>
+        <span class="step-nav-title">JOINs</span>
+      </a></nav>
+      </article>
+    </main>
+    <aside id="sidebar-right"></aside>
+  </div>
+  <div id="site-footer"></div>
+  <script src="../../../assets/js/main.js"></script>
+  
+</body>
+</html>

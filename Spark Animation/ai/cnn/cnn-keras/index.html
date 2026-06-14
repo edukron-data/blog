@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en" data-page="ai" data-category="ai" data-section="cnn" data-topic="cnn-keras" data-step="16" data-total-steps="20">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CNNs in Keras — EDUKRON BLOB</title>
+  <meta name="description" content="CNNs in Keras — CNN. Conv2D, MaxPooling2D, and pretrained applications.">
+  <link rel="stylesheet" href="../../../assets/css/style.css">
+  <link rel="stylesheet" href="../../../assets/css/flow-diagrams.css">
+</head>
+<body>
+  <div id="site-header"></div>
+  <div class="site-layout">
+    <aside id="sidebar-left"></aside>
+    <main class="main-content">
+      <nav class="breadcrumb" aria-label="Breadcrumb"><a href="../../../index.html">Home</a><span class="breadcrumb-sep">/</span><a href="../../../ai/index.html">AI</a><span class="breadcrumb-sep">/</span><a href="../../../ai/cnn/index.html">CNN</a><span class="breadcrumb-sep">/</span><span aria-current="page">CNNs in Keras</span></nav>
+      <header class="page-header">
+        <span class="badge">ai</span>
+        <h1>CNNs in Keras</h1>
+        <p class="page-subtitle">Conv2D, MaxPooling2D, and pretrained applications.</p>
+      </header>
+      
+      <article class="learning-plan">
+        
+      <div class="learning-progress" aria-label="Learning path progress">
+        <div class="learning-progress-header">
+          <span class="phase-badge phase-advanced">Advanced</span>
+          <span class="read-time">~16 min read</span>
+        </div>
+        <div class="progress-bar-track" role="progressbar" aria-valuenow="16" aria-valuemin="1" aria-valuemax="20" aria-label="Progress through this learning path">
+          <div class="progress-bar-fill" style="width:80%"></div>
+        </div>
+      </div>
+        <section class="learning-section" id="objective">
+          <h2>Learning Objective</h2>
+          <ul class="checklist objectives-list"><li>Define CNNs in Keras and explain its role in Convolutional neural networks and computer vision</li><li>Implement cnns in keras using PyTorch Conv2d in advanced-level scenarios</li><li>Design real-world engineering patterns that integrates with image classification, detection, segmentation, deployment</li><li>Evaluate trade-offs, failure modes, and monitoring signals for cnns in keras</li><li>Connect cnns in keras to adjacent topics in the CNN path</li><li>Apply cnns in keras patterns in production-scale Convolutional neural networks and computer vision workloads</li></ul>
+        </section>
+        <section class="learning-section" id="prerequisites">
+          <h2>Prerequisites</h2>
+          <ul class="prereq-list"><li><a href="../../../ai/cnn/cnn-pytorch/index.html">CNNs in PyTorch</a></li><li><a href="../../../ai/cnn/segmentation-intro/index.html">Segmentation Intro</a></li></ul>
+        </section>
+        <section class="learning-section" id="overview">
+          <h2>Overview</h2>
+          <p>Building on earlier CNN lessons, <strong>CNNs in Keras</strong> is a core topic in the CNN learning path. Conv2D, MaxPooling2D, and pretrained applications.</p>
+        <p>Convolutional neural networks and computer vision teams rely on cnns in keras when delivering practical implementation and production-ready design. At this advanced stage, you will work with <strong>real-world engineering patterns</strong> using PyTorch Conv2d, torchvision, Keras, transfer learning, ONNX.</p>
+        <p>Industry practitioners treat cnns in keras as more than syntax — it shapes how you architect pipelines, debug incidents, and communicate in design reviews. Understanding the underlying mechanics helps you choose the right tool when multiple options exist (PyTorch Conv2d, torchvision, Keras, transfer learning, ONNX).</p>
+        <p>Production systems add constraints tutorials often skip: authentication, idempotency, observability, cost controls, and rollback paths. This lesson covers those operational realities alongside theory so you can reason about cnns in keras in real deployments.</p>
+        <p>Align your local practice environment with PyTorch Conv2d, torchvision, Keras, transfer learning, ONNX so examples transfer directly to work projects.</p>
+        <p>Work through the architecture notes, detailed explanations, production guidance, and code example below. Modify the sample for your domain, explain it aloud, and note one trade-off you would discuss in an interview.</p>
+        <p>The next steps extend cnns in keras into more complex Convolutional neural networks and computer vision scenarios — revisit this page if later topics feel unclear.</p>
+        </section>
+        
+      <section class="learning-section flow-diagram-section" id="flow-diagram">
+        <h2>CNNs in Keras — Process Flow</h2>
+        <p class="flow-diagram-desc">Conv2D, MaxPooling2D, and pretrained applications.</p>
+        <div class="flow-diagram-container">
+          <pre class="mermaid">flowchart LR
+    N0["Load image tensor batch"]
+    N1["Step focus: CNNs in Keras"]
+    N2["Conv2D"]
+    N3["MaxPooling2D"]
+    N4["And pretrained applications"]
+    N5["Input image tensor"]
+    N6["Stack conv blocks"]
+    N7["Global average pool"]
+    N8["Softmax classification"]
+    N9["Validate cnns in keras output"]
+    N0 --> N1
+    N1 --> N2
+    N2 --> N3
+    N3 --> N4
+    N4 --> N5
+    N5 --> N6
+    N6 --> N7
+    N7 --> N8
+    N8 --> N9</pre>
+        </div>
+      </section>
+        <section class="learning-section" id="key-concepts">
+          <h2>Key Concepts</h2>
+          <ul class="concept-list"><li>CNNs in Keras — definition, motivation, and when to apply it</li><li>Convolutional neural networks and computer vision vocabulary and mental models for real-world engineering patterns</li><li>Practical implementation and production-ready design</li><li>Integration with PyTorch Conv2d and  torchvision</li><li>Input/output contracts, validation, and error boundaries</li><li>Testing strategy: unit, integration, and smoke checks</li><li>Performance, scalability, and cost levers</li><li>Security, secrets handling, and least privilege</li><li>Observability: logs, metrics, traces, and runbooks</li><li>Common anti-patterns and how teams avoid them</li></ul>
+        </section>
+        
+      <section class="learning-section" id="architecture">
+        <h2>Architecture Notes</h2>
+        <div class="de-architecture-block"><strong>System role:</strong> CNNs in Keras sits in the Convolutional neural networks and computer vision workflow as a component for real-world engineering patterns. Map inputs (sources, APIs, user actions), transformations (business rules, model inference, aggregations), and outputs (tables, APIs, dashboards). Define failure boundaries and retry semantics at each hop.</div><div class="de-architecture-block"><strong>Component interaction:</strong> Upstream producers and downstream consumers depend on stable contracts. Document schemas, SLAs, and versioning for interfaces touched by cnns in keras. Use feature flags or config-driven behavior when rolling out changes.</div><div class="de-architecture-block"><strong>Data & control flow:</strong> Trace how information moves when applying cnns in keras — including practical implementation and production-ready design. Identify synchronous vs asynchronous steps, batch vs streaming paths, and where state persists between invocations.</div><div class="de-architecture-block"><strong>Operational model:</strong> Production usage requires structured logging, metrics (latency, error rate, throughput), alerting, runbooks, and rollback plans. Store infrastructure and application config in version control; automate deployments where possible.</div>
+      </section>
+        
+      <section class="learning-section de-detailed-notes" id="detailed-notes">
+        <h2>Detailed Notes</h2>
+        <p><strong>What it is:</strong> Conv2D, MaxPooling2D, and pretrained applications. In Convolutional neural networks and computer vision, this typically involves practical implementation and production-ready design.</p>
+        <p><strong>Why it matters:</strong> Teams encounter cnns in keras when shipping real-world engineering patterns. Gaps here surface as production bugs, slow queries, model drift, pipeline failures, or failed interviews.</p>
+        <p><strong>How it works:</strong> Break the problem into inputs, processing steps, and outputs. For each step, specify validation rules, expected latency, and idempotency. Use PyTorch Conv2d as your primary implementation surface.</p>
+        <p><strong>When to use:</strong> Apply cnns in keras when requirements align with practical implementation and production-ready design. Avoid forcing this pattern when a simpler batch job, SQL view, or single API call suffices.</p>
+        <p><strong>How to practice:</strong> Run the code example locally or in a sandbox subscription. Change one parameter at a time, predict the outcome, then verify. Write a one-paragraph explanation suitable for a stand-up or PR description.</p>
+      </section>
+        <section class="learning-section" id="what-youll-learn">
+          <h2>What You&apos;ll Learn</h2>
+          <ul class="learn-checklist"><li><span class="check-icon" aria-hidden="true">✓</span> Theory and motivation behind cnns in keras in Convolutional neural networks and computer vision</li><li><span class="check-icon" aria-hidden="true">✓</span> Key terminology for real-world engineering patterns</li><li><span class="check-icon" aria-hidden="true">✓</span> Architecture and component interaction patterns</li><li><span class="check-icon" aria-hidden="true">✓</span> Production best practices, pitfalls, and interview preparation</li><li><span class="check-icon" aria-hidden="true">✓</span> Hands-on example using PyTorch Conv2d</li><li><span class="check-icon" aria-hidden="true">✓</span> Clear linkage to prior and upcoming learning steps</li></ul>
+        </section>
+        
+      <section class="learning-section" id="production-notes">
+        <h2>Production Notes</h2>
+        <div class="de-notes-grid"><div class="de-note-card"><h3>Best Practices</h3><ul><li>Start with the simplest design that meets requirements — add complexity only with measured need</li><li>Pin tool and library versions; reproduce environments with containers or IaC</li><li>Write automated tests for critical paths before expanding scope</li><li>Document assumptions, inputs, outputs, SLAs, and known limitations in team wikis</li><li>Use structured logging with correlation IDs for cross-service debugging</li><li>Monitor key metrics from day one — latency, errors, cost, data freshness</li><li>Apply least-privilege access for credentials, API keys, and cloud roles</li><li>Peer-review cnns in keras changes; treat learning-path code as a draft requiring hardening for prod</li></ul></div><div class="de-note-card"><h3>Common Pitfalls</h3><ul><li>Skipping fundamentals and jumping to advanced cnns in keras patterns prematurely</li><li>Copy-pasting examples without understanding trade-offs or edge cases</li><li>Ignoring error handling, timeouts, and partial-failure recovery</li><li>Not validating outputs against representative production-scale data</li><li>Hard-coding secrets, connection strings, or environment-specific paths</li><li>Omitting observability — flying blind during incidents</li><li>Treating notebook or tutorial code as production-ready without tests and review</li></ul></div><div class="de-note-card"><h3>Interview Preparation</h3><ul><li>Open with a crisp definition of cnns in keras, then walk through a concrete Convolutional neural networks and computer vision example</li><li>Discuss trade-offs for real-world engineering patterns — interviewers reward reasoning over memorization</li><li>Mention tools: PyTorch Conv2d,  torchvision,  Keras and when you would choose each</li><li>Cover failure modes, debugging steps, and how you would monitor in production</li><li>Connect to a project story: problem, approach, metrics improved, lessons learned</li><li>Whiteboard the data/control flow for cnns in keras including one optimization you would make</li></ul></div></div>
+      </section>
+        
+      <section class="learning-section code-section" id="code-example">
+        <h2>Code Example</h2>
+        <pre class="code-block"><code class="language-python"># CNNs in Keras — transfer learning with torchvision
+import torch
+from torchvision import models, transforms
+from torch import nn
+
+weights = models.ResNet18_Weights.DEFAULT
+model = models.resnet18(weights=weights)
+for param in model.parameters():
+    param.requires_grad = False
+
+model.fc = nn.Linear(model.fc.in_features, 5)  # 5-class custom head
+
+transform = weights.transforms()
+# image_tensor = transform(pil_image).unsqueeze(0)
+# logits = model(image_tensor)</code></pre>
+      </section>
+        
+        <nav class="step-nav" aria-label="Learning path navigation"><a href="../../../ai/cnn/cnn-pytorch/index.html" class="step-nav-link step-nav-prev">
+        <span class="step-nav-label">← Previous</span>
+        <span class="step-nav-title">CNNs in PyTorch</span>
+      </a><a href="../../../ai/cnn/regularization-cnn/index.html" class="step-nav-link step-nav-next">
+        <span class="step-nav-label">Next →</span>
+        <span class="step-nav-title">CNN Regularization</span>
+      </a></nav>
+      </article>
+    </main>
+    <aside id="sidebar-right"></aside>
+  </div>
+  <div id="site-footer"></div>
+  <script src="../../../assets/js/main.js"></script>
+  
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        if (typeof mermaid !== 'undefined') {
+          mermaid.initialize({
+            startOnLoad: true,
+            theme: 'neutral',
+            securityLevel: 'loose',
+            themeVariables: {
+              primaryColor: '#e8f4fc',
+              primaryTextColor: '#1e293b',
+              primaryBorderColor: '#94a3b8',
+              lineColor: '#64748b',
+              secondaryColor: '#f1f5f9',
+              tertiaryColor: '#ffffff',
+              background: '#ffffff',
+              mainBkg: '#ffffff',
+              nodeBorder: '#94a3b8',
+              clusterBkg: '#f8fafc',
+              titleColor: '#0f172a',
+              edgeLabelBackground: '#ffffff'
+            }
+          });
+        }
+      });
+    </script>
+</body>
+</html>

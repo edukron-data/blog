@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en" data-page="interview-questions" data-category="interview-questions" data-section="python-interview-questions" data-topic="file-io-interview" data-step="15" data-total-steps="20">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>File I/O — EDUKRON BLOB</title>
+  <meta name="description" content="File I/O — Python Interview Questions. Reading/writing files, context managers, and pathlib.">
+  <link rel="stylesheet" href="../../../assets/css/style.css">
+  
+</head>
+<body>
+  <div id="site-header"></div>
+  <div class="site-layout">
+    <aside id="sidebar-left"></aside>
+    <main class="main-content">
+      <nav class="breadcrumb" aria-label="Breadcrumb"><a href="../../../index.html">Home</a><span class="breadcrumb-sep">/</span><a href="../../../interview-questions/index.html">Interview Questions</a><span class="breadcrumb-sep">/</span><a href="../../../interview-questions/python-interview-questions/index.html">Python Interview Questions</a><span class="breadcrumb-sep">/</span><span aria-current="page">File I/O</span></nav>
+      <header class="page-header">
+        <span class="badge">interview questions</span>
+        <h1>File I/O</h1>
+        <p class="page-subtitle">Reading/writing files, context managers, and pathlib.</p>
+      </header>
+      
+      <article class="learning-plan">
+        
+      <div class="learning-progress" aria-label="Learning path progress">
+        <div class="learning-progress-header">
+          <span class="phase-badge phase-advanced">Advanced</span>
+          <span class="read-time">~15 min read</span>
+        </div>
+        <div class="progress-bar-track" role="progressbar" aria-valuenow="15" aria-valuemin="1" aria-valuemax="20" aria-label="Progress through this learning path">
+          <div class="progress-bar-fill" style="width:75%"></div>
+        </div>
+      </div>
+        <section class="learning-section" id="objective">
+          <h2>Learning Objective</h2>
+          <ul class="checklist objectives-list"><li>Master file i/o Python interview questions at advanced depth</li><li>Practice structured answers with examples, metrics, and trade-offs</li><li>Review Python 3, data structures, concurrency, pytest concepts commonly probed in follow-ups</li><li>Identify weak areas and map them to DevSpark learning path steps</li><li>Build a personal anecdote bank connecting theory to project experience</li></ul>
+        </section>
+        <section class="learning-section" id="prerequisites">
+          <h2>Prerequisites</h2>
+          <ul class="prereq-list"><li><a href="../../../interview-questions/python-interview-questions/async-interview/index.html">Async &amp; Concurrency</a></li><li><a href="../../../interview-questions/python-interview-questions/multiprocessing/index.html">Multiprocessing</a></li></ul>
+        </section>
+        <section class="learning-section" id="overview">
+          <h2>Overview</h2>
+          <p><strong>File I/O</strong> — Reading/writing files, context managers, and pathlib.</p>
+        <p>This page contains <strong>10 curated Q&amp;A pairs</strong> focused on Python interviews — not generic placeholders. Each answer models how senior engineers communicate: precise definitions, concrete examples, and trade-offs.</p>
+        <p>Interviewers at advanced difficulty expect you to connect file i/o to Python 3, data structures, concurrency, pytest. Practice aloud, time yourself (2–3 minutes per answer), and prepare one personal project story that touches these themes.</p>
+        <p>After reviewing all questions, attempt mock interviews with a peer. Have them ask unpredictable follow-ups — "What if data volume 10x?" or "How would you test this?" — and refine your responses.</p>
+        <p>Continue to the next interview page to broaden coverage across the Python competency map.</p>
+        </section>
+        
+        <section class="learning-section" id="key-concepts">
+          <h2>Key Concepts</h2>
+          <ul class="concept-list"><li>File I/O core topics</li><li>Python terminology and patterns</li><li>Answer structuring (STAR / definition-example-tradeoff)</li><li>Whiteboard and live coding etiquette</li><li>Follow-up depth areas</li><li>Common mistakes that fail interviews</li><li>Metrics and business impact framing</li><li>Testing and production hardening talking points</li><li>Security and compliance angles</li><li>Resources for continued drill practice</li></ul>
+        </section>
+        
+        
+        <section class="learning-section" id="what-youll-learn">
+          <h2>What You&apos;ll Learn</h2>
+          <ul class="learn-checklist"><li><span class="check-icon" aria-hidden="true">✓</span> High-frequency question patterns at this difficulty</li><li><span class="check-icon" aria-hidden="true">✓</span> Model answers with examples and trade-offs</li><li><span class="check-icon" aria-hidden="true">✓</span> Follow-up topics interviewers commonly probe</li><li><span class="check-icon" aria-hidden="true">✓</span> Red flags that weaken technical interviews</li><li><span class="check-icon" aria-hidden="true">✓</span> Whiteboard/live-coding strategies</li><li><span class="check-icon" aria-hidden="true">✓</span> How to tie answers to measurable business outcomes</li></ul>
+        </section>
+        
+        
+        
+      <section class="learning-section" id="interview-qa">
+        <h2>Interview Questions &amp; Answers</h2>
+        <div class="interview-qa-list">
+        <div class="interview-qa-item">
+          <h3 class="qa-question">Q1: What are common pitfalls with mutable default arguments?</h3>
+          <p class="qa-answer"><strong>Answer:</strong> def append_item(x, bucket=[]) shares one list across calls. Fix with None sentinel: bucket = bucket or []. This is a frequent bug in interview coding — always explain the fix.</p>
+        </div>
+        <div class="interview-qa-item">
+          <h3 class="qa-question">Q2: Explain *args and **kwargs with a practical example.</h3>
+          <p class="qa-answer"><strong>Answer:</strong> *args collects positional extras as tuple; **kwargs collects keyword extras as dict. Use in wrapper functions forwarding to inner APIs. Example: logging decorator or Django view wrapper.</p>
+        </div>
+        <div class="interview-qa-item">
+          <h3 class="qa-question">Q3: How do you test async code with pytest?</h3>
+          <p class="qa-answer"><strong>Answer:</strong> Use pytest-asyncio, mark tests @pytest.mark.asyncio, mock aiohttp responses with aioresponses, and test cancellation/timeouts. For integration tests, spin ephemeral services or use testcontainers.</p>
+        </div>
+        <div class="interview-qa-item">
+          <h3 class="qa-question">Q4: When would you use multiprocessing vs threading vs asyncio?</h3>
+          <p class="qa-answer"><strong>Answer:</strong> Multiprocessing for CPU-bound parallel work bypassing GIL. Threading for blocking I/O with legacy sync libraries. Asyncio for high-concurrency I/O with async-native libraries. Justify choice with workload profile and operational complexity.</p>
+        </div>
+        <div class="interview-qa-item">
+          <h3 class="qa-question">Q5: Walk through debugging a production Python memory leak.</h3>
+          <p class="qa-answer"><strong>Answer:</strong> Reproduce in staging, capture heap with tracemalloc or objgraph, identify growing object types, inspect reference chains, check caches/global singletons, add metrics, deploy fix with regression test.</p>
+        </div>
+        <div class="interview-qa-item">
+          <h3 class="qa-question">Q6: Explain list vs tuple vs set — when would you choose each?</h3>
+          <p class="qa-answer"><strong>Answer:</strong> Lists are ordered mutable sequences for homogeneous collections you modify. Tuples are immutable ordered records — use for fixed-size data, dict keys, and function returns. Sets are unordered unique collections for membership tests and deduplication. Discuss time complexity: O(1) average set lookup vs O(n) list scan.</p>
+        </div>
+        <div class="interview-qa-item">
+          <h3 class="qa-question">Q7: What is the GIL and how does it affect concurrency?</h3>
+          <p class="qa-answer"><strong>Answer:</strong> The Global Interpreter Lock allows only one thread to execute Python bytecode at a time in CPython. CPU-bound parallelism needs multiprocessing or native extensions; I/O-bound work benefits from threading or asyncio because threads release the GIL during I/O waits.</p>
+        </div>
+        <div class="interview-qa-item">
+          <h3 class="qa-question">Q8: How do decorators work under the hood?</h3>
+          <p class="qa-answer"><strong>Answer:</strong> Decorators are higher-order functions applying wrapper(callable). @decorator desugars to func = decorator(func). Mention functools.wraps to preserve metadata, parameterized decorators (decorator factory), and common uses: timing, auth, caching, retry.</p>
+        </div>
+        <div class="interview-qa-item">
+          <h3 class="qa-question">Q9: What follow-ups might interviewers ask after file i/o questions?</h3>
+          <p class="qa-answer"><strong>Answer:</strong> Expect depth on edge cases, trade-offs between Python 3, data structures, concurrency, pytest, failure recovery, and how your answer changes at scale or under compliance constraints (HIPAA, SOC2).</p>
+        </div>
+        <div class="interview-qa-item">
+          <h3 class="qa-question">Q10: How do you communicate file i/o answers clearly in a live interview?</h3>
+          <p class="qa-answer"><strong>Answer:</strong> Use structure: definition → example → trade-offs → production consideration. Write clean code or SQL incrementally, state assumptions, and narrate your thinking while validating with a small test case.</p>
+        </div></div>
+      </section>
+        <nav class="step-nav" aria-label="Learning path navigation"><a href="../../../interview-questions/python-interview-questions/async-interview/index.html" class="step-nav-link step-nav-prev">
+        <span class="step-nav-label">← Previous</span>
+        <span class="step-nav-title">Async &amp; Concurrency</span>
+      </a><a href="../../../interview-questions/python-interview-questions/testing-interview/index.html" class="step-nav-link step-nav-next">
+        <span class="step-nav-label">Next →</span>
+        <span class="step-nav-title">Testing</span>
+      </a></nav>
+      </article>
+    </main>
+    <aside id="sidebar-right"></aside>
+  </div>
+  <div id="site-footer"></div>
+  <script src="../../../assets/js/main.js"></script>
+  
+</body>
+</html>

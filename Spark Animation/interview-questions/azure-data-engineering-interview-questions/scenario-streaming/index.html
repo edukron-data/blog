@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en" data-page="interview-questions" data-category="interview-questions" data-section="azure-data-engineering-interview-questions" data-topic="scenario-streaming" data-step="14" data-total-steps="20">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Scenario: Real-Time Pipeline — EDUKRON BLOB</title>
+  <meta name="description" content="Scenario: Real-Time Pipeline — Azure Data Engineering Interview Questions. Design streaming architecture for IoT or clickstream data.">
+  <link rel="stylesheet" href="../../../assets/css/style.css">
+  
+</head>
+<body>
+  <div id="site-header"></div>
+  <div class="site-layout">
+    <aside id="sidebar-left"></aside>
+    <main class="main-content">
+      <nav class="breadcrumb" aria-label="Breadcrumb"><a href="../../../index.html">Home</a><span class="breadcrumb-sep">/</span><a href="../../../interview-questions/index.html">Interview Questions</a><span class="breadcrumb-sep">/</span><a href="../../../interview-questions/azure-data-engineering-interview-questions/index.html">Azure Data Engineering Interview Questions</a><span class="breadcrumb-sep">/</span><span aria-current="page">Scenario: Real-Time Pipeline</span></nav>
+      <header class="page-header">
+        <span class="badge">interview questions</span>
+        <h1>Scenario: Real-Time Pipeline</h1>
+        <p class="page-subtitle">Design streaming architecture for IoT or clickstream data.</p>
+      </header>
+      
+      <article class="learning-plan">
+        
+      <div class="learning-progress" aria-label="Learning path progress">
+        <div class="learning-progress-header">
+          <span class="phase-badge phase-advanced">Advanced</span>
+          <span class="read-time">~14 min read</span>
+        </div>
+        <div class="progress-bar-track" role="progressbar" aria-valuenow="14" aria-valuemin="1" aria-valuemax="20" aria-label="Progress through this learning path">
+          <div class="progress-bar-fill" style="width:70%"></div>
+        </div>
+      </div>
+        <section class="learning-section" id="objective">
+          <h2>Learning Objective</h2>
+          <ul class="checklist objectives-list"><li>Master scenario: real-time pipeline Azure Data Engineering interview questions at advanced depth</li><li>Practice structured answers with examples, metrics, and trade-offs</li><li>Review ADF, Databricks, ADLS, Delta Lake, Synapse concepts commonly probed in follow-ups</li><li>Identify weak areas and map them to DevSpark learning path steps</li><li>Build a personal anecdote bank connecting theory to project experience</li></ul>
+        </section>
+        <section class="learning-section" id="prerequisites">
+          <h2>Prerequisites</h2>
+          <ul class="prereq-list"><li><a href="../../../interview-questions/azure-data-engineering-interview-questions/scenario-etl-design/index.html">Scenario: ETL Design</a></li><li><a href="../../../interview-questions/azure-data-engineering-interview-questions/data-quality-interview/index.html">Data Quality</a></li></ul>
+        </section>
+        <section class="learning-section" id="overview">
+          <h2>Overview</h2>
+          <p><strong>Scenario: Real-Time Pipeline</strong> — Design streaming architecture for IoT or clickstream data.</p>
+        <p>This page contains <strong>10 curated Q&amp;A pairs</strong> focused on Azure Data Engineering interviews — not generic placeholders. Each answer models how senior engineers communicate: precise definitions, concrete examples, and trade-offs.</p>
+        <p>Interviewers at advanced difficulty expect you to connect scenario: real-time pipeline to ADF, Databricks, ADLS, Delta Lake, Synapse. Practice aloud, time yourself (2–3 minutes per answer), and prepare one personal project story that touches these themes.</p>
+        <p>After reviewing all questions, attempt mock interviews with a peer. Have them ask unpredictable follow-ups — "What if data volume 10x?" or "How would you test this?" — and refine your responses.</p>
+        <p>Continue to the next interview page to broaden coverage across the Azure Data Engineering competency map.</p>
+        </section>
+        
+        <section class="learning-section" id="key-concepts">
+          <h2>Key Concepts</h2>
+          <ul class="concept-list"><li>Scenario: Real-Time Pipeline core topics</li><li>Azure Data Engineering terminology and patterns</li><li>Answer structuring (STAR / definition-example-tradeoff)</li><li>Whiteboard and live coding etiquette</li><li>Follow-up depth areas</li><li>Common mistakes that fail interviews</li><li>Metrics and business impact framing</li><li>Testing and production hardening talking points</li><li>Security and compliance angles</li><li>Resources for continued drill practice</li></ul>
+        </section>
+        
+        
+        <section class="learning-section" id="what-youll-learn">
+          <h2>What You&apos;ll Learn</h2>
+          <ul class="learn-checklist"><li><span class="check-icon" aria-hidden="true">✓</span> High-frequency question patterns at this difficulty</li><li><span class="check-icon" aria-hidden="true">✓</span> Model answers with examples and trade-offs</li><li><span class="check-icon" aria-hidden="true">✓</span> Follow-up topics interviewers commonly probe</li><li><span class="check-icon" aria-hidden="true">✓</span> Red flags that weaken technical interviews</li><li><span class="check-icon" aria-hidden="true">✓</span> Whiteboard/live-coding strategies</li><li><span class="check-icon" aria-hidden="true">✓</span> How to tie answers to measurable business outcomes</li></ul>
+        </section>
+        
+        
+        
+      <section class="learning-section" id="interview-qa">
+        <h2>Interview Questions &amp; Answers</h2>
+        <div class="interview-qa-list">
+        <div class="interview-qa-item">
+          <h3 class="qa-question">Q1: ADF copy activity performance tuning.</h3>
+          <p class="qa-answer"><strong>Answer:</strong> DIU allocation, parallel copy, staging on blob for database sources, partition slicing, compression format choice, IR placement near source/sink, avoid unnecessary schema mapping overhead.</p>
+        </div>
+        <div class="interview-qa-item">
+          <h3 class="qa-question">Q2: Delta Lake time travel use cases.</h3>
+          <p class="qa-answer"><strong>Answer:</strong> Audit historical states, reproduce ML training snapshots, rollback bad writes, debug pipeline regressions by querying older table versions with VERSION AS OF timestamp.</p>
+        </div>
+        <div class="interview-qa-item">
+          <h3 class="qa-question">Q3: Implement incremental load with watermark.</h3>
+          <p class="qa-answer"><strong>Answer:</strong> Store high-watermark column (modified_at) in control table, query source WHERE modified_at &gt; watermark, merge into target, atomically advance watermark after success, handle late-arriving data with lookback window.</p>
+        </div>
+        <div class="interview-qa-item">
+          <h3 class="qa-question">Q4: Synapse dedicated vs serverless pools.</h3>
+          <p class="qa-answer"><strong>Answer:</strong> Dedicated: provisioned MPP for predictable heavy workloads. Serverless: pay-per-TB scanned for ad hoc lake queries. Often combine: curated Delta in lake queried serverless, hot aggregates in dedicated SQL pool.</p>
+        </div>
+        <div class="interview-qa-item">
+          <h3 class="qa-question">Q5: Data quality framework components.</h3>
+          <p class="qa-answer"><strong>Answer:</strong> Expectations on schema/nulls/ranges, quarantine zone for bad records, metrics dashboards, alerting, data contracts between producers/consumers, Great Expectations/Delta constraints integration.</p>
+        </div>
+        <div class="interview-qa-item">
+          <h3 class="qa-question">Q6: Secure ADLS Gen2 access patterns.</h3>
+          <p class="qa-answer"><strong>Answer:</strong> RBAC at container/folder level, ACLs for fine-grained POSIX-style, private endpoints, disable public access, managed identity for pipelines, audit logs to Log Analytics, encryption with CMK optional.</p>
+        </div>
+        <div class="interview-qa-item">
+          <h3 class="qa-question">Q7: Streaming IoT pipeline design on Azure.</h3>
+          <p class="qa-answer"><strong>Answer:</strong> IoT Hub/Event Hubs ingest, Stream analytics or Structured Streaming process, watermark late events, idempotent sink writes to Delta bronze, serve gold via SQL endpoint/Power BI, monitor lag and dead-letter queue.</p>
+        </div>
+        <div class="interview-qa-item">
+          <h3 class="qa-question">Q8: Pipeline failure reconciliation process.</h3>
+          <p class="qa-answer"><strong>Answer:</strong> Identify failed slice, rerun from checkpoint, compare row counts/checksums source vs target, backfill partitions, document root cause (schema drift, auth expiry), add proactive alerts on SLA miss.</p>
+        </div>
+        <div class="interview-qa-item">
+          <h3 class="qa-question">Q9: System design: Scenario: Real-Time Pipeline — outline your architecture.</h3>
+          <p class="qa-answer"><strong>Answer:</strong> Structure answer: requirements clarifying questions, high-level diagram (ingress, compute, storage, observability), data flow, scaling strategy, failure modes, security, cost estimate, and phased MVP rollout.</p>
+        </div>
+        <div class="interview-qa-item">
+          <h3 class="qa-question">Q10: What follow-ups might interviewers ask after scenario: real-time pipeline questions?</h3>
+          <p class="qa-answer"><strong>Answer:</strong> Expect depth on edge cases, trade-offs between ADF, Databricks, ADLS, Delta Lake, Synapse, failure recovery, and how your answer changes at scale or under compliance constraints (HIPAA, SOC2).</p>
+        </div></div>
+      </section>
+        <nav class="step-nav" aria-label="Learning path navigation"><a href="../../../interview-questions/azure-data-engineering-interview-questions/scenario-etl-design/index.html" class="step-nav-link step-nav-prev">
+        <span class="step-nav-label">← Previous</span>
+        <span class="step-nav-title">Scenario: ETL Design</span>
+      </a><a href="../../../interview-questions/azure-data-engineering-interview-questions/scenario-migration-de/index.html" class="step-nav-link step-nav-next">
+        <span class="step-nav-label">Next →</span>
+        <span class="step-nav-title">Scenario: Migration</span>
+      </a></nav>
+      </article>
+    </main>
+    <aside id="sidebar-right"></aside>
+  </div>
+  <div id="site-footer"></div>
+  <script src="../../../assets/js/main.js"></script>
+  
+</body>
+</html>

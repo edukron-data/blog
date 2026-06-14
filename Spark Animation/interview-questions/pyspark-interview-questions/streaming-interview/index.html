@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en" data-page="interview-questions" data-category="interview-questions" data-section="pyspark-interview-questions" data-topic="streaming-interview" data-step="12" data-total-steps="20">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Structured Streaming — EDUKRON BLOB</title>
+  <meta name="description" content="Structured Streaming — PySpark Interview Questions. Streaming concepts, watermarks, and output modes.">
+  <link rel="stylesheet" href="../../../assets/css/style.css">
+  
+</head>
+<body>
+  <div id="site-header"></div>
+  <div class="site-layout">
+    <aside id="sidebar-left"></aside>
+    <main class="main-content">
+      <nav class="breadcrumb" aria-label="Breadcrumb"><a href="../../../index.html">Home</a><span class="breadcrumb-sep">/</span><a href="../../../interview-questions/index.html">Interview Questions</a><span class="breadcrumb-sep">/</span><a href="../../../interview-questions/pyspark-interview-questions/index.html">PySpark Interview Questions</a><span class="breadcrumb-sep">/</span><span aria-current="page">Structured Streaming</span></nav>
+      <header class="page-header">
+        <span class="badge">interview questions</span>
+        <h1>Structured Streaming</h1>
+        <p class="page-subtitle">Streaming concepts, watermarks, and output modes.</p>
+      </header>
+      
+      <article class="learning-plan">
+        
+      <div class="learning-progress" aria-label="Learning path progress">
+        <div class="learning-progress-header">
+          <span class="phase-badge phase-intermediate">Intermediate</span>
+          <span class="read-time">~14 min read</span>
+        </div>
+        <div class="progress-bar-track" role="progressbar" aria-valuenow="12" aria-valuemin="1" aria-valuemax="20" aria-label="Progress through this learning path">
+          <div class="progress-bar-fill" style="width:60%"></div>
+        </div>
+      </div>
+        <section class="learning-section" id="objective">
+          <h2>Learning Objective</h2>
+          <ul class="checklist objectives-list"><li>Master structured streaming PySpark interview questions at intermediate depth</li><li>Practice structured answers with examples, metrics, and trade-offs</li><li>Review Spark DataFrames, shuffle, Delta Lake, Databricks concepts commonly probed in follow-ups</li><li>Identify weak areas and map them to DevSpark learning path steps</li><li>Build a personal anecdote bank connecting theory to project experience</li></ul>
+        </section>
+        <section class="learning-section" id="prerequisites">
+          <h2>Prerequisites</h2>
+          <ul class="prereq-list"><li><a href="../../../interview-questions/pyspark-interview-questions/performance-interview/index.html">Performance Tuning</a></li><li><a href="../../../interview-questions/pyspark-interview-questions/shuffle-interview/index.html">Shuffle Operations</a></li></ul>
+        </section>
+        <section class="learning-section" id="overview">
+          <h2>Overview</h2>
+          <p><strong>Structured Streaming</strong> — Streaming concepts, watermarks, and output modes.</p>
+        <p>This page contains <strong>10 curated Q&amp;A pairs</strong> focused on PySpark interviews — not generic placeholders. Each answer models how senior engineers communicate: precise definitions, concrete examples, and trade-offs.</p>
+        <p>Interviewers at intermediate difficulty expect you to connect structured streaming to Spark DataFrames, shuffle, Delta Lake, Databricks. Practice aloud, time yourself (2–3 minutes per answer), and prepare one personal project story that touches these themes.</p>
+        <p>After reviewing all questions, attempt mock interviews with a peer. Have them ask unpredictable follow-ups — "What if data volume 10x?" or "How would you test this?" — and refine your responses.</p>
+        <p>Continue to the next interview page to broaden coverage across the PySpark competency map.</p>
+        </section>
+        
+        <section class="learning-section" id="key-concepts">
+          <h2>Key Concepts</h2>
+          <ul class="concept-list"><li>Structured Streaming core topics</li><li>PySpark terminology and patterns</li><li>Answer structuring (STAR / definition-example-tradeoff)</li><li>Whiteboard and live coding etiquette</li><li>Follow-up depth areas</li><li>Common mistakes that fail interviews</li><li>Metrics and business impact framing</li><li>Testing and production hardening talking points</li><li>Security and compliance angles</li><li>Resources for continued drill practice</li></ul>
+        </section>
+        
+        
+        <section class="learning-section" id="what-youll-learn">
+          <h2>What You&apos;ll Learn</h2>
+          <ul class="learn-checklist"><li><span class="check-icon" aria-hidden="true">✓</span> High-frequency question patterns at this difficulty</li><li><span class="check-icon" aria-hidden="true">✓</span> Model answers with examples and trade-offs</li><li><span class="check-icon" aria-hidden="true">✓</span> Follow-up topics interviewers commonly probe</li><li><span class="check-icon" aria-hidden="true">✓</span> Red flags that weaken technical interviews</li><li><span class="check-icon" aria-hidden="true">✓</span> Whiteboard/live-coding strategies</li><li><span class="check-icon" aria-hidden="true">✓</span> How to tie answers to measurable business outcomes</li></ul>
+        </section>
+        
+        
+        
+      <section class="learning-section" id="interview-qa">
+        <h2>Interview Questions &amp; Answers</h2>
+        <div class="interview-qa-list">
+        <div class="interview-qa-item">
+          <h3 class="qa-question">Q1: Python UDF performance issues?</h3>
+          <p class="qa-answer"><strong>Answer:</strong> Row UDFs serialize rows Python↔JVM — slow. Prefer Spark SQL functions, pandas UDFs (vectorized), or Scala UDFs. If UDF required, minimize columns passed and cache strategically.</p>
+        </div>
+        <div class="interview-qa-item">
+          <h3 class="qa-question">Q2: Explain Delta Lake MERGE interview scenario.</h3>
+          <p class="qa-answer"><strong>Answer:</strong> Upsert staging to target on business key, WHEN MATCHED UPDATE, WHEN NOT MATCHED INSERT, optional WHEN NOT MATCHED BY SOURCE DELETE for hard deletes. Mention ZORDER on join keys and conflict detection tests.</p>
+        </div>
+        <div class="interview-qa-item">
+          <h3 class="qa-question">Q3: How do you debug OOM on executors?</h3>
+          <p class="qa-answer"><strong>Answer:</strong> Check spill metrics, reduce collect(), increase memory overhead fraction, tune shuffle partitions, avoid wide transformations on huge partitions, analyze skew, increase executor memory/cores, use AQE coalesce.</p>
+        </div>
+        <div class="interview-qa-item">
+          <h3 class="qa-question">Q4: Design batch ETL for 5TB daily on Azure Databricks.</h3>
+          <p class="qa-answer"><strong>Answer:</strong> Land raw on ADLS bronze as Parquet/Delta, partition by date, use Auto Loader/incremental, transform in silver with merge, aggregate gold, orchestrate with ADF, monitor with Azure Monitor, enforce Unity Catalog permissions, right-size job clusters vs SQL warehouse for serving.</p>
+        </div>
+        <div class="interview-qa-item">
+          <h3 class="qa-question">Q5: RDD vs DataFrame — when still use RDDs?</h3>
+          <p class="qa-answer"><strong>Answer:</strong> DataFrames leverage Catalyst optimizer, whole-stage codegen, and structured APIs — default choice. RDDs for unstructured processing, custom partitioners, or legacy code. Prefer Dataset/DataFrame for production ETL.</p>
+        </div>
+        <div class="interview-qa-item">
+          <h3 class="qa-question">Q6: What causes shuffle in Spark and how to reduce it?</h3>
+          <p class="qa-answer"><strong>Answer:</strong> Wide transformations: groupBy, join, repartition, distinct. Reduce by filtering early, using broadcast joins for small tables, salting skewed keys, AQE, increasing shuffle partitions judiciously, and avoiding unnecessary repartition.</p>
+        </div>
+        <div class="interview-qa-item">
+          <h3 class="qa-question">Q7: Explain lazy evaluation and lineage.</h3>
+          <p class="qa-answer"><strong>Answer:</strong> Transformations build DAG without execution; actions trigger jobs. Lineage enables fault tolerance via recomputation. Discuss stage boundaries at shuffle and pipelined narrow transformations within stages.</p>
+        </div>
+        <div class="interview-qa-item">
+          <h3 class="qa-question">Q8: When to broadcast join?</h3>
+          <p class="qa-answer"><strong>Answer:</strong> When one table fits in driver/executor memory under spark.sql.autoBroadcastJoinThreshold (default 10MB). Force with broadcast() hint after verifying size. Avoid broadcasting large tables — OOM risk.</p>
+        </div>
+        <div class="interview-qa-item">
+          <h3 class="qa-question">Q9: What follow-ups might interviewers ask after structured streaming questions?</h3>
+          <p class="qa-answer"><strong>Answer:</strong> Expect depth on edge cases, trade-offs between Spark DataFrames, shuffle, Delta Lake, Databricks, failure recovery, and how your answer changes at scale or under compliance constraints (HIPAA, SOC2).</p>
+        </div>
+        <div class="interview-qa-item">
+          <h3 class="qa-question">Q10: How do you communicate structured streaming answers clearly in a live interview?</h3>
+          <p class="qa-answer"><strong>Answer:</strong> Use structure: definition → example → trade-offs → production consideration. Write clean code or SQL incrementally, state assumptions, and narrate your thinking while validating with a small test case.</p>
+        </div></div>
+      </section>
+        <nav class="step-nav" aria-label="Learning path navigation"><a href="../../../interview-questions/pyspark-interview-questions/performance-interview/index.html" class="step-nav-link step-nav-prev">
+        <span class="step-nav-label">← Previous</span>
+        <span class="step-nav-title">Performance Tuning</span>
+      </a><a href="../../../blog/spark-architecture.html" class="step-nav-link step-nav-next">
+        <span class="step-nav-label">Next →</span>
+        <span class="step-nav-title">Architecture Deep Dive</span>
+      </a></nav>
+      </article>
+    </main>
+    <aside id="sidebar-right"></aside>
+  </div>
+  <div id="site-footer"></div>
+  <script src="../../../assets/js/main.js"></script>
+  
+</body>
+</html>
